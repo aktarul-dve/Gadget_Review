@@ -1,36 +1,41 @@
 import React from "react";
 import quiz from "../../assets/quiz.jpg";
+
 const Job2 = () => {
   return (
-    <div className="w-full bg-gray-100 py-5 px-2">
-      <p>কুইজ জব</p>
-      <div className="container mx-auto flex justify-center items-center gap-6">
-        
+    <div className="w-full bg-gray-100 py-8 px-4">
+      <h2 className="text-center font-semibold text-lg mb-6">কুইজ জব</h2>
+
+      <div className="container mx-auto grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {/* Card 1 */}
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden w-72 hover:shadow-xl transition">
-          <img src={quiz} alt="Work Rule 1" className="w-20 h-20 mx-auto object-cover" /> 
-          
-          <div className="p-4 text-center">
-            <p className="text-sm">বাংলা কুইজ</p>
-          </div>
+        <div className="bg-white rounded-2xl shadow-md h-48 flex flex-col justify-center items-center hover:shadow-xl hover:scale-105 transition-transform">
+          <img
+            src={quiz}
+            alt="বাংলা কুইজ"
+            className="w-20 h-20 object-cover mb-2"
+          />
+          <p className="text-sm font-medium text-gray-700">বাংলা কুইজ</p>
         </div>
 
         {/* Card 2 */}
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden w-72 hover:shadow-xl transition">
-           <img src={quiz} alt="Work Rule 1" className="w-20 h-20 mx-auto object-cover" /> 
-          <div className="p-4 text-center">
-            <p className=" text-sm">অংক কুইজ</p>
-          </div>
+        <div className="bg-white rounded-2xl shadow-md h-48 flex flex-col justify-center items-center hover:shadow-xl hover:scale-105 transition-transform">
+          <img
+            src={quiz}
+            alt="অংক কুইজ"
+            className="w-20 h-20 object-cover mb-2"
+          />
+          <p className="text-sm font-medium text-gray-700">অংক কুইজ</p>
         </div>
 
         {/* Card 3 */}
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden w-72 hover:shadow-xl transition">
-           <img src={quiz} alt="Work Rule 1" className="w-20 h-20 mx-auto object-cover" /> 
-          <div className="p-4 text-center">
-            <p className=" text-sm">ইংলিশ কুইজ</p>
-          </div>
+        <div className="bg-white rounded-2xl shadow-md h-48 flex flex-col justify-center items-center hover:shadow-xl hover:scale-105 transition-transform">
+          <img
+            src={quiz}
+            alt="ইংলিশ কুইজ"
+            className="w-20 h-20 object-cover mb-2"
+          />
+          <p className="text-sm font-medium text-gray-700">ইংলিশ কুইজ</p>
         </div>
-
       </div>
     </div>
   );
