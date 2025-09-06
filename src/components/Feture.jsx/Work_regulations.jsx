@@ -7,7 +7,7 @@ import lederbord from "../../assets/lederbord.png";
 const Work_regulations = () => {
   return (
     <div className="w-full bg-gray-100 p-4">
-      <h2 className="text-center text-xl font-bold text-gray-700 mb-8">
+      <h2 className="text-center text-xl font-bold text-gray-700 mb-3">
         কাজের নিয়মাবলী
       </h2>
 

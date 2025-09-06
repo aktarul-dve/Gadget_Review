@@ -4,11 +4,11 @@ import quiz from "../../assets/quiz.jpg";
 const Job2 = () => {
   return (
     <div className="w-full bg-gray-100 p-4">
-      <h2 className="text-center font-semibold text-lg mb-6">কুইজ জব</h2>
+      <h2 className="text-center font-semibold text-lg mb-3">কুইজ জব</h2>
 
       <div className="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         {/* Card 1 */}
-        <div className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+        <div className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
             src={quiz}
             alt="বাংলা কুইজ"
@@ -18,7 +18,7 @@ const Job2 = () => {
         </div>
 
         {/* Card 2 */}
-        <div className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+        <div className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
             src={quiz}
             alt="অংক কুইজ"
@@ -28,7 +28,7 @@ const Job2 = () => {
         </div>
 
         {/* Card 3 */}
-        <div className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+        <div className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
             src={quiz}
             alt="ইংলিশ কুইজ"
