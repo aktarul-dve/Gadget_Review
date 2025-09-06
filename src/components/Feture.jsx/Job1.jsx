@@ -8,14 +8,14 @@ const Job1 = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full bg-gray-100 py-10 px-4">
+    <div className="w-full bg-gray-100 p-4">
       <h2 className="text-center font-semibold text-lg mb-8">আমার কাজ</h2>
 
-      <div className="container mx-auto grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         {/* Card 1 */}
         <div
           onClick={() => navigate("spin")}
-          className="bg-white rounded-2xl shadow-md h-48 flex flex-col justify-center items-center cursor-pointer hover:shadow-xl hover:scale-105 transition-transform"
+          className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform"
         >
           <img
             src={spin}
@@ -28,7 +28,7 @@ const Job1 = () => {
         {/* Card 2 */}
         <div
           onClick={() => navigate("math")}
-          className="bg-white rounded-2xl shadow-md h-48 flex flex-col justify-center items-center cursor-pointer hover:shadow-xl hover:scale-105 transition-transform"
+          className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform"
         >
           <img
             src={math}
@@ -41,7 +41,7 @@ const Job1 = () => {
         {/* Card 3 */}
         <div
           onClick={() => navigate("watchAds")}
-          className="bg-white rounded-2xl shadow-md h-48 flex flex-col justify-center items-center cursor-pointer hover:shadow-xl hover:scale-105 transition-transform"
+          className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform"
         >
           <img
             src={ads}

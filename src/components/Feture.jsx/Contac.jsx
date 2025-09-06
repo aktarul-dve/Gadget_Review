@@ -1,31 +1,22 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import withdrow from "../../assets/withdro.png";
+import refer from "../../assets/refer.png";
+import telegram from "../../assets/telegram.png";
+
 
 const Contac = () => {
-  const naviget= useNavigate();
-
-  const refer =()=>{
-    naviget("refer")
-
-  }
-
-   const withdrow =()=>{
-    naviget("withdrow")
-
-  }
-
 
   return (
     <div className="w-full bg-gray-100 py-5 px-2">
-      <p>আমার টাকা</p>
-      <div className="container mx-auto flex justify-center items-center gap-6">
+      <p className="text-center font-semibold">আমার টাকা</p>
+      <div className="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         
         {/* Card 1 */}
-        <div onClick={refer} className="bg-white rounded-2xl shadow-md overflow-hidden w-72 hover:shadow-xl transition">
+        <div  className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
-            src="https://via.placeholder.com/300x200"
+            src={refer}
             alt="Rule 1"
-            className="w-full h-20 object-cover"
+            className="w-20 h-20 object-cover"
           />
           <div className="p-4 text-center">
             <p className=" text-sm">রেফার করুন</p>
@@ -33,11 +24,11 @@ const Contac = () => {
         </div>
 
         {/* Card 2 */}
-        <div onClick={withdrow} className="bg-white rounded-2xl shadow-md overflow-hidden w-72 hover:shadow-xl transition">
+        <div  className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform">
           <img
-            src="https://via.placeholder.com/300x200"
+            src={withdrow}
             alt="Rule 2"
-            className="w-full h-20 object-cover"
+            className="w-20 h-20 object-cover"
           />
           <div className="p-4 text-center">
             <p className=" text-sm">টাকা উথড্র</p>
@@ -45,11 +36,11 @@ const Contac = () => {
         </div>
 
         {/* Card 3 */}
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden w-72 hover:shadow-xl transition">
+        <div className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center  hover:scale-105 transition-transform">
           <img
-            src="https://via.placeholder.com/300x200"
+            src={telegram}
             alt="Rule 3"
-            className="w-full h-20 object-cover"
+            className="w-20 h-20 object-cover"
           />
           <div className="p-4 text-center">
             <p className=" text-sm">জয়েন করুন</p>
