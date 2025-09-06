@@ -14,7 +14,7 @@ const Work_regulations = () => {
       <div className="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         
         {/* Card 1 */}
-        <div className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+        <div className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
             src={anows}
             alt="Work Rule 1"
@@ -24,7 +24,7 @@ const Work_regulations = () => {
         </div>
 
         {/* Card 2 */}
-        <div className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+        <div className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
             src={vpn}
             alt="Work Rule 2"
@@ -34,7 +34,7 @@ const Work_regulations = () => {
         </div>
 
         {/* Card 3 */}
-        <div className="bg-white rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+        <div className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
             src={lederbord}
             alt="Work Rule 2"
