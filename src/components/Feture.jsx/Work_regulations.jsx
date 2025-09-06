@@ -18,7 +18,7 @@ const Work_regulations = () => {
           <img
             src={anows}
             alt="Work Rule 1"
-            className="w-24 h-24 object-contain mb-4"
+            className="w-20 h-20 object-contain mb-3"
           />
           <p className="text-gray-700 font-medium">কাজের নিয়ম</p>
         </div>
@@ -28,7 +28,7 @@ const Work_regulations = () => {
           <img
             src={vpn}
             alt="Work Rule 2"
-            className="w-24 h-24 object-contain mb-4"
+            className="w-20 h-20 object-contain mb-3"
           />
           <p className="text-gray-700 font-medium">VPN কানেক্ট করুন</p>
         </div>
@@ -38,7 +38,7 @@ const Work_regulations = () => {
           <img
             src={lederbord}
             alt="Work Rule 2"
-            className="w-24 h-24 object-contain mb-4"
+            className="w-20 h-20 object-contain mb-3"
           />
           <p className="text-gray-700 font-medium">লিডার বোর্ড</p>
         </div>

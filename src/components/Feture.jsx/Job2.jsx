@@ -12,7 +12,7 @@ const Job2 = () => {
           <img
             src={quiz}
             alt="বাংলা কুইজ"
-            className="w-20 h-20 object-cover mb-2"
+            className="w-20 h-20 object-cover mb-3"
           />
           <p className="text-sm font-medium text-gray-700">বাংলা কুইজ</p>
         </div>
@@ -22,7 +22,7 @@ const Job2 = () => {
           <img
             src={quiz}
             alt="অংক কুইজ"
-            className="w-20 h-20 object-cover mb-2"
+            className="w-20 h-20 object-cover mb-3"
           />
           <p className="text-sm font-medium text-gray-700">অংক কুইজ</p>
         </div>
@@ -32,7 +32,7 @@ const Job2 = () => {
           <img
             src={quiz}
             alt="ইংলিশ কুইজ"
-            className="w-20 h-20 object-cover mb-2"
+            className="w-20 h-20 object-cover mb-3"
           />
           <p className="text-sm font-medium text-gray-700">ইংলিশ কুইজ</p>
         </div>
