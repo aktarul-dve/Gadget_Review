@@ -34,7 +34,7 @@ const Job2 = () => {
             alt="ইংলিশ কুইজ"
             className="w-20 h-20 object-cover mb-3"
           />
-          <p className="text-sm font-medium text-gray-700">ইংলিশ কুইজ</p>
+          <p className="text-sm text-center font-medium text-gray-700">ইংলিশ কুইজ</p>
         </div>
       </div>
     </div>

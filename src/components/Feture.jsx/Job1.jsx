@@ -23,7 +23,7 @@ const Job1 = () => {
             alt="Spin & Earn"
             className="w-20 h-20 object-cover mb-3"
           />
-          <p className="text-sm font-medium text-gray-700">স্পিন করে টাকা</p>
+          <p className="text-sm text-center font-medium text-gray-700">স্পিন করে টাকা</p>
         </div>
 
         {/* Card 2 */}
@@ -36,7 +36,7 @@ const Job1 = () => {
             alt="Math & Earn"
             className="w-20 h-20 object-cover mb-3"
           />
-          <p className="text-sm font-medium text-gray-700">অংক করে টাকা</p>
+          <p className="text-sm text-center font-medium text-gray-700">অংক করে টাকা</p>
         </div>
 
         {/* Card 3 */}
@@ -49,7 +49,7 @@ const Job1 = () => {
             alt="Watch Ads & Earn"
             className="w-20 h-20 object-cover mb-3"
           />
-          <p className="text-sm font-medium text-gray-700">অ্যাড দেখে টাকা</p>
+          <p className="text-sm text-center font-medium text-gray-700">অ্যাড দেখে টাকা</p>
         </div>
       </div>
     </div>
