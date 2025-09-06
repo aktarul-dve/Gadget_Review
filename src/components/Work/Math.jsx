@@ -19,7 +19,7 @@ const Math = () => {
             </p>
         </div>
 
-        <div className='flex   items-center justify-between p-10 mt-8 bg-red-500 rounded-2xl shadow-md overflow-hidden w-78 h-48 hover:shadow-xl transition'>
+        <div className='flex   items-center justify-between p-10 mt-8 bg-red-500 rounded-2xl shadow-md overflow-hidden w-78 h-40 hover:shadow-xl transition'>
 
             <FcHome className='w-20 h-20'/>
             <div className='flex text-5xl'>
