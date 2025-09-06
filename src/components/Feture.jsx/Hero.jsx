@@ -3,9 +3,9 @@ import { CgProfile } from "react-icons/cg";
 
 const Hero = () => {
   return (
-    <section className="w-full h-auto bg-gradient-to-br from-rose-50 to-cyan-50">
+    <section className="w-full h-auto bg-gradient-to-br from-rose-200 to-cyan-50">
       <div className="container mx-auto px-4 py-12 ">
-       <div className="flex justify-center justify-between items-center">
+       <div className="flex  justify-between items-center">
 
         <div>
             <CgProfile className="w-10 h-10"/>
