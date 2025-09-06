@@ -11,6 +11,11 @@ const Hero = () => {
             <CgProfile className="w-10 h-10"/>
             <p>MD: Aktarul Islam</p>
             <p>aktarul@gmail.com</p>
+            <div>
+              <p className="text-2xl">Refer Code: 12345</p>
+
+            </div>
+            
             
         </div>
 
