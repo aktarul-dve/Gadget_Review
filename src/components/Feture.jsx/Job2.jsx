@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import quiz from "../../assets/quiz.jpg";
+import { useNavigate } from "react-router-dom";
 import bangla from "../../assets/bangla.png";
 import en from "../../assets/english.jpg";
 
 Modal.setAppElement("#root"); // Modal warning fix
 
 const Job2 = () => {
+
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
 
@@ -17,6 +21,20 @@ const Job2 = () => {
     setIsOpen(true);
   };
 
+  const banglaQuiz =() =>{
+    navigate("banglaQuiz")
+
+  }
+  const mathQuiz =() =>{
+    navigate("mathQuiz")
+
+  }
+
+  const englishQuiz =() =>{
+    navigate("englishQuiz")
+
+  }
+
   const closeModal = () => setIsOpen(false);
 
   return (
@@ -26,7 +44,7 @@ const Job2 = () => {
       <div className="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         {/* Card 1 */}
         <div
-           onClick={handleCardClick}
+           onClick={banglaQuiz}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={bangla} alt="বাংলা কুইজ" className="w-20 h-20 object-cover mb-3" />
@@ -35,7 +53,7 @@ const Job2 = () => {
 
         {/* Card 2 */}
         <div
-           onClick={handleCardClick}
+           onClick={mathQuiz}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={quiz} alt="অংক কুইজ" className="w-20 h-20 object-cover mb-3" />
@@ -44,7 +62,7 @@ const Job2 = () => {
 
         {/* Card 3 */}
         <div
-          onClick={handleCardClick}
+          onClick={englishQuiz}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={en} alt="ইংলিশ কুইজ" className="w-20 h-20 object-cover mb-3" />

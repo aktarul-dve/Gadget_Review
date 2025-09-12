@@ -9,26 +9,38 @@ Modal.setAppElement("#root"); // Modal warning fix
 
 const Job1 = () => {
   const navigate = useNavigate();
+  
   const [isOpen, setIsOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
 
-  const handleCardClick = () => {
-    
-      setDialogText("👉 বন্ধু এখনো সব কাজ করা শেষ হয় নাই।");
-    
-    setIsOpen(true);
+  const mathClick = () => {
+       setDialogText("👉 নিয়ম মেনে কাজ করুন তাহলে পেমেন্ট পাবেন। আর যদি নিয়ম মেনে কাজ না করেন তাহলে আপনার একাউন্ট ব্লক করা হবে");
+       setIsOpen(true);
   };
 
-  const closeModal = () => setIsOpen(false);
+    const Spin = () => {
+      navigate("SpinWheel")
+    
+     
+  };
+
+  const AdsClick =() => {
+    navigate("ads")
+  }
+
+  const closeModal = () =>{
+    setIsOpen(false);
+    navigate("math")
+  } 
 
   return (
     <div className="w-full bg-gray-100 p-4">
-      <h2 className="text-center font-semibold text-lg mb-3">আমার কাজ</h2>
+      <h2 className="text-center text-xl font-bold text-gray-700 mb-3">আমার কাজ</h2>
 
       <div className="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         {/* Card 1 */}
         <div
-          onClick={handleCardClick}
+          onClick={Spin}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={spin} alt="Spin & Earn" className="w-20 h-20 object-cover mb-3" />
@@ -39,7 +51,7 @@ const Job1 = () => {
 
         {/* Card 2 */}
         <div
-          onClick={handleCardClick}
+          onClick={mathClick}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={math} alt="Math & Earn" className="w-20 h-20 object-cover mb-3" />
@@ -50,7 +62,7 @@ const Job1 = () => {
 
         {/* Card 3 */}
         <div
-          onClick={handleCardClick}
+          onClick={AdsClick}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={ads} alt="Watch Ads & Earn" className="w-20 h-20 object-cover mb-3" />
@@ -66,8 +78,8 @@ const Job1 = () => {
         onRequestClose={closeModal}
         style={{
           content: {
-            width: "200px",
-            height: "200px",
+            width: "250px",
+            height: "350px",
             margin: "auto",
             borderRadius: "15px",
             padding: "20px",
@@ -78,7 +90,7 @@ const Job1 = () => {
           },
         }}
       >
-        <h3 className="text-lg font-bold mb-3">বিস্তারিত</h3>
+       
         <p className="text-gray-700 mb-5">{dialogText}</p>
         <button
           onClick={closeModal}

@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
-  const navget = useNavigate();
+  const login =()=>{
+    window.location.href = 'http://localhost:3000/auth/google'
+  };
 
-  const nevigetUserLayout = ()=>{
-    navget("/userLayout");
+ 
+  const navigate = useNavigate();
 
-  }
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    if (token) {
+      localStorage.setItem("authToken", token);
+      navigate("/userLayout"); // টোকেন সেভ হয়ে গেলে মেইন পেজে পাঠিয়ে দিন
+    }
+  }, [navigate]);
+
+   useEffect(() => {
+
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      navigate("/userLayout"); 
+    }
+  }, [navigate]);
 
 
 
@@ -25,7 +43,7 @@ const LoginPage = () => {
         </div>
 
         {/* Google Login Button */}
-        <div onClick={nevigetUserLayout} className='flex bg-white space-x-3 px-4 py-2 rounded-lg shadow-md cursor-pointer items-center'>
+        <div onClick={login} className='flex bg-white space-x-3 px-4 py-2 rounded-lg shadow-md cursor-pointer items-center'>
           <FcGoogle size={24}/>
           <p className='font-bold'>Continue With Google</p>
         </div>
