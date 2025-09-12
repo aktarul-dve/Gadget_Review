@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
 
   const login =()=>{
-    window.location.href = 'http://localhost:3000/auth/google'
+    window.location.href = 'https://aktarul.onrender.com/auth/google'
   };
 
  
