@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import withdrow from "../../assets/withdro.png";
-import refer from "../../assets/refer.png";
+import refericon from "../../assets/refer.png";
 import telegram from "../../assets/telegram.png";
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +38,7 @@ const Contac = () => {
          onClick={refer}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
-            src={refer}
+            src={refericon}
             alt="Rule 1"
             className="w-20 h-20 object-cover mb-3"
           />
