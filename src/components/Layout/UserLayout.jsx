@@ -12,7 +12,7 @@ const UserLayout = () => {
 
          {/* Maincontent */}
 
-         <main className="pt-10 pb-9">
+         <main className="pt-10 pb-20">
             <Outlet/>
          </main>
 
