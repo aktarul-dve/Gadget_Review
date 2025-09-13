@@ -10,6 +10,7 @@ import SpinWheel from './components/Work/SpinWheel '
 import BanglaQuiz from './components/Work/BanglaQuiz'
 import MathQuiz from './components/Work/MathQuiz'
 import EnglishQuiz from './components/Work/EnglishQuiz'
+import Profile from './components/Feture/Profile'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="englishQuiz" element={<EnglishQuiz/>} />
           <Route path="refer" element={<Refer />} />
           <Route path="withdrow" element={<Withdrow />} />
+          <Route path="profile" element={<Profile/>} />
         </Route>
       </Routes>
     </BrowserRouter>

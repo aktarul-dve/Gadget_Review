@@ -18,7 +18,7 @@ const Footer = () => {
 
   }
   const profile = () =>{
-    navigate("refer")
+    navigate("profile")
 
   }
 

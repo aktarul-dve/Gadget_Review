@@ -1,10 +1,10 @@
 import React from 'react'
-import Hero from '../components/Feture.jsx/Hero'
-import MarqueeText from '../components/Feture.jsx/MarqueeText '
-import Work_regulations from '../components/Feture.jsx/Work_regulations'
-import Job1 from '../components/Feture.jsx/Job1'
-import Job2 from '../components/Feture.jsx/Job2'
-import Contac from '../components/Feture.jsx/Contac'
+import Hero from '../components/Feture/Hero'
+import MarqueeText from '../components/Feture/MarqueeText '
+import Work_regulations from '../components/Feture/Work_regulations'
+import Job1 from '../components/Feture/Job1'
+import Job2 from '../components/Feture/Job2'
+
 
 
 const Home = () => {
