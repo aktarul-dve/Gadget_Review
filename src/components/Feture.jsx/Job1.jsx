@@ -34,16 +34,17 @@ const Job1 = () => {
   } 
 
   return (
-    <div className="w-full bg-gray-100 p-4">
-      <h2 className="text-center text-xl font-bold text-gray-700 mb-3">আমার কাজ</h2>
-
-      <div className="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
+    <div className="w-full bg-gray-100 ">
+      <div className="bg-red-500 w-full h-1 mb-1"></div>
+    
+      <div className="container bg-white rounded-lg shadow-lime-50 p-3 mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         {/* Card 1 */}
         <div
           onClick={Spin}
-          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
+          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
-          <img src={spin} alt="Spin & Earn" className="w-20 h-20 object-cover mb-3" />
+          <img src={spin} alt="Spin & Earn"
+           className="w-10 h-10 object-cover mb-3" />
           <p className="text-sm text-center font-medium text-gray-700">
             স্পিন করে টাকা
           </p>
@@ -52,9 +53,10 @@ const Job1 = () => {
         {/* Card 2 */}
         <div
           onClick={mathClick}
-          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
+          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
-          <img src={math} alt="Math & Earn" className="w-20 h-20 object-cover mb-3" />
+          <img src={math} alt="Math & Earn"
+           className="w-10 h-10 object-cover mb-3" />
           <p className="text-sm text-center font-medium text-gray-700">
             অংক করে টাকা
           </p>
@@ -63,9 +65,9 @@ const Job1 = () => {
         {/* Card 3 */}
         <div
           onClick={AdsClick}
-          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform cursor-pointer"
+          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
-          <img src={ads} alt="Watch Ads & Earn" className="w-20 h-20 object-cover mb-3" />
+          <img src={ads} alt="Watch Ads & Earn" className="w-10 h-10 object-cover mb-3" />
           <p className="text-sm text-center font-medium text-gray-700">
             অ্যাড দেখে টাকা
           </p>

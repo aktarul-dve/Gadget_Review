@@ -21,21 +21,21 @@ const Work_regulations = () => {
   const closeModal = () => setIsOpen(false);
   
   return (
-    <div className="w-full bg-gray-100 p-4">
+    <div className="w-full bg-gray-100 p-2">
       <h2 className="text-center text-xl font-bold text-gray-700 mb-3">
         কাজের নিয়মাবলী
       </h2>
 
-      <div className="container mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
+      <div className="container bg-white rounded-2xl shadow-lime-50 p-3 mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         
         {/* Card 1 */}
         <div
          onClick={handleCardClick}
-         className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+         className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform">
           <img
             src={anows}
             alt="Work Rule 1"
-            className="w-20 h-20 object-contain mb-3"
+            className="w-10 h-10 object-contain mb-3"
           />
           <p className="text-gray-700 text-center font-medium">কাজের নিয়ম</p>
         </div>
@@ -43,11 +43,11 @@ const Work_regulations = () => {
         {/* Card 2 */}
         <div
           onClick={handleCardClick}
-         className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+         className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center  items-center hover:scale-105 transition-transform">
           <img
             src={vpn}
             alt="Work Rule 2"
-            className="w-20 h-20 object-contain mb-3"
+            className="w-10 h-10 object-contain mb-3"
           />
           <p className="text-gray-700 text-center font-medium">VPN কানেক্ট করুন</p>
         </div>
@@ -55,11 +55,11 @@ const Work_regulations = () => {
         {/* Card 3 */}
         <div 
           onClick={handleCardClick}
-        className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
+        className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center  items-center hover:scale-105 transition-transform">
           <img
             src={lederbord}
             alt="Work Rule 2"
-            className="w-20 h-20 object-contain mb-3"
+            className="w-10 h-10 object-contain mb-3"
           />
           <p className="text-gray-700 text-center font-medium">লিডার বোর্ড</p>
         </div>

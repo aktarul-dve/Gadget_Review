@@ -18,7 +18,7 @@ const UserLayout = () => {
 
          {/* Footer */}
 
-          {/* <Footer/> */}
+         <Footer/>
          
         </>
     </div>

@@ -15,7 +15,7 @@ const Home = () => {
       <Work_regulations/>
       <Job1/>
       <Job2/>
-      <Contac/>
+      
 
     </div>
   )
