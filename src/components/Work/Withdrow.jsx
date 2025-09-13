@@ -46,7 +46,7 @@ const Withdrow = () => {
       setLoading(true);
       setMessage("");
 
-      // এখানে API কল করতে পারেন
+      // এখানে API কল করতে পারেন 
       await axios.post("https://aktarul.onrender.com/withdraw", {
         method,
         amount: minAmount,
@@ -55,7 +55,7 @@ const Withdrow = () => {
       setMessage("✅ আপনার অনুরোধ গ্রহণ করা হয়েছে!");
     } catch (err) {
       console.error("Withdraw error:", err);
-      setMessage("❌ কিছু সমস্যা হয়েছে।");
+      setMessage("❌ কিছু সমস্যা হয়েছে");
     } finally {
       setLoading(false);
     }
