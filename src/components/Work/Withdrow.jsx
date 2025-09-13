@@ -55,7 +55,7 @@ const Withdrow = () => {
       setMessage("✅ আপনার অনুরোধ গ্রহণ করা হয়েছে!");
     } catch (err) {
       console.error("Withdraw error:", err);
-      setMessage("❌ কিছু সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+      setMessage("❌ কিছু সমস্যা হয়েছে।");
     } finally {
       setLoading(false);
     }
