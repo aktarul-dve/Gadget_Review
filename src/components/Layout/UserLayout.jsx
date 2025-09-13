@@ -12,13 +12,14 @@ const UserLayout = () => {
 
          {/* Maincontent */}
 
-         <main className="pt-10">
+         <main className="pt-10 pb-9">
             <Outlet/>
          </main>
 
          {/* Footer */}
 
-         <Footer/>
+         
+         <Footer />
          
         </>
     </div>

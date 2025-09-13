@@ -37,7 +37,7 @@ const Work_regulations = () => {
             alt="Work Rule 1"
             className="w-10 h-10 object-contain mb-3"
           />
-          <p className="text-gray-700 text-center font-medium">কাজের নিয়ম</p>
+          <p className="text-gray-700 text-sm text-center font-medium">কাজের নিয়ম</p>
         </div>
 
         {/* Card 2 */}
@@ -49,7 +49,7 @@ const Work_regulations = () => {
             alt="Work Rule 2"
             className="w-10 h-10 object-contain mb-3"
           />
-          <p className="text-gray-700 text-center font-medium">VPN কানেক্ট করুন</p>
+          <p className="text-gray-700 text-sm text-center font-medium">VPN কানেক্ট</p>
         </div>
 
         {/* Card 3 */}
@@ -61,7 +61,7 @@ const Work_regulations = () => {
             alt="Work Rule 2"
             className="w-10 h-10 object-contain mb-3"
           />
-          <p className="text-gray-700 text-center font-medium">লিডার বোর্ড</p>
+          <p className="text-gray-700 text-sm text-center font-medium">লিডার বোর্ড</p>
         </div>
       </div>
 
