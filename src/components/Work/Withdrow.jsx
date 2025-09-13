@@ -77,7 +77,7 @@ const Withdrow = () => {
         <h2 className="text-lg font-medium">
           আপনার ব্যালেন্স:{" "}
           <span className="text-indigo-600 font-bold">
-            {user ? user.balance.toFixed(2) : "0.00"} টাকা
+            {user ? (user.balance / 100).toFixed(2) : "0.00"} টাকা
           </span>
         </h2>
 
