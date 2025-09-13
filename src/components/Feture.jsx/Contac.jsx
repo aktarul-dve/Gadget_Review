@@ -3,18 +3,27 @@ import Modal from "react-modal";
 import withdrow from "../../assets/withdro.png";
 import refer from "../../assets/refer.png";
 import telegram from "../../assets/telegram.png";
+import { useNavigate } from "react-router-dom";
 
 
 const Contac = () => {
 
+    const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
     const [dialogText, setDialogText] = useState("");
   
-    const handleCardClick = (type) => {
+    const refer = (type) => {
+      navigate("refer")
+        
+    };
+    const withdrowhandl = (type) => {
       
-        setDialogText("👉 বন্ধু এখনো সব কাজ করা শেষ হয় নাই।");
-     
-      setIsOpen(true);
+        navigate("withdrow")
+    };
+    const telegramhandl = (type) => {
+      
+        navigate("withdrow")
     };
   
     const closeModal = () => setIsOpen(false);
@@ -26,7 +35,7 @@ const Contac = () => {
         
         {/* Card 1 */}
         <div
-         onClick={handleCardClick}
+         onClick={refer}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3  items-center hover:scale-105 transition-transform">
           <img
             src={refer}
@@ -40,7 +49,7 @@ const Contac = () => {
 
         {/* Card 2 */}
         <div
-         onClick={handleCardClick}
+         onClick={withdrowhandl}
         className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center hover:scale-105 transition-transform">
           <img
             src={withdrow}
@@ -54,7 +63,7 @@ const Contac = () => {
 
         {/* Card 3 */}
         <div
-         onClick={handleCardClick}
+         onClick={telegramhandl}
         className="bg-white flex flex-col rounded-2xl shadow-lg p-3 items-center  hover:scale-105 transition-transform">
           <img
             src={telegram}
