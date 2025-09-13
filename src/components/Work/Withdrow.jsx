@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FcHome } from "react-icons/fc";
+import wuthdro from "../../assets/withdro.png"
 import { motion } from "framer-motion";
 
 const Withdrow = () => {
@@ -82,7 +82,7 @@ const Withdrow = () => {
   return (
     <div className="max-w-md mx-auto p-4">
       <div className="flex items-center gap-2 text-xl font-semibold mb-4">
-        <FcHome />
+        <img src={wuthdro} className="w-16 h-16" alt="" />
         <span>Withdraw</span>
       </div>
 
