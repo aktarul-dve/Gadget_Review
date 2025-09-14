@@ -27,16 +27,16 @@ const Hero = () => {
 
 
   return (
-    <section className="w-full h-auto bg-gradient-to-br from-rose-200 to-cyan-50">
-      <div className="container mx-auto px-4 py-12 ">
+    <section className="w-full h-auto bg-gradient-to-br from-rose-200 to-cyan-50 p-3">
+      <div className="container bg-white  rounded-lg shadow-lg mx-auto px-4 py-12 ">
         <div className="flex  justify-between items-center">
 
-          <div>
+          <div >
             <CgProfile className="w-10 h-10" />
-            <p>{user ? user.name : "Loading..."}</p>
-            <p>{user ? user.email : ""}</p>
+            <p className="font-english" >{user ? user.name : "Loading..."}</p>
+            <p className="font-english">{user ? user.email : ""}</p>
             <div>
-              <p className="text-2xl">
+              <p className="font-english text-2xl">
                 Refer Code: {user ? user.referCode : ""}
               </p>
 
@@ -46,7 +46,7 @@ const Hero = () => {
           </div>
 
           <div>
-            <p>আপনার ব্যলেন্স</p>
+            <p className="font-bangla" >আপনার ব্যলেন্স</p>
             <div className="flex space-x-5">
               <p>{user ? (user.balance / 100).toFixed(2) : "0.00"} টাকা</p>
 
