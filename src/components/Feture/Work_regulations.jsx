@@ -22,7 +22,14 @@ const Work_regulations = () => {
   
   return (
     <div className="w-full bg-gray-100 p-2">
-      <h2 className="text-center text-xl font-bold text-gray-700 mb-3">
+      <h2 className="text-center text-xl font-bold text-gray-700 mb-3
+       bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 
+           bg-clip-text text-transparent 
+           drop-shadow-[2px_2px_4px_rgba(0,0,0,0.5)]
+           transition-transform duration-300 
+           hover:scale-110 hover:rotate-3
+           cursor-pointer
+      ">
         কাজের নিয়মাবলী
       </h2>
 
