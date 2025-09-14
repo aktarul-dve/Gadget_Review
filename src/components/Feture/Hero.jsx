@@ -33,10 +33,10 @@ const Hero = () => {
 
           <div >
             <CgProfile className="w-10 h-10" />
-            <p className="font-english" >{user ? user.name : "Loading..."}</p>
-            <p className="font-english">{user ? user.email : ""}</p>
+            <p className="font-semibold"  >{user ? user.name : "Loading..."}</p>
+            <p >{user ? user.email : ""}</p>
             <div>
-              <p className="font-english text-2xl">
+              <p>
                 Refer Code: {user ? user.referCode : ""}
               </p>
 
@@ -46,7 +46,7 @@ const Hero = () => {
           </div>
 
           <div>
-            <p className="font-bangla" >আপনার ব্যলেন্স</p>
+            <p>মোট আয়</p>
             <div className="flex space-x-5">
               <p>{user ? (user.balance / 100).toFixed(2) : "0.00"} টাকা</p>
 

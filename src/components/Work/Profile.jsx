@@ -75,11 +75,6 @@ const Profile = () => {
             <span className="text-blue-600 font-bold">{user ? user.referCode : ""}</span>
           </div>
         </div>
-
-        {/* Action Button */}
-        <button className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium shadow-md transition">
-          Edit Profile
-        </button>
       </div>
     </div>
   );
