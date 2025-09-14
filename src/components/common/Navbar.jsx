@@ -16,6 +16,12 @@ const Navbar = () => {
 
    const [navDrawerOpen, setnavDrawerOpen] = useState(false);
 
+   // 🔹 Logout ফাংশন
+  const handleLogout = () => {
+    localStorage.removeItem("authToken"); // Token remove
+    navigate("/"); // Login page-এ redirect
+  };
+
    const toggleNavDrawer = () =>{
         setnavDrawerOpen(!navDrawerOpen);
     }
@@ -94,7 +100,10 @@ const Navbar = () => {
                   <PiChatText/>
                   <span>লাইভ চ্যাট</span>
                 </Link>
-                 <Link to="#" onClick={toggleNavDrawer} 
+                 <Link to="#"  onClick={() => {
+                   handleLogout();
+                   toggleNavDrawer(); // drawer বন্ধ হবে
+                   }} 
                    className='flex items-center space-x-3 text-gray-600 hover:text-black'>
                   <BiLogOut/>
                   <span>লগ আউট</span>

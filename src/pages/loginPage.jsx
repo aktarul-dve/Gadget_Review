@@ -26,9 +26,25 @@ const LoginPage = () => {
   }, [navigate]);
 
   return (
-    <div className='bg-white h-screen w-screen flex justify-center items-center'> 
+    <div className='bg-white h-screen w-screen flex justify-center items-center'>
       <div className='flex flex-col space-y-5 items-center'>
-        
+
+        <h1 className="flex justify-center items-center text-5xl font-extrabold">
+          Welcome to
+          <span className="
+            ml-3 
+           bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 
+           bg-clip-text text-transparent 
+           drop-shadow-[2px_2px_4px_rgba(0,0,0,0.5)]
+           transition-transform duration-300 
+           hover:scale-110 hover:rotate-3
+           cursor-pointer
+    
+           ">
+            AdCash
+          </span>
+        </h1>
+
         {/* 🔹 Lottie Animation */}
         <div className='flex justify-center items-center'>
           <Player
@@ -42,7 +58,7 @@ const LoginPage = () => {
 
         {/* Google Login Button */}
         <div onClick={login} className='flex bg-white space-x-3 px-4 py-2 rounded-lg shadow-md cursor-pointer items-center'>
-          <FcGoogle size={24}/>
+          <FcGoogle size={24} />
           <p className='font-bold'>Continue With Google</p>
         </div>
       </div>
