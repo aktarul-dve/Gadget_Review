@@ -10,7 +10,7 @@ import SpinWheel from './components/Work/SpinWheel '
 import BanglaQuiz from './components/Work/BanglaQuiz'
 import MathQuiz from './components/Work/MathQuiz'
 import EnglishQuiz from './components/Work/EnglishQuiz'
-import Profile from './components/Feture/Profile'
+import Profile from './components/Work/Profile'
 
 function App() {
   return (
