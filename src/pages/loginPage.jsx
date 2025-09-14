@@ -3,6 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import { Player } from "@lottiefiles/react-lottie-player";
 import loginAnimation from "../assets/animations/login.json";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
