@@ -29,7 +29,7 @@ const LoginPage = () => {
     <div className='bg-white h-screen w-screen flex justify-center items-center'>
       <div className='flex flex-col space-y-5 items-center'>
 
-        <h1 className="flex  justify-center items-center  sm:text-2xl xs:text-2xl font-extrabold">
+        <h1 className="flex  justify-center items-center  sm:text-2xl  font-extrabold">
           Welcome to
           <span className="
             ml-3 
