@@ -18,7 +18,7 @@ const Job1 = () => {
   const handleJob = async (jobType, action) => {
     try {
       const res = await axios.get(`https://aktarul.onrender.com/api/job/${jobType}`);
-
+       console.log("✅ Backend Response:", res.data); // Debugging এর জন্য
       if (res.data.success) {
         action(); // যদি success হয় তবে কাজ চালু হবে
       }
