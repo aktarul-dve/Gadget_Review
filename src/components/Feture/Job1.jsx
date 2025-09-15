@@ -1,50 +1,69 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
+import axios from "axios"; // ✅ axios import
 import math from "../../assets/math.jpg";
 import spin from "../../assets/spin.jpg";
 import ads from "../../assets/ads.jpg";
 
-Modal.setAppElement("#root"); // Modal warning fix
+Modal.setAppElement("#root");
 
 const Job1 = () => {
   const navigate = useNavigate();
-  
+
   const [isOpen, setIsOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
 
+  // ✅ Backend Call Function
+  const handleJob = async (jobType, action) => {
+    try {
+      const res = await axios.get(`http://localhost:4001/api/job/${jobType}`);
+
+      if (res.data.success) {
+        action(); // যদি success হয় তবে কাজ চালু হবে
+      }
+    } catch (err) {
+      // Backend থেকে error এলে modal এ দেখাবে
+      setDialogText(err.response?.data?.message || "কিছু সমস্যা হয়েছে");
+      setIsOpen(true);
+    }
+  };
+
   const mathClick = () => {
-       setDialogText("👉 নিয়ম মেনে কাজ করুন তাহলে পেমেন্ট পাবেন। আর যদি নিয়ম মেনে কাজ না করেন তাহলে আপনার একাউন্ট ব্লক করা হবে");
-       setIsOpen(true);
+    handleJob("math", () => {
+      setDialogText(
+        "👉 নিয়ম মেনে কাজ করুন তাহলে পেমেন্ট পাবেন। আর যদি নিয়ম মেনে কাজ না করেন তাহলে আপনার একাউন্ট ব্লক করা হবে"
+      );
+      setIsOpen(true);
+    });
   };
 
-    const Spin = () => {
-      navigate("SpinWheel")
-    
-     
+  const Spin = () => {
+    handleJob("spin", () => navigate("SpinWheel"));
   };
 
-  const AdsClick =() => {
-    navigate("ads")
-  }
+  const AdsClick = () => {
+    handleJob("ads", () => navigate("ads"));
+  };
 
-  const closeModal = () =>{
+  const closeModal = () => {
     setIsOpen(false);
-    navigate("math")
-  } 
+    if (dialogText.includes("নিয়ম মেনে কাজ")) {
+      navigate("math");
+    }
+  };
 
   return (
     <div className="w-full bg-gray-100 ">
       <div className="bg-red-500 w-full h-1 mb-1"></div>
-    
+
       <div className="container bg-white rounded-lg shadow-lime-50 p-3 mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         {/* Card 1 */}
         <div
           onClick={Spin}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
-          <img src={spin} alt="Spin & Earn"
-           className="w-10 h-10 object-cover mb-3" />
+          <img src={spin} alt="Spin & Earn" className="w-10 h-10 object-cover mb-3" />
           <p className="text-sm text-center font-medium text-gray-700">
             স্পিন করে টাকা
           </p>
@@ -55,8 +74,7 @@ const Job1 = () => {
           onClick={mathClick}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
-          <img src={math} alt="Math & Earn"
-           className="w-10 h-10 object-cover mb-3" />
+          <img src={math} alt="Math & Earn" className="w-10 h-10 object-cover mb-3" />
           <p className="text-sm text-center font-medium text-gray-700">
             অংক করে টাকা
           </p>
@@ -92,7 +110,6 @@ const Job1 = () => {
           },
         }}
       >
-       
         <p className="text-gray-700 mb-5">{dialogText}</p>
         <button
           onClick={closeModal}
