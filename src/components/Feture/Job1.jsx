@@ -17,7 +17,7 @@ const Job1 = () => {
   // ✅ Backend Call Function
   const handleJob = async (jobType, action) => {
     try {
-      const res = await axios.get(`http://localhost:4001/api/job/${jobType}`);
+      const res = await axios.get(`https://aktarul.onrender.com/api/job/${jobType}`);
 
       if (res.data.success) {
         action(); // যদি success হয় তবে কাজ চালু হবে
