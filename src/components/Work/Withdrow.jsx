@@ -33,6 +33,13 @@ const Withdrow = () => {
   }, []);
 
   const handleWithdraw = async () => {
+
+    const token = localStorage.getItem("authToken"); // এখানে token নিতে হবে
+
+    if (!token) {
+      setMessage("⚠️ আপনার লগইন নেই");
+      return;
+    }
     if (!user) return;
     if (!method) {
       setMessage("⚠️ প্রথমে পদ্ধতি নির্বাচন করুন");
