@@ -33,62 +33,62 @@ const Withdrow = () => {
   }, []);
 
   const handleWithdraw = async () => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    setMessage("⚠️ আপনার লগইন নেই");
+    return;
+  }
+  if (!user) return;
+  if (!method) {
+    setMessage("⚠️ প্রথমে পদ্ধতি নির্বাচন করুন");
+    return;
+  }
+  if (!phone) {
+    setMessage("⚠️ নাম্বার দিন");
+    return;
+  }
+  if (!amount || isNaN(amount)) {
+    setMessage("⚠️ সঠিক পরিমাণ লিখুন");
+    return;
+  }
 
-    const token = localStorage.getItem("authToken"); // এখানে token নিতে হবে
+  let minAmount = method === "mobile" ? MIN_MOBILE : MIN_BKASH;
+  if (amount < minAmount) {
+    setMessage(`${method === "mobile" ? "Mobile recharge" : "Bkash"} এর জন্য ন্যূনতম ${minAmount} টাকা দরকার`);
+    return;
+  }
 
-    if (!token) {
-      setMessage("⚠️ আপনার লগইন নেই");
-      return;
-    }
-    if (!user) return;
-    if (!method) {
-      setMessage("⚠️ প্রথমে পদ্ধতি নির্বাচন করুন");
-      return;
-    }
-    if (!phone) {
-      setMessage("⚠️ নাম্বার দিন");
-      return;
-    }
-    if (!amount || isNaN(amount)) {
-      setMessage("⚠️ সঠিক পরিমাণ লিখুন");
-      return;
-    }
+  if (Number(amount) * 100 > user.balance) {
+    setMessage("⚠️ আপনার ব্যালেন্সের চেয়ে বেশি টাকা তোলা যাবে না");
+    return;
+  }
 
-    let minAmount = method === "mobile" ? MIN_MOBILE : MIN_BKASH;
-    if (amount < minAmount) {
-      setMessage(
-        `${method === "mobile" ? "Mobile recharge" : "Bkash"} এর জন্য ন্যূনতম ${minAmount} টাকা দরকার`
-      );
-      return;
-    }
+  try {
+    setLoading(true);
+    setMessage("");
 
-    if (amount > user.balance) {
-      setMessage("⚠️ আপনার ব্যালেন্সের চেয়ে বেশি টাকা তোলা যাবে না");
-      return;
-    }
+    await axios.post(
+      "https://aktarul.onrender.com/withdraw",
+      { method, phone, amount: Number(amount) }, // ব্যাকএন্ডে multiply 100
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
-    try {
-      setLoading(true);
-      setMessage("");
+    // Balance update ফ্রন্টএন্ডে
+    setUser(prev => ({ ...prev, balance: prev.balance - Number(amount) * 100 }));
 
-      await axios.post(
-        "https://aktarul.onrender.com/withdraw",
-        { method, phone, amount },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setMessage("✅ আপনার অনুরোধ গ্রহণ করা হয়েছে!");
-    } catch (err) {
-      console.error("Withdraw error:", err);
-      setMessage("❌ কিছু সমস্যা হয়েছে");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setMessage("✅ আপনার অনুরোধ গ্রহণ করা হয়েছে!");
+    setAmount("");
+    setPhone("");
+    setMethod("");
+  } catch (err) {
+    console.error("Withdraw error:", err);
+    setMessage("❌ কিছু সমস্যা হয়েছে");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="max-w-md mx-auto p-4">
