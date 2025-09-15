@@ -64,11 +64,15 @@ const Withdrow = () => {
       setLoading(true);
       setMessage("");
 
-      await axios.post("https://aktarul.onrender.com/withdraw", {
-        method,
-        phone,
-        amount,
-      });
+      await axios.post(
+        "https://aktarul.onrender.com/withdraw",
+        { method, phone, amount },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setMessage("✅ আপনার অনুরোধ গ্রহণ করা হয়েছে!");
     } catch (err) {
@@ -106,18 +110,16 @@ const Withdrow = () => {
         <div className="mt-5 grid gap-3">
           <button
             onClick={() => setMethod("mobile")}
-            className={`p-3 rounded-xl w-full text-left ${
-              method === "mobile" ? "bg-green-200" : "bg-green-100 hover:bg-green-200"
-            }`}
+            className={`p-3 rounded-xl w-full text-left ${method === "mobile" ? "bg-green-200" : "bg-green-100 hover:bg-green-200"
+              }`}
           >
             📱 মোবাইল রিচার্জ (ন্যূনতম {MIN_MOBILE} টাকা)
           </button>
 
           <button
             onClick={() => setMethod("bkash")}
-            className={`p-3 rounded-xl w-full text-left ${
-              method === "bkash" ? "bg-pink-200" : "bg-pink-100 hover:bg-pink-200"
-            }`}
+            className={`p-3 rounded-xl w-full text-left ${method === "bkash" ? "bg-pink-200" : "bg-pink-100 hover:bg-pink-200"
+              }`}
           >
             💸 বিকাশ ট্রান্সফার (ন্যূনতম {MIN_BKASH} টাকা)
           </button>
