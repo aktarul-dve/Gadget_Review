@@ -11,10 +11,10 @@ const Job1 = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
-  const [isUSA, setIsUSA] = useState(false); // ✅ VPN চেক (USA হলে true)
+  const [isUSA, setIsUSA] = useState(false); 
   const [loading, setLoading] = useState(true);
 
-  // ✅ Country Check (Frontend থেকে ipapi.co ব্যবহার)
+  // ✅ Country Check
   useEffect(() => {
     const checkCountry = async () => {
       try {
@@ -25,8 +25,6 @@ const Job1 = () => {
           setIsUSA(true);
         } else {
           setIsUSA(false);
-          setDialogText("❌ আগে VPN কানেক্ট করুন (USA server).");
-          setIsOpen(true);
         }
       } catch (err) {
         console.error("Country check error:", err);
@@ -40,7 +38,7 @@ const Job1 = () => {
 
   const closeModal = () => setIsOpen(false);
 
-  // ✅ কাজ করার আগে চেক
+  // ✅ VPN চেক
   const requireVPN = (action) => {
     if (!isUSA) {
       setDialogText("❌ আগে VPN কানেক্ট করুন (USA server).");
@@ -66,9 +64,7 @@ const Job1 = () => {
         {/* Spin */}
         <div
           onClick={() => requireVPN(() => navigate("SpinWheel"))}
-          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer ${
-            !isUSA ? "opacity-50 pointer-events-none" : "hover:scale-105"
-          }`}
+          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={spin} alt="Spin & Earn" className="w-10 h-10 object-cover mb-3" />
           <p className="text-sm text-center font-medium text-gray-700">স্পিন করে টাকা</p>
@@ -82,9 +78,7 @@ const Job1 = () => {
               setIsOpen(true);
             })
           }
-          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer ${
-            !isUSA ? "opacity-50 pointer-events-none" : "hover:scale-105"
-          }`}
+          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={math} alt="Math & Earn" className="w-10 h-10 object-cover mb-3" />
           <p className="text-sm text-center font-medium text-gray-700">অংক করে টাকা</p>
@@ -93,9 +87,7 @@ const Job1 = () => {
         {/* Ads */}
         <div
           onClick={() => requireVPN(() => navigate("ads"))}
-          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer ${
-            !isUSA ? "opacity-50 pointer-events-none" : "hover:scale-105"
-          }`}
+          className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={ads} alt="Watch Ads & Earn" className="w-10 h-10 object-cover mb-3" />
           <p className="text-sm text-center font-medium text-gray-700">অ্যাড দেখে টাকা</p>
