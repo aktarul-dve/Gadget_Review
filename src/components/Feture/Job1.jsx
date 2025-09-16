@@ -11,7 +11,7 @@ const Job1 = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
-  const [isUSA, setIsUSA] = useState(false); 
+  const [isUSA, setIsUSA] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // ✅ Country Check
@@ -72,12 +72,7 @@ const Job1 = () => {
 
         {/* Math */}
         <div
-          onClick={() =>
-            requireVPN(() => {
-              setDialogText("👉 নিয়ম মেনে কাজ করুন তাহলে পেমেন্ট পাবেন।");
-              setIsOpen(true);
-            })
-          }
+          onClick={() => requireVPN(() => navigate("math"))}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={math} alt="Math & Earn" className="w-10 h-10 object-cover mb-3" />
