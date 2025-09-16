@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import axios from "axios";
 import math from "../../assets/math.jpg";
 import spin from "../../assets/spin.jpg";
 import ads from "../../assets/ads.jpg";
@@ -12,75 +11,63 @@ const Job1 = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [dialogText, setDialogText] = useState("");
-  const [isUSA, setIsUSA] = useState(false); // USA IP check
+  const [isUSA, setIsUSA] = useState(false); // ✅ VPN চেক (USA হলে true)
+  const [loading, setLoading] = useState(true);
 
-  // Frontend Country Check
+  // ✅ Country Check (Frontend থেকে ipapi.co ব্যবহার)
   useEffect(() => {
     const checkCountry = async () => {
       try {
         const res = await fetch("https://ipapi.co/json/");
         const data = await res.json();
+
         if (data.country_name === "United States") {
           setIsUSA(true);
         } else {
           setIsUSA(false);
+          setDialogText("❌ আগে VPN কানেক্ট করুন (USA server).");
+          setIsOpen(true);
         }
       } catch (err) {
-        console.error(err);
+        console.error("Country check error:", err);
+      } finally {
+        setLoading(false);
       }
     };
+
     checkCountry();
   }, []);
 
-  // Backend Call
-  const handleJob = async (jobType, action) => {
+  const closeModal = () => setIsOpen(false);
+
+  // ✅ কাজ করার আগে চেক
+  const requireVPN = (action) => {
     if (!isUSA) {
-      setDialogText("❌ VPN দিয়ে USA IP ব্যবহার করুন।");
+      setDialogText("❌ আগে VPN কানেক্ট করুন (USA server).");
       setIsOpen(true);
       return;
     }
-
-    try {
-      const res = await axios.get(`https://aktarul.onrender.com/api/job/${jobType}`);
-      console.log("✅ Backend Response:", res.data);
-
-      if (res.data.success) {
-        action();
-      }
-    } catch (err) {
-      setDialogText(err.response?.data?.message || "কিছু সমস্যা হয়েছে");
-      setIsOpen(true);
-    }
+    action();
   };
 
-  const mathClick = () =>
-    handleJob("math", () => {
-      setDialogText(
-        "👉 নিয়ম মেনে কাজ করুন তাহলে পেমেন্ট পাবেন। আর যদি নিয়ম মেনে কাজ না করেন তাহলে আপনার একাউন্ট ব্লক করা হবে"
-      );
-      setIsOpen(true);
-    });
-
-  const Spin = () => handleJob("spin", () => navigate("SpinWheel"));
-  const AdsClick = () => handleJob("ads", () => navigate("ads"));
-
-  const closeModal = () => {
-    setIsOpen(false);
-    if (dialogText.includes("নিয়ম মেনে কাজ")) {
-      navigate("math");
-    }
-  };
+  if (loading) {
+    return (
+      <div className="w-full flex justify-center items-center h-screen">
+        <p className="text-gray-600">🌍 Country যাচাই করা হচ্ছে...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full bg-gray-100 ">
+    <div className="w-full bg-gray-100">
       <div className="bg-red-500 w-full h-1 mb-1"></div>
 
-      <div className="container bg-white rounded-lg shadow-lime-50 p-3 mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
+      <div className="container bg-white rounded-lg shadow p-3 mx-auto grid grid-cols-3 gap-2">
         {/* Spin */}
         <div
-          onClick={Spin}
-          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer ${
-            !isUSA ? "opacity-50 pointer-events-none" : ""
+          onClick={() => requireVPN(() => navigate("SpinWheel"))}
+          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer ${
+            !isUSA ? "opacity-50 pointer-events-none" : "hover:scale-105"
           }`}
         >
           <img src={spin} alt="Spin & Earn" className="w-10 h-10 object-cover mb-3" />
@@ -89,9 +76,14 @@ const Job1 = () => {
 
         {/* Math */}
         <div
-          onClick={mathClick}
-          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer ${
-            !isUSA ? "opacity-50 pointer-events-none" : ""
+          onClick={() =>
+            requireVPN(() => {
+              setDialogText("👉 নিয়ম মেনে কাজ করুন তাহলে পেমেন্ট পাবেন।");
+              setIsOpen(true);
+            })
+          }
+          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer ${
+            !isUSA ? "opacity-50 pointer-events-none" : "hover:scale-105"
           }`}
         >
           <img src={math} alt="Math & Earn" className="w-10 h-10 object-cover mb-3" />
@@ -100,9 +92,9 @@ const Job1 = () => {
 
         {/* Ads */}
         <div
-          onClick={AdsClick}
-          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer ${
-            !isUSA ? "opacity-50 pointer-events-none" : ""
+          onClick={() => requireVPN(() => navigate("ads"))}
+          className={`bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer ${
+            !isUSA ? "opacity-50 pointer-events-none" : "hover:scale-105"
           }`}
         >
           <img src={ads} alt="Watch Ads & Earn" className="w-10 h-10 object-cover mb-3" />
@@ -116,8 +108,8 @@ const Job1 = () => {
         onRequestClose={closeModal}
         style={{
           content: {
-            width: "250px",
-            height: "350px",
+            width: "280px",
+            height: "200px",
             margin: "auto",
             borderRadius: "15px",
             padding: "20px",
