@@ -6,7 +6,7 @@ const Watch_Ads = () => {
 
   const token = localStorage.getItem("authToken");
 
-  const [watchAds, setWatchAds] = useState({});
+  const [watchAds, setWatchAds] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answeredCount, setAnsweredCount] = useState(0);  // কোন প্রশ্ন চলছে
@@ -79,7 +79,7 @@ const Watch_Ads = () => {
     }
 
     setAnsweredCount(answeredCount + 1);
-    if (currentIndex < questions.length - 1) {
+    if (currentIndex < watchAds.length - 1) {
       setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
     } else {
       alert("🎉 সব প্রশ্ন শেষ!");
