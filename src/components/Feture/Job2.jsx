@@ -4,38 +4,61 @@ import quiz from "../../assets/quiz.jpg";
 import { useNavigate } from "react-router-dom";
 import bangla from "../../assets/bangla.png";
 import en from "../../assets/english.jpg";
+import { useEffect } from "react";
 
 Modal.setAppElement("#root"); // Modal warning fix
 
 const Job2 = () => {
 
   const navigate = useNavigate();
+   const [isOpen, setIsOpen] = useState(false);
+   const [dialogText, setDialogText] = useState("");
+   const [isUSA, setIsUSA] = useState(false);
+   const [loading, setLoading] = useState(true);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [dialogText, setDialogText] = useState("");
 
-  const handleCardClick = (type) => {
+   // ✅ Country Check
+     useEffect(() => {
+       const checkCountry = async () => {
+         try {
+           const res = await fetch("https://ipapi.co/json/");
+           const data = await res.json();
    
-      setDialogText("👉 বন্ধু এখনো সব কাজ করা শেষ হয় নাই।");
+           if (data.country_name === "United States") {
+             setIsUSA(true);
+           } else {
+             setIsUSA(false);
+           }
+         } catch (err) {
+           console.error("Country check error:", err);
+         } finally {
+           setLoading(false);
+         }
+       };
    
-    setIsOpen(true);
+       checkCountry();
+     }, []);
+
+     const closeModal = () => setIsOpen(false);
+
+  // ✅ VPN চেক
+  const requireVPN = (action) => {
+    if (!isUSA) {
+      setDialogText("❌ আগে VPN কানেক্ট করুন (USA server).");
+      setIsOpen(true);
+      return;
+    }
+    action();
   };
 
-  const banglaQuiz =() =>{
-    navigate("banglaQuiz")
-
-  }
-  const mathQuiz =() =>{
-    navigate("mathQuiz")
-
-  }
-
-  const englishQuiz =() =>{
-    navigate("englishQuiz")
-
+  if (loading) {
+    return (
+      <div className="w-full flex justify-center items-center h-screen">
+       
+      </div>
+    );
   }
 
-  const closeModal = () => setIsOpen(false);
 
   return (
     <div className="w-full bg-gray-100 ">
@@ -44,7 +67,7 @@ const Job2 = () => {
       <div className="container bg-white rounded-lg shadow-lime-50 p-3 mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         {/* Card 1 */}
         <div
-           onClick={banglaQuiz}
+          onClick={() => requireVPN(() => navigate("banglaQuiz"))}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={bangla} alt="বাংলা কুইজ"
@@ -54,7 +77,7 @@ const Job2 = () => {
 
         {/* Card 2 */}
         <div
-           onClick={mathQuiz}
+          onClick={() => requireVPN(() => navigate("mathQuiz"))}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={quiz} alt="অংক কুইজ"
@@ -64,7 +87,7 @@ const Job2 = () => {
 
         {/* Card 3 */}
         <div
-          onClick={englishQuiz}
+          onClick={() => requireVPN(() => navigate("englishQuiz"))}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={en} alt="ইংলিশ কুইজ"
