@@ -65,7 +65,10 @@ const Math = () => {
       // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
       if (currentIndex === questions.length - 1) {
         setShowModal(true);
-        setUserAnswer("");
+       
+      }
+
+       setUserAnswer("");
         setAnsweredCount(answeredCount + 1);
 
         if (currentIndex < questions.length - 1) {
@@ -73,7 +76,6 @@ const Math = () => {
         } else {
           alert("🎉 সব প্রশ্ন শেষ!");
         }
-      }
 
     }, 30000);
   };
