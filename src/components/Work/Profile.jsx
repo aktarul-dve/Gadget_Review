@@ -77,22 +77,22 @@ const Profile = () => {
           withdraws.map((w) => (
             <div
               key={w._id}
-              className="bg-white shadow-md rounded-xl p-4 flex  sm:flex-row justify-between sm:items-center gap-4"
+              className="bg-white shadow-md rounded-xl p-4 flex flex-row flex-wrap justify-between items-center gap-2 text-xs sm:text-sm"
             >
-              <div className="w-full sm:w-auto">
-                <span className="block text-sm text-gray-500">Method</span>
+              <div className="flex flex-col">
+                <span className="text-gray-500">Method</span>
                 <span className="font-medium">{w.method}</span>
               </div>
-              <div className="w-full sm:w-auto">
-                <span className="block text-sm text-gray-500">Phone</span>
+              <div className="flex flex-col">
+                <span className="text-gray-500">Phone</span>
                 <span className="font-medium">{w.phone}</span>
               </div>
-              <div className="w-full sm:w-auto">
-                <span className="block text-sm text-gray-500">Amount</span>
+              <div className="flex flex-col">
+                <span className="text-gray-500">Amount</span>
                 <span className="font-medium">{(w.amount / 100).toFixed(2)} টাকা</span>
               </div>
-              <div className="w-full sm:w-auto">
-                <span className="block text-sm text-gray-500">Status</span>
+              <div className="flex flex-col">
+                <span className="text-gray-500">Status</span>
                 <span
                   className={`font-medium ${
                     w.status === "approved"
@@ -105,8 +105,8 @@ const Profile = () => {
                   {w.status}
                 </span>
               </div>
-              <div className="w-full sm:w-auto">
-                <span className="block text-sm text-gray-500">Date</span>
+              <div className="flex flex-col">
+                <span className="text-gray-500">Date</span>
                 <span className="font-medium">
                   {new Date(w.createdAt).toLocaleString()}
                 </span>
