@@ -45,56 +45,57 @@ const Math = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
- // Submit করলে
-const handleClick = () => {
-  if (userAnswer.trim() === "") {
-    alert("দয়া করে উত্তর দিন!");
-    return;
-  }
-
-  setCountdown(30);
-
-  setTimeout(() => {
-    const correctAnswer = questions[currentIndex]?.answer;
-    if (userAnswer.trim() === correctAnswer) {
-      setReward(questions[currentIndex]?.reward || 0.2);
-    } else {
-      setReward(0);
+  // Submit করলে
+  const handleClick = () => {
+    if (userAnswer.trim() === "") {
+      alert("দয়া করে উত্তর দিন!");
+      return;
     }
 
-    // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
-    if (currentIndex === questions.length - 1) {
-      setShowModal(true);
+    setCountdown(30);
+
+    setTimeout(() => {
+      const correctAnswer = questions[currentIndex]?.answer;
+      if (userAnswer.trim() === correctAnswer) {
+        setReward(questions[currentIndex]?.reward || 0.2);
+      } else {
+        setReward(0);
+      }
+
+      // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
+      if (currentIndex === questions.length - 1) {
+        setShowModal(true);
+        setUserAnswer("");
+        setAnsweredCount(answeredCount + 1);
+
+        if (currentIndex < questions.length - 1) {
+          setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+        } else {
+          alert("🎉 সব প্রশ্ন শেষ!");
+        }
+      }
+
+    }, 30000);
+  };
+
+  const updateBalance = () => {
+    setShowModal(false);
+    if (reward > 0) {
+      axios.put(
+        "https://aktarul.onrender.com/reward/balance",
+        { amount: parseFloat(reward) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+        .then((res) => {
+          alert(`✅ New Balance: ৳${res.data.balance}`);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
 
-  }, 30000);
-};
 
-const updateBalance = () => {
-  setShowModal(false);
-  if (reward > 0) {
-    axios.put(
-      "https://aktarul.onrender.com/reward/balance",
-      { amount: parseFloat(reward) },
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
-    .then((res) => {
-      alert(`✅ New Balance: ৳${res.data.balance}`);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  }
-
-  setUserAnswer("");
-  setAnsweredCount(answeredCount + 1);
-
-  if (currentIndex < questions.length - 1) {
-    setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
-  } else {
-    alert("🎉 সব প্রশ্ন শেষ!");
-  }
-};
+  };
 
 
 
