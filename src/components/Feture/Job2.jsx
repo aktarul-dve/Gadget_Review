@@ -114,7 +114,7 @@ const Job2 = () => {
           },
         }}
       >
-        <h3 className="text-lg font-bold mb-3">বিস্তারিত</h3>
+       
         <p className="text-gray-700 mb-5">{dialogText}</p>
         <button
           onClick={closeModal}
