@@ -16,48 +16,27 @@ const Job2 = () => {
    const [isUSA, setIsUSA] = useState(false);
    const [loading, setLoading] = useState(true);
 
+   const banglaQuizhandel =()=>{
+    navigate("banglaQuiz")
 
-   // ✅ Country Check
-     useEffect(() => {
-       const checkCountry = async () => {
-         try {
-           const res = await fetch("https://ipapi.co/json/");
-           const data = await res.json();
+   }
+
+   const mathQuizhandel =()=>{
+    navigate("mathQuiz")
+    
+   }
+
+   const englishQuizhandel =()=>{
+    navigate("englishQuiz")
+    
+   }
+
+
    
-           if (data.country_name === "United States") {
-             setIsUSA(true);
-           } else {
-             setIsUSA(false);
-           }
-         } catch (err) {
-           console.error("Country check error:", err);
-         } finally {
-           setLoading(false);
-         }
-       };
-   
-       checkCountry();
-     }, []);
 
      const closeModal = () => setIsOpen(false);
 
-  // ✅ VPN চেক
-  const requireVPN = (action) => {
-    if (!isUSA) {
-      setDialogText("❌ আগে VPN কানেক্ট করুন (USA server সিলেক্ট করুন).");
-      setIsOpen(true);
-      return;
-    }
-    action();
-  };
-
-  if (loading) {
-    return (
-      <div className="w-full flex justify-center items-center h-screen">
-       
-      </div>
-    );
-  }
+  
 
 
   return (
@@ -67,7 +46,7 @@ const Job2 = () => {
       <div className="container bg-white rounded-lg shadow-lime-50 p-3 mx-auto grid grid-cols-3 md:grid-cols-3 gap-2">
         {/* Card 1 */}
         <div
-          onClick={() => requireVPN(() => navigate("banglaQuiz"))}
+          onClick={banglaQuizhandel}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={bangla} alt="বাংলা কুইজ"
@@ -77,7 +56,7 @@ const Job2 = () => {
 
         {/* Card 2 */}
         <div
-          onClick={() => requireVPN(() => navigate("mathQuiz"))}
+          onClick={mathQuizhandel}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={quiz} alt="অংক কুইজ"
@@ -87,7 +66,7 @@ const Job2 = () => {
 
         {/* Card 3 */}
         <div
-          onClick={() => requireVPN(() => navigate("englishQuiz"))}
+          onClick={englishQuizhandel}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center hover:scale-105 transition-transform cursor-pointer"
         >
           <img src={en} alt="ইংলিশ কুইজ"

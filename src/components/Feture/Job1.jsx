@@ -14,47 +14,25 @@ const Job1 = () => {
   const [isUSA, setIsUSA] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Country Check
-  useEffect(() => {
-    const checkCountry = async () => {
-      try {
-        const res = await fetch("https://ipapi.co/json/");
-        const data = await res.json();
 
-        if (data.country_name === "United States") {
-          setIsUSA(true);
-        } else {
-          setIsUSA(false);
-        }
-      } catch (err) {
-        console.error("Country check error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const spinhendel = () => {
+    navigate("SpinWheel")
+  }
 
-    checkCountry();
-  }, []);
+  const mathhandel = () => {
+    navigate("math")
+  }
+
+  const watchadhandel = () => {
+    navigate("ads")
+  }
+  
 
   const closeModal = () => setIsOpen(false);
 
-  // ✅ VPN চেক
-  const requireVPN = (action) => {
-    if (!isUSA) {
-      setDialogText("❌ আগে VPN কানেক্ট করুন (USA server সিলেক্ট করুন).");
-      setIsOpen(true);
-      return;
-    }
-    action();
-  };
+  
 
-  if (loading) {
-    return (
-      <div className="w-full flex justify-center items-center h-screen">
-        <p className="text-gray-600">🌍 Country যাচাই করা হচ্ছে...</p>
-      </div>
-    );
-  }
+  
 
   return (
     <div className="w-full bg-gray-100">
@@ -63,7 +41,7 @@ const Job1 = () => {
       <div className="container bg-white rounded-lg shadow p-3 mx-auto grid grid-cols-3 gap-2">
         {/* Spin */}
         <div
-          onClick={() => requireVPN(() => navigate("SpinWheel"))}
+          onClick={spinhendel}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={spin} alt="Spin & Earn" className="w-10 h-10 object-cover mb-3" />
@@ -72,7 +50,7 @@ const Job1 = () => {
 
         {/* Math */}
         <div
-          onClick={() => requireVPN(() => navigate("math"))}
+          onClick={mathhandel}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={math} alt="Math & Earn" className="w-10 h-10 object-cover mb-3" />
@@ -81,7 +59,7 @@ const Job1 = () => {
 
         {/* Ads */}
         <div
-          onClick={() => requireVPN(() => navigate("ads"))}
+          onClick={watchadhandel}
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={ads} alt="Watch Ads & Earn" className="w-10 h-10 object-cover mb-3" />
