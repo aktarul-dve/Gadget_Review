@@ -54,9 +54,6 @@ const Math = () => {
 
     setCountdown(30);
 
-     // Monetag link নতুন tab-এ খোলা
-    window.open("https://otieu.com/4/9887860", "_blank");
-
     setTimeout(() => {
       const correctAnswer = questions[currentIndex]?.answer;
       if (userAnswer.trim() === correctAnswer) {
@@ -64,7 +61,7 @@ const Math = () => {
       } else {
         setReward(0);
       }
-      setShowModal(true);
+      
     }, 30000);
   };
 
@@ -93,6 +90,7 @@ const Math = () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
     } else {
+      setShowModal(true);
       alert("🎉 সব প্রশ্ন শেষ!");
     }
 
