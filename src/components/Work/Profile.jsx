@@ -73,35 +73,47 @@ const Profile = () => {
 
       {/* Withdraw History */}
       <div className="w-full max-w-3xl space-y-4">
-        {withdraws.length > 0 ? withdraws.map((w) => (
-          <div
-            key={w._id}
-            className="bg-white shadow-md rounded-xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
-          >
-            <div>
-              <span className="block text-sm text-gray-500">Method</span>
-              <span className="font-medium">{w.method}</span>
+        {withdraws.length > 0 ? (
+          withdraws.map((w) => (
+            <div
+              key={w._id}
+              className="bg-white shadow-md rounded-xl p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4"
+            >
+              <div className="w-full sm:w-auto">
+                <span className="block text-sm text-gray-500">Method</span>
+                <span className="font-medium">{w.method}</span>
+              </div>
+              <div className="w-full sm:w-auto">
+                <span className="block text-sm text-gray-500">Phone</span>
+                <span className="font-medium">{w.phone}</span>
+              </div>
+              <div className="w-full sm:w-auto">
+                <span className="block text-sm text-gray-500">Amount</span>
+                <span className="font-medium">{(w.amount / 100).toFixed(2)} টাকা</span>
+              </div>
+              <div className="w-full sm:w-auto">
+                <span className="block text-sm text-gray-500">Status</span>
+                <span
+                  className={`font-medium ${
+                    w.status === "approved"
+                      ? "text-green-600"
+                      : w.status === "rejected"
+                      ? "text-red-600"
+                      : "text-yellow-500"
+                  }`}
+                >
+                  {w.status}
+                </span>
+              </div>
+              <div className="w-full sm:w-auto">
+                <span className="block text-sm text-gray-500">Date</span>
+                <span className="font-medium">
+                  {new Date(w.createdAt).toLocaleString()}
+                </span>
+              </div>
             </div>
-            <div>
-              <span className="block text-sm text-gray-500">Phone</span>
-              <span className="font-medium">{w.phone}</span>
-            </div>
-            <div>
-              <span className="block text-sm text-gray-500">Amount</span>
-              <span className="font-medium">{(w.amount / 100).toFixed(2)} টাকা</span>
-            </div>
-            <div>
-              <span className="block text-sm text-gray-500">Status</span>
-              <span className={`font-medium ${w.status === "approved" ? "text-green-600" : w.status === "rejected" ? "text-red-600" : "text-yellow-500"}`}>
-                {w.status}
-              </span>
-            </div>
-            <div>
-              <span className="block text-sm text-gray-500">Date</span>
-              <span className="font-medium">{new Date(w.createdAt).toLocaleString()}</span>
-            </div>
-          </div>
-        )) : (
+          ))
+        ) : (
           <p className="text-center text-gray-500">No withdraw history available.</p>
         )}
       </div>
