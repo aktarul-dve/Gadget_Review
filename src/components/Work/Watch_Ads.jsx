@@ -47,11 +47,6 @@ const Watch_Ads = () => {
 
   // Submit করলে
   const handleClick = () => {
-    if (userAnswer.trim() === "") {
-      alert("দয়া করে উত্তর দিন!");
-      return;
-    }
-
     setCountdown(30);
 
     setTimeout(() => {
