@@ -65,8 +65,6 @@ const handleClick = () => {
     // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
     if (currentIndex === questions.length - 1) {
       setShowModal(true);
-    } else {
-      updateBalance(); // নাহলে সরাসরি পরের প্রশ্নে চলে যাবে
     }
 
   }, 30000);
