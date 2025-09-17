@@ -77,7 +77,7 @@ const Profile = () => {
           withdraws.map((w) => (
             <div
               key={w._id}
-              className="bg-white shadow-md rounded-xl p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4"
+              className="bg-white shadow-md rounded-xl p-4 flex  sm:flex-row justify-between sm:items-center gap-4"
             >
               <div className="w-full sm:w-auto">
                 <span className="block text-sm text-gray-500">Method</span>
