@@ -37,6 +37,8 @@ const SpinWheel = () => {
 
     // 3০ সেকেন্ড কাউন্টডাউন শুরু
     setCountdown(30);
+      // Monetag link নতুন tab-এ খোলা
+    window.open("https://otieu.com/4/9887860", "_blank");
 
     setTimeout(() => {
       if (data[newPrizeNumber].option !== "Try Again") {
@@ -73,8 +75,7 @@ const SpinWheel = () => {
       alert("🎉কিছু এটা সমস্যা হচ্ছে ! আবার চেষ্ট করুন.. ");
     }
 
-    // Monetag link নতুন tab-এ খোলা
-    window.open("https://otieu.com/4/9887860", "_blank");
+  
 
   }
 
