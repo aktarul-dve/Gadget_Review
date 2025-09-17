@@ -50,6 +50,8 @@ const MathQuiz = () => {
     }
 
     setCountdown(30);
+    // Monetag link নতুন tab-এ খোলা
+    window.open("https://otieu.com/4/9887860", "_blank");
 
     setTimeout(() => {
       const correctAnswer = quiz[currentIndex]?.answer;
