@@ -41,7 +41,7 @@ const Job1 = () => {
   // ✅ VPN চেক
   const requireVPN = (action) => {
     if (!isUSA) {
-      setDialogText("❌ আগে VPN কানেক্ট করুন (USA server).");
+      setDialogText("❌ আগে VPN কানেক্ট করুন (USA server সিলেক্ট করুন).");
       setIsOpen(true);
       return;
     }
