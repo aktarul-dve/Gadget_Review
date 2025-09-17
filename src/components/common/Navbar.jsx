@@ -119,14 +119,14 @@ const Navbar = () => {
               <span>প্রোফাইল</span>
             </Link>
 
-            <Link to="#" onClick={() => {
+            <button  onClick={() => {
               handleLogout();
               toggleNavDrawer(); // drawer বন্ধ হবে
             }}
               className='flex items-center space-x-3 text-gray-600 hover:text-black'>
               <BiLogOut />
               <span>লগ আউট</span>
-            </Link>
+            </button>
           </nav>
 
         </div>
