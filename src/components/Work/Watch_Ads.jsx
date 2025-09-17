@@ -45,52 +45,59 @@ const Watch_Ads = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
+  // Submit করলে
   const handleClick = () => {
-
+    if (userAnswer.trim() === "") {
+      alert("দয়া করে উত্তর দিন!");
+      return;
+    }
 
     setCountdown(30);
-    // Monetag link নতুন tab-এ খোলা
-    window.open("https://otieu.com/4/9887860", "_blank");
 
     setTimeout(() => {
+      const correctAnswer = questions[currentIndex]?.answer;
+      if (userAnswer.trim() === correctAnswer) {
+        setReward(questions[currentIndex]?.reward || 0.2);
+      } else {
+        setReward(0);
+      }
 
-      setReward(watchAds[currentIndex]?.reward || 0.2);
-      setShowModal(true);
+      // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
+      if (currentIndex === questions.length - 1) {
+        setShowModal(true);
+       
+      }
+
+       setUserAnswer("");
+        setAnsweredCount(answeredCount + 1);
+
+        if (currentIndex < questions.length - 1) {
+          setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+        } else {
+          alert("🎉 সব প্রশ্ন শেষ!");
+        }
+
     }, 30000);
   };
 
   const updateBalance = () => {
     setShowModal(false);
     if (reward > 0) {
-
-      axios
-        .put(
-          "https://aktarul.onrender.com/reward/balance",
-          { amount: parseFloat(reward) }, // যেমন 0.30
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
+      axios.put(
+        "https://aktarul.onrender.com/reward/balance",
+        { amount: parseFloat(reward) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
         .then((res) => {
           alert(`✅ New Balance: ৳${res.data.balance}`);
         })
         .catch((err) => {
           console.error(err);
         });
-
     }
 
-    setAnsweredCount(answeredCount + 1);
-    if (currentIndex < watchAds.length - 1) {
-      setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
-    } else {
-      alert("🎉 সব প্রশ্ন শেষ!");
-    }
 
-    
-
-
-  }
+  };
 
   // progress bar এর width হিসাব করা
   const progressPercent = ((30 - countdown) / 30) * 100;

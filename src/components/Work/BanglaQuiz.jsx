@@ -41,40 +41,49 @@ const BanglaQuiz = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  // ✅ Submit
+  // Submit করলে
   const handleClick = () => {
-    if (userAnswer === "") {
-      alert("একটি অপশন সিলেক্ট করুন!");
+    if (userAnswer.trim() === "") {
+      alert("দয়া করে উত্তর দিন!");
       return;
     }
 
     setCountdown(30);
-    // Monetag link নতুন tab-এ খোলা
-    window.open("https://otieu.com/4/9887860", "_blank");
 
     setTimeout(() => {
-      const correctAnswer = quiz[currentIndex]?.answer;
-      if (userAnswer === correctAnswer) {
-        setReward(quiz[currentIndex]?.reward || 0.2);
+      const correctAnswer = questions[currentIndex]?.answer;
+      if (userAnswer.trim() === correctAnswer) {
+        setReward(questions[currentIndex]?.reward || 0.2);
       } else {
         setReward(0);
       }
-      setShowModal(true);
+
+      // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
+      if (currentIndex === questions.length - 1) {
+        setShowModal(true);
+       
+      }
+
+       setUserAnswer("");
+        setAnsweredCount(answeredCount + 1);
+
+        if (currentIndex < questions.length - 1) {
+          setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+        } else {
+          alert("🎉 সব প্রশ্ন শেষ!");
+        }
+
     }, 30000);
   };
 
-  // ✅ ব্যালেন্স আপডেট
   const updateBalance = () => {
     setShowModal(false);
     if (reward > 0) {
-      axios
-        .put(
-          "https://aktarul.onrender.com/reward/balance",
-          { amount: parseFloat(reward) },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
+      axios.put(
+        "https://aktarul.onrender.com/reward/balance",
+        { amount: parseFloat(reward) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
         .then((res) => {
           alert(`✅ New Balance: ৳${res.data.balance}`);
         })
@@ -83,14 +92,7 @@ const BanglaQuiz = () => {
         });
     }
 
-    if (currentIndex < quiz.length - 1) {
-      setAnsweredCount(answeredCount + 1);
-      setCurrentIndex(currentIndex + 1);
-      setUserAnswer("");  
-    } else {
-      alert("🎉 সব প্রশ্ন শেষ!");
-      setAnsweredCount(0); // 🔄 সব শেষ হলে আবার 0 করে দিলাম
-    }
+
   };
 
   // ✅ progress bar
