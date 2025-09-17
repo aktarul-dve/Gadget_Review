@@ -47,7 +47,7 @@ const Hero = () => {
           {/* মোট আয় Card */}
           <div className="flex flex-col items-center">
             <p className="text-gray-600 font-medium mb-2">মোট আয়</p>
-            <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-white to-emerald-600 shadow-lg flex items-center justify-center">
+            <div className="w-28 h-28 rounded-full bg-gradient-to-tr from-white to-red-500 shadow-lg flex items-center justify-center">
               <p className="text-white text-xl font-bold">
                 {user ? (user.balance / 100).toFixed(2) : "0.00"} <span className="text-sm">BDT</span>
               </p>
