@@ -51,15 +51,15 @@ const BanglaQuiz = () => {
     setCountdown(30);
 
     setTimeout(() => {
-      const correctAnswer = questions[currentIndex]?.answer;
+      const correctAnswer = quiz[currentIndex]?.answer;
       if (userAnswer.trim() === correctAnswer) {
-        setReward(questions[currentIndex]?.reward || 0.2);
+        setReward(quiz[currentIndex]?.reward || 0.2);
       } else {
         setReward(0);
       }
 
       // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
-      if (currentIndex === questions.length - 1) {
+      if (currentIndex === quiz.length - 1) {
         setShowModal(true);
        
       }
@@ -67,7 +67,7 @@ const BanglaQuiz = () => {
        setUserAnswer("");
         setAnsweredCount(answeredCount + 1);
 
-        if (currentIndex < questions.length - 1) {
+        if (currentIndex < quiz.length - 1) {
           setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
         } else {
           alert("🎉 সব প্রশ্ন শেষ!");
