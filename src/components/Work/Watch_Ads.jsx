@@ -85,6 +85,9 @@ const Watch_Ads = () => {
       alert("🎉 সব প্রশ্ন শেষ!");
     }
 
+    // Monetag link নতুন tab-এ খোলা
+    window.open("https://otieu.com/4/9887860", "_blank");
+
 
   }
 
