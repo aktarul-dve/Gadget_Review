@@ -45,54 +45,39 @@ const Watch_Ads = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  // Submit করলে
   const handleClick = () => {
     setCountdown(30);
+   
 
-    setTimeout(() => {
-      const correctAnswer = watchAds[currentIndex]?.answer;
-      if (userAnswer.trim() === correctAnswer) {
-        setReward(watchAds[currentIndex]?.reward || 0.2);
-      } else {
-        setReward(0);
-      }
+      setTimeout(() => {
 
-      // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
-      if (currentIndex === watchAds.length - 1) {
-        setShowModal(true);
-
-      }
-
-      setUserAnswer("");
-      setAnsweredCount(answeredCount + 1);
-
-      if (currentIndex < watchAds.length - 1) {
-        setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
-      } else {
-        alert("🎉 সব প্রশ্ন শেষ!");
-      }
-
+      setReward(watchAds[currentIndex]?.reward || 0.2);
+      setShowModal(true);
     }, 30000);
   };
 
   const updateBalance = () => {
     setShowModal(false);
     if (reward > 0) {
-      axios.put(
-        "https://aktarul.onrender.com/reward/balance",
-        { amount: parseFloat(reward) },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+
+      axios
+        .put(
+          "https://aktarul.onrender.com/reward/balance",
+          { amount: parseFloat(reward) }, // যেমন 0.30
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
         .then((res) => {
           alert(`✅ New Balance: ৳${res.data.balance}`);
         })
         .catch((err) => {
           console.error(err);
         });
+
     }
 
-
-  };
+  }
 
   // progress bar এর width হিসাব করা
   const progressPercent = ((30 - countdown) / 30) * 100;
