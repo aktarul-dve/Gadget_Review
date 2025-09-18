@@ -46,13 +46,22 @@ const Watch_Ads = () => {
   }, [countdown]);
 
   const handleClick = () => {
-    setCountdown(30);
-   
-
+     setCountdown(30);
       setTimeout(() => {
 
       setReward(watchAds[currentIndex]?.reward || 0.2);
-      setShowModal(true);
+
+       // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
+      if (currentIndex === watchAds.length - 1) {
+        setShowModal(true);
+       
+      }
+        setAnsweredCount(answeredCount + 1);
+        if (currentIndex < watchAds.length - 1) {
+          setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+        } else {
+          alert("🎉 সব প্রশ্ন শেষ!");
+        }
     }, 30000);
   };
 
