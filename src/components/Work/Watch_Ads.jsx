@@ -46,22 +46,24 @@ const Watch_Ads = () => {
   }, [countdown]);
 
   const handleClick = () => {
-     setCountdown(30);
-      setTimeout(() => {
+    setCountdown(30);
 
+      setTimeout(() => {
       setReward(watchAds[currentIndex]?.reward || 0.2);
 
-       // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
-      if (currentIndex === watchAds.length - 1) {
-        setShowModal(true);
-       
-      }
-        setAnsweredCount(answeredCount + 1);
-        if (currentIndex < watchAds.length - 1) {
-          setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+      // answeredCount update
+      setAnsweredCount((prev) => prev + 1);
+
+      // currentIndex update
+      setCurrentIndex((prevIndex) => {
+        if (prevIndex < watchAds.length - 1) {
+          return prevIndex + 1;
         } else {
-          alert("🎉 সব প্রশ্ন শেষ!");
+          setShowModal(true); // সবশেষে Modal
+          return prevIndex;
         }
+      });
+
     }, 30000);
   };
 
