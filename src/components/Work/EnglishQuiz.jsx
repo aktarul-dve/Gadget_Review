@@ -40,7 +40,7 @@ const EnglishQuiz = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
- // Submit করলে
+  // Submit করলে
   const handleClick = () => {
     if (userAnswer.trim() === "") {
       alert("দয়া করে উত্তর দিন!");
@@ -60,17 +60,18 @@ const EnglishQuiz = () => {
       // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
       if (currentIndex === quiz.length - 1) {
         setShowModal(true);
-       
+
       }
 
-       setUserAnswer("");
-        setAnsweredCount(answeredCount + 1);
+      setUserAnswer("");
+      setAnsweredCount(answeredCount + 1);
 
-        if (currentIndex < quiz.length - 1) {
-          setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
-        } else {
-          alert("🎉 সব প্রশ্ন শেষ!");
-        }
+       // যদি শেষ প্রশ্ন হয় → Modal খুলবে
+      if (currentIndex === quiz.length - 1) {
+        setShowModal(true);
+      } else {
+        setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+      }
 
     }, 30000);
   };
@@ -91,6 +92,13 @@ const EnglishQuiz = () => {
         });
     }
 
+   // Modal বন্ধ এবং সব রিসেট
+    setShowModal(false);
+    setCurrentIndex(0);
+    setAnsweredCount(0);
+    setReward(0);
+    setUserAnswer("");
+
 
   };
 
@@ -110,7 +118,7 @@ const EnglishQuiz = () => {
       {/* নির্দেশনা */}
       <div className="p-6 mt-6 bg-white rounded-2xl shadow-md">
         <p className="text-gray-700">
-           প্রথমে  30 সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন ।
+          প্রথমে  30 সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন ।
           সঠিক নিয়ম মেনে কাজ করলে পেমেন্ট পাবেন। ধন্যবাদ।
         </p>
       </div>

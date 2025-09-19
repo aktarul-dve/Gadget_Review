@@ -42,7 +42,7 @@ const MathQuiz = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
- // Submit করলে
+  // Submit করলে
   const handleClick = () => {
     if (userAnswer.trim() === "") {
       alert("দয়া করে উত্তর দিন!");
@@ -62,17 +62,18 @@ const MathQuiz = () => {
       // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
       if (currentIndex === quiz.length - 1) {
         setShowModal(true);
-       
+
       }
 
-       setUserAnswer("");
-        setAnsweredCount(answeredCount + 1);
+      setUserAnswer("");
+      setAnsweredCount(answeredCount + 1);
 
-        if (currentIndex < quiz.length - 1) {
-          setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
-        } else {
-          alert("🎉 সব প্রশ্ন শেষ!");
-        }
+      // যদি শেষ প্রশ্ন হয় → Modal খুলবে
+      if (currentIndex === quiz.length - 1) {
+        setShowModal(true);
+      } else {
+        setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+      }
 
     }, 30000);
   };
@@ -92,6 +93,13 @@ const MathQuiz = () => {
           console.error(err);
         });
     }
+
+    // Modal বন্ধ এবং সব রিসেট
+    setShowModal(false);
+    setCurrentIndex(0);
+    setAnsweredCount(0);
+    setReward(0);
+    setUserAnswer("");
 
 
   };
