@@ -4,16 +4,14 @@ import axios from 'axios';
 
 const Math = () => {
 
-
   const [countdown, setCountdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
   const [questions, setQuestions] = useState([]); // সব প্রশ্ন
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answeredCount, setAnsweredCount] = useState(0);  // কোন প্রশ্ন চলছে
+  const [answeredCount, setAnsweredCount] = useState(0); // কোন প্রশ্ন চলছে
   const [userAnswer, setUserAnswer] = useState(""); // ইউজারের উত্তর
   const [reward, setReward] = useState(0);
-
 
   const token = localStorage.getItem("authToken");
 
@@ -62,44 +60,40 @@ const Math = () => {
         setReward(0);
       }
 
-      // ✅ যদি শেষ প্রশ্ন হয় → Modal খুলবে
+      setUserAnswer("");
+      setAnsweredCount(answeredCount + 1);
+
+      // যদি শেষ প্রশ্ন হয় → Modal খুলবে
       if (currentIndex === questions.length - 1) {
         setShowModal(true);
-       
+      } else {
+        setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
       }
-
-       setUserAnswer("");
-        setAnsweredCount(answeredCount + 1);
-
-        if (currentIndex < questions.length - 1) {
-          setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
-        } else {
-          alert("🎉 সব প্রশ্ন শেষ!");
-        }
-
     }, 30000);
   };
 
   const updateBalance = () => {
-    setShowModal(false);
     if (reward > 0) {
       axios.put(
         "https://aktarul.onrender.com/reward/balance",
         { amount: parseFloat(reward) },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-        .then((res) => {
-          alert(`✅ New Balance: ৳${res.data.balance}`);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      .then((res) => {
+        alert(`✅ New Balance: ৳${res.data.balance}`);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     }
 
-
+    // Modal বন্ধ এবং সব রিসেট
+    setShowModal(false);
+    setCurrentIndex(0);
+    setAnsweredCount(0);
+    setReward(0);
+    setUserAnswer("");
   };
-
-
 
   // progress bar
   const progressPercent = ((30 - countdown) / 30) * 100;
@@ -117,11 +111,9 @@ const Math = () => {
 
       <div className="p-6 mt-6 bg-white rounded-2xl shadow-md">
         <p className="text-gray-700">
-          প্রথমে  30 সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন ।
-          সঠিক নিয়ম মেনে কাজ করলে পেমেন্ট পাবেন। ধন্যবাদ।
+          প্রথমে  30 সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন । সঠিক নিয়ম মেনে কাজ করলে পেমেন্ট পাবেন। ধন্যবাদ।
         </p>
       </div>
-
 
       {/* প্রশ্ন দেখাও */}
       {questions.length > 0 ? (
@@ -192,8 +184,6 @@ const Math = () => {
             >
               গ্রহণ করুন
             </button>
-
-
           </div>
         </div>
       )}
