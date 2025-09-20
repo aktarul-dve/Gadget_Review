@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Wheel } from "react-custom-roulette";
+import useMonetag from "./useMonetag";
 
 const SpinWheel = () => {
+   useMonetag("9905440"); // Monetag Zone ID
   const token = localStorage.getItem("authToken");
   const data = [
     { option: "10 Coins", amount: 0.10 },
@@ -36,12 +38,13 @@ const SpinWheel = () => {
     setMustSpin(true);
 
 
-    // ✅ Monetag Interstitial Ad show
+     // Monetag Interstitial দেখানো
     if (window.Monetag && window.Monetag.showInterstitial) {
+      console.log("🎬 Showing Monetag Ad...");
       window.Monetag.showInterstitial();
-    }else {
-    console.log("⏳ Monetag এখনও লোড হয়নি");
-  }
+    } else {
+      console.log("⏳ Monetag এখনও লোড হয়নি");
+    }
 
     // 3০ সেকেন্ড কাউন্টডাউন শুরু
     setCountdown(30);
