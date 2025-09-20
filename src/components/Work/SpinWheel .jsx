@@ -39,7 +39,9 @@ const SpinWheel = () => {
     // ✅ Monetag Interstitial Ad show
     if (window.Monetag && window.Monetag.showInterstitial) {
       window.Monetag.showInterstitial();
-    }
+    }else {
+    console.log("⏳ Monetag এখনও লোড হয়নি");
+  }
 
     // 3০ সেকেন্ড কাউন্টডাউন শুরু
     setCountdown(30);
