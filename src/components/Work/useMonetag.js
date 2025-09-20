@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 const useMonetag = (zoneId = "9905440") => {
   useEffect(() => {
-    // Check if script is already added
+    // যদি script ইতিমধ্যেই থাকে, আরেকবার inject করা যাবে না
     if (document.querySelector(`script[data-zone="${zoneId}"]`)) return;
 
     const script = document.createElement("script");
@@ -14,6 +14,7 @@ const useMonetag = (zoneId = "9905440") => {
 
     script.onload = () => {
       console.log("✅ Monetag script loaded for zone:", zoneId);
+      // এখানে কোনো auto-show নেই
     };
 
     script.onerror = () => {
