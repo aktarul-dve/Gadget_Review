@@ -11,7 +11,7 @@ const Withdrow = () => {
   const [phone, setPhone] = useState("");
   const [method, setMethod] = useState("");
 
-  const MIN_MOBILE = 20;
+  const MIN_MOBILE = 100;
   const MIN_BKASH = 300;
 
   useEffect(() => {
