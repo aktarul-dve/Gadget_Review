@@ -35,10 +35,15 @@ const SpinWheel = () => {
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
 
+
+    // ✅ Monetag Interstitial Ad show
+    if (window.Monetag && window.Monetag.showInterstitial) {
+      window.Monetag.showInterstitial();
+    }
+
     // 3০ সেকেন্ড কাউন্টডাউন শুরু
     setCountdown(30);
-      // Monetag link নতুন tab-এ খোলা
-    window.open("https://otieu.com/4/9887860", "_blank");
+     
 
     setTimeout(() => {
       if (data[newPrizeNumber].option !== "Try Again") {

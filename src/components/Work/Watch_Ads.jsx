@@ -46,9 +46,15 @@ const Watch_Ads = () => {
   }, [countdown]);
 
   const handleClick = () => {
+
+    // ✅ Monetag Interstitial Ad show
+    if (window.Monetag && window.Monetag.showInterstitial) {
+      window.Monetag.showInterstitial();
+    }
+
     setCountdown(30);
 
-      setTimeout(() => {
+    setTimeout(() => {
       setReward(watchAds[currentIndex]?.reward || 0.2);
 
       // answeredCount update

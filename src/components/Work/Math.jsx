@@ -50,6 +50,11 @@ const Math = () => {
       return;
     }
 
+    // ✅ Monetag Interstitial Ad show
+    if (window.Monetag && window.Monetag.showInterstitial) {
+      window.Monetag.showInterstitial();
+    }
+
     setCountdown(30);
 
     setTimeout(() => {
