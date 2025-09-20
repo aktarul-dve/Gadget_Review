@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',   // সার্ভিস ওয়ার্কার অটো আপডেট হবে
       includeAssets: ['favicon.svg', 'robots.txt'], // extra assets
       manifest: {
-        name: 'My React App',
-        short_name: 'ReactApp',
-        description: 'A Vite + React PWA example',
+        name: 'My AdCashBD App',
+        short_name: 'AdCashBD',
+        description: 'A AdCasBD Web Application',
         theme_color: '#ffffff',
         icons: [
           {
@@ -20,7 +20,7 @@ export default defineConfig({
             type: 'image/png'
           },
           {
-            src: '/pwa-512x512.png',
+            src: '/pwa-192x192.png',
             sizes: '512x512',
             type: 'image/png'
           },
