@@ -12,7 +12,7 @@ export default defineConfig({
         name: 'My AdCashBD App',
         short_name: 'AdCashBD',
         description: 'A AdCasBD Web Application',
-        theme_color: '#ffffff',
+        theme_color: '#000000',
         icons: [
           {
             src: '/pwa-192x192.png',
