@@ -31,15 +31,24 @@ const SpinWheel = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  // 🔹 Monetag ad trigger
   const showMyAd = () => {
-    if (window.monetagReady && window.showVignetteAd) {
-      window.showVignetteAd("9905440"); // Zone ID
-      console.log("🎯 Ad Triggered");
-    } else {
-      console.log("⚠️ Monetag not ready yet");
-    }
+    let attempts = 0;
+    const interval = setInterval(() => {
+      attempts++;
+      if (window.showVignetteAd) {
+        window.showVignetteAd("9905440"); // Zone ID
+        console.log("🎯 Ad Triggered after", attempts, "attempt(s)");
+        clearInterval(interval);
+      } else {
+        console.log("⏳ Waiting for Monetag API...");
+        if (attempts > 10) { // 10 * 500ms = 5 sec max wait
+          console.log("❌ Monetag API not available");
+          clearInterval(interval);
+        }
+      }
+    }, 500); // প্রতি 500ms চেক করবে
   };
+
 
   const handleSpinClick = () => {
     const newPrizeNumber = Math.floor(Math.random() * data.length);
