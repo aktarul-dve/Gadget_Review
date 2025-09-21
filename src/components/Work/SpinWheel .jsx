@@ -31,16 +31,17 @@ const SpinWheel = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  const showMyAd = () =>{
-     if (window.showVignetteAd) {
-      window.showVignetteAd("9905440"); // আপনার Zone ID
+  // 🔹 Monetag ad trigger
+  const showMyAd = () => {
+    if (window.monetagReady && window.showVignetteAd) {
+      window.showVignetteAd("9905440"); // Zone ID
+      console.log("🎯 Ad Triggered");
     } else {
       console.log("⚠️ Monetag not ready yet");
     }
+  };
 
-  }
-
-  const handleSpinClick =  () => {
+  const handleSpinClick = () => {
     const newPrizeNumber = Math.floor(Math.random() * data.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
@@ -50,7 +51,7 @@ const SpinWheel = () => {
 
     // 3০ সেকেন্ড কাউন্টডাউন শুরু
     setCountdown(30);
-     
+
 
     setTimeout(() => {
       if (data[newPrizeNumber].option !== "Try Again") {
@@ -87,7 +88,7 @@ const SpinWheel = () => {
       alert("🎉কিছু এটা সমস্যা হচ্ছে ! আবার চেষ্ট করুন.. ");
     }
 
-  
+
 
   }
 

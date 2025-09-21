@@ -1,26 +1,36 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/pwa-192x192.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Monetag script inject, auto-show নেই -->
-   <script>
-  (function() {
-    const script = document.createElement('script');
-    script.src = "https://groleegni.net/vignette.min.js";
-    script.async = true;
-    document.head.appendChild(script);
-  })();
-</script>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/pwa-192x192.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Monetag script inject, auto-show নেই -->
+  <script>
+    (function () {
+      const script = document.createElement("script");
+      script.dataset.zone = "9905440"; // আপনার Zone ID
+      script.src = "https://groleegni.net/vignette.min.js";
+      script.async = true;
+      document.head.appendChild(script);
+
+      script.onload = () => {
+        console.log("✅ Monetag SDK Ready");
+        window.monetagReady = true; // 🔹 ready flag
+      };
+    })();
+  </script>
 
 
-    <meta name="monetag" content="26b94d3d0abf97bcbb0cea8a7e39dd9a">
-    <title>AdCashBD</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+  <meta name="monetag" content="26b94d3d0abf97bcbb0cea8a7e39dd9a">
+  <title>AdCashBD</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
