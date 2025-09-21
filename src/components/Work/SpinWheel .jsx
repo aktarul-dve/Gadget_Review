@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Wheel } from "react-custom-roulette";
-import { showMonetagAd } from "./monetagHelper";
-import useMonetag from "./useMonetag";
+
 
 const SpinWheel = () => {
-   useMonetag("9905440"); // Monetag Zone ID
   const token = localStorage.getItem("authToken");
   const data = [
     { option: "10 Coins", amount: 0.10 },
@@ -33,17 +31,22 @@ const SpinWheel = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  const handleSpinClick = async () => {
+  const showMyAd = () =>{
+     if (window.showVignetteAd) {
+      window.showVignetteAd("9905440"); // আপনার Zone ID
+    } else {
+      console.log("⚠️ Monetag not ready yet");
+    }
+
+  }
+
+  const handleSpinClick =  () => {
     const newPrizeNumber = Math.floor(Math.random() * data.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
 
+    showMyAd();
 
-     try {
-      await showMonetagAd(); // ✅ এখন নিশ্চিতভাবে ad আসবে
-    } catch (err) {
-      console.log(err);
-    }
 
     // 3০ সেকেন্ড কাউন্টডাউন শুরু
     setCountdown(30);

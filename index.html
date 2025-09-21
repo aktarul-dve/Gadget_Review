@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Monetag script inject, auto-show নেই -->
-    <script>
-      (function() {
-        const script = document.createElement('script');
-        script.dataset.zone = '9905440'; // আপনার zone ID
-        script.src = 'https://groleegni.net/vignette.min.js';
-        script.async = true;
-        document.body.appendChild(script);
-        script.onload = () => console.log('✅ Monetag loaded (manual trigger)');
-      })();
-    </script>
+   <script>
+  (function() {
+    const script = document.createElement('script');
+    script.src = "https://groleegni.net/vignette.min.js";
+    script.async = true;
+    document.head.appendChild(script);
+  })();
+</script>
+
 
     <meta name="monetag" content="26b94d3d0abf97bcbb0cea8a7e39dd9a">
     <title>AdCashBD</title>
