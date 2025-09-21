@@ -19,6 +19,20 @@ const SpinWheel = () => {
   const [countdown, setCountdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [reward, setReward] = useState(0);
+  const [adReady, setAdReady] = useState(false);
+
+  // Monetag ready flag check on mount
+  useEffect(() => {
+    const checkReady = setInterval(() => {
+      if (window.monetagReady && window.showVignetteAd) {
+        setAdReady(true);
+        clearInterval(checkReady);
+        console.log("✅ Monetag SDK is ready");
+      }
+    }, 500);
+
+    return () => clearInterval(checkReady);
+  }, []);
 
   // কাউন্টডাউন হ্যান্ডেল
   useEffect(() => {
@@ -31,44 +45,32 @@ const SpinWheel = () => {
 
   // 🔹 Spin + Monetag ad trigger combined
   const handleSpinClick = () => {
-    let attempts = 0;
+    if (!adReady) {
+      alert("⚠️ Monetag এখনো Ready হয়নি, একটু পর আবার চেষ্টা করুন।");
+      return;
+    }
 
-    const waitForAd = setInterval(() => {
-      attempts++;
+    // Monetag ad trigger
+    window.showVignetteAd("9905440");
+    console.log("🎯 Ad Triggered");
 
-      if (window.showVignetteAd) {
-        clearInterval(waitForAd);
+    // Spin logic
+    const newPrizeNumber = Math.floor(Math.random() * data.length);
+    setPrizeNumber(newPrizeNumber);
+    setMustSpin(true);
 
-        // ✅ Monetag ad trigger
-        window.showVignetteAd("9905440");
-        console.log("🎯 Ad Triggered before Spin");
+    // 30 সেকেন্ড কাউন্টডাউন
+    setCountdown(30);
 
-        // 🔹 Spin logic
-        const newPrizeNumber = Math.floor(Math.random() * data.length);
-        setPrizeNumber(newPrizeNumber);
-        setMustSpin(true);
-
-        // 30 সেকেন্ড কাউন্টডাউন
-        setCountdown(30);
-
-        setTimeout(() => {
-          if (data[newPrizeNumber].option !== "Try Again") {
-            setReward(data[newPrizeNumber].amount);
-            setShowModal(true);
-          } else {
-            setReward(0);
-            setShowModal(true);
-          }
-        }, 30000);
-
+    setTimeout(() => {
+      if (data[newPrizeNumber].option !== "Try Again") {
+        setReward(data[newPrizeNumber].amount);
+        setShowModal(true);
       } else {
-        console.log("⏳ Waiting for Monetag API...");
-        if (attempts > 10) { // max 5 seconds wait
-          clearInterval(waitForAd);
-          alert("⚠️ Ad এখনো Ready হয়নি, একটু পর আবার চেষ্টা করুন।");
-        }
+        setReward(0);
+        setShowModal(true);
       }
-    }, 500); // প্রতি 500ms check করবে
+    }, 30000);
   };
 
   const updateBalance = () => {
@@ -112,13 +114,17 @@ const SpinWheel = () => {
 
       <button
         onClick={handleSpinClick}
-        disabled={countdown > 0}
+        disabled={countdown > 0 || !adReady}
         className={`mt-6 px-6 py-3 rounded-lg font-bold transition
-          ${countdown > 0
+          ${countdown > 0 || !adReady
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-red-500 text-white hover:bg-red-600"}`}
       >
-        {countdown > 0 ? "⏳ অপেক্ষা করুন..." : "🚀 Spin"}
+        {countdown > 0
+          ? "⏳ অপেক্ষা করুন..."
+          : !adReady
+          ? "⏳ Ad Loading..."
+          : "🚀 Spin"}
       </button>
 
       {countdown > 0 && (
