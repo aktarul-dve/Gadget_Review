@@ -21,17 +21,19 @@ const SpinWheel = () => {
   const [reward, setReward] = useState(0);
   const [adReady, setAdReady] = useState(false);
 
-  // Monetag ready flag check on mount
+  // Monetag API ready check
   useEffect(() => {
-    const checkReady = setInterval(() => {
-      if (window.monetagReady && window.showVignetteAd) {
+    const interval = setInterval(() => {
+      if (window.monetagReady && window.Monetag && typeof window.Monetag.showInterstitial === "function") {
         setAdReady(true);
-        clearInterval(checkReady);
-        console.log("✅ Monetag SDK is ready");
+        clearInterval(interval);
+        console.log("✅ Monetag SDK and API Ready");
+      } else {
+        console.log("⏳ Waiting for Monetag API...");
       }
     }, 500);
 
-    return () => clearInterval(checkReady);
+    return () => clearInterval(interval);
   }, []);
 
   // কাউন্টডাউন হ্যান্ডেল
@@ -43,7 +45,7 @@ const SpinWheel = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  // 🔹 Spin + Monetag ad trigger combined
+  // Spin + Ad trigger
   const handleSpinClick = () => {
     if (!adReady) {
       alert("⚠️ Monetag এখনো Ready হয়নি, একটু পর আবার চেষ্টা করুন।");
@@ -51,8 +53,8 @@ const SpinWheel = () => {
     }
 
     // Monetag ad trigger
-    window.showVignetteAd("9905440");
-    console.log("🎯 Ad Triggered");
+    window.Monetag.showInterstitial();
+    console.log("🎯 Monetag Ad Triggered");
 
     // Spin logic
     const newPrizeNumber = Math.floor(Math.random() * data.length);
