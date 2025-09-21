@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Wheel } from "react-custom-roulette";
+import { showMonetagAd } from "./monetagHelper";
 import useMonetag from "./useMonetag";
 
 const SpinWheel = () => {
@@ -32,18 +33,16 @@ const SpinWheel = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  const handleSpinClick = () => {
+  const handleSpinClick = async () => {
     const newPrizeNumber = Math.floor(Math.random() * data.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
 
 
-     // Monetag Interstitial দেখানো
-    if (window.Monetag && window.Monetag.showInterstitial) {
-      console.log("🎬 Showing Monetag Ad...");
-      window.Monetag.showInterstitial();
-    } else {
-      console.log("⏳ Monetag এখনও লোড হয়নি");
+     try {
+      await showMonetagAd(); // ✅ এখন নিশ্চিতভাবে ad আসবে
+    } catch (err) {
+      console.log(err);
     }
 
     // 3০ সেকেন্ড কাউন্টডাউন শুরু

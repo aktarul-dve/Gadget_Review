@@ -1,10 +1,11 @@
-// useMonetag.js
 import { useEffect } from "react";
 
 const useMonetag = (zoneId = "9905440") => {
   useEffect(() => {
-    // যদি script ইতিমধ্যেই থাকে, আরেকবার inject করা যাবে না
-    if (document.querySelector(`script[data-zone="${zoneId}"]`)) return;
+    // script আগে থেকে থাকলে আবার যোগ করা হবে না
+    if (document.querySelector(`script[data-zone="${zoneId}"]`)) {
+      return;
+    }
 
     const script = document.createElement("script");
     script.dataset.zone = zoneId;
@@ -14,7 +15,7 @@ const useMonetag = (zoneId = "9905440") => {
 
     script.onload = () => {
       console.log("✅ Monetag script loaded for zone:", zoneId);
-      // এখানে কোনো auto-show নেই
+      window.MonetagReady = true; // ✅ লোড হলে ফ্ল্যাগ সেট হবে
     };
 
     script.onerror = () => {
