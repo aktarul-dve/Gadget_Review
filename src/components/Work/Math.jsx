@@ -4,6 +4,8 @@ import axios from 'axios';
 
 const Math = () => {
 
+  const [workCountdown, setWorkCountdown]  = useState (0);
+
   const [countdown, setCountdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
@@ -78,27 +80,36 @@ const Math = () => {
   };
 
   const updateBalance = () => {
-    if (reward > 0) {
-      axios.put(
-        "https://aktarul.onrender.com/reward/balance",
-        { amount: parseFloat(reward) },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-      .then((res) => {
-        alert(`✅ New Balance: ৳${res.data.balance}`);
-      })
-      .catch((err) => {
+  if (reward > 0) {
+    axios.put(
+      "https://aktarul.onrender.com/reward/balance",
+      { amount: parseFloat(reward) },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+    .then((res) => {
+      alert(`✅ New Balance: ৳${res.data.balance}`);
+      // cooldown শুরু হবে backend থেকেই
+    })
+    .catch((err) => {
+      if (err.response?.data?.remaining) {
+        // যদি cooldown error আসে
+        const remaining = err.response.data.remaining;
+        setWorkCountdown(remaining); // বাকি সময় সেকেন্ডে বসাও
+        alert(err.response.data.message); // "⏳ আবার কাজ করতে পারবেন..."
+      } else {
         console.error(err);
-      });
-    }
+      }
+    });
+  }
 
-    // Modal বন্ধ এবং সব রিসেট
-    setShowModal(false);
-    setCurrentIndex(0);
-    setAnsweredCount(0);
-    setReward(0);
-    setUserAnswer("");
-  };
+  // Modal বন্ধ এবং সব রিসেট
+  setShowModal(false);
+  setCurrentIndex(0);
+  setAnsweredCount(0);
+  setReward(0);
+  setUserAnswer("");
+};
+
 
   // progress bar
   const progressPercent = ((30 - countdown) / 30) * 100;
@@ -106,8 +117,13 @@ const Math = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
 
+
+
       <div className="flex justify-center mt-5">
         <div className="flex space-x-2 items-center bg-white rounded-2xl shadow-md w-28 justify-center p-3 hover:shadow-xl transition">
+          <p>{ `⏳ ${Math.floor(workCountdown / 3600)}h ${Math.floor(
+        (workCountdown % 3600) / 60
+      )}m অপেক্ষা করুন...`}</p>
           <p className="font-bold text-lg">{answeredCount}</p>
           <span>/</span>
           <p className="font-bold text-lg">{questions.length}</p>
