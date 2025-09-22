@@ -30,7 +30,7 @@ const SpinWheel = () => {
       } else {
         console.log("Monetag not ready yet");
       }
-    }, 500); // প্রতি 0.5 সেকেন্ডে check করবে
+    }, 3000); // প্রতি 0.5 সেকেন্ডে check করবে
   };
 
 
