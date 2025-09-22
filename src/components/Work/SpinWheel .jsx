@@ -32,7 +32,7 @@ const SpinWheel = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  
+
   const handleSpinClick = () => {
 
 
@@ -41,6 +41,12 @@ const SpinWheel = () => {
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
 
+    if (window.monetagReady && window.monetag && window.monetag.show) {
+      window.monetag.show(); // Full-screen ad দেখাবে
+    }
+if (window.monetagReady && window.monetag && window.monetag.show) {
+  window.monetag.show(); // Full-screen ad দেখাবে
+}
     // 30 সেকেন্ড কাউন্টডাউন
     setCountdown(30);
 
@@ -79,12 +85,12 @@ const SpinWheel = () => {
     <div className="flex flex-col items-center mt-10">
       <div className="p-6 mt-6 bg-white rounded-2xl shadow-md">
         <p className="text-gray-700">
-          প্রথমে 30 সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন। 
+          প্রথমে 30 সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন।
           সঠিক নিয়ম মেনে কাজ করলে পেমেন্ট পাবেন। ধন্যবাদ।
         </p>
       </div>
 
-       {/* Native Banner Ad এখানে দেখানো হচ্ছে */}
+      {/* Native Banner Ad এখানে দেখানো হচ্ছে */}
       <NativeBannerAd />
 
       <Wheel
@@ -97,16 +103,16 @@ const SpinWheel = () => {
         onStopSpinning={() => setMustSpin(false)}
       />
 
-        <button
-          onClick={handleSpinClick}
-          disabled={countdown > 0}
-          className={`px-8 py-3 rounded-2xl font-bold shadow-md transform transition-all duration-300
+      <button
+        onClick={handleSpinClick}
+        disabled={countdown > 0}
+        className={`px-8 py-3 rounded-2xl font-bold shadow-md transform transition-all duration-300
             ${countdown > 0
-              ? "bg-gray-300 text-gray-600 cursor-not-allowed shadow-none"
-              : "bg-gradient-to-r from-red-500 to-pink-500 text-white hover:scale-105 hover:shadow-lg"}`}
-        >
-          {countdown > 0 ? "⏳ অপেক্ষা করুন..." : "🚀 Spin"}
-        </button>
+            ? "bg-gray-300 text-gray-600 cursor-not-allowed shadow-none"
+            : "bg-gradient-to-r from-red-500 to-pink-500 text-white hover:scale-105 hover:shadow-lg"}`}
+      >
+        {countdown > 0 ? "⏳ অপেক্ষা করুন..." : "🚀 Spin"}
+      </button>
 
       {countdown > 0 && (
         <div className="w-64 mt-6">
