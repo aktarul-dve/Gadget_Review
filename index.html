@@ -8,19 +8,20 @@
 
   <!-- Monetag script inject, auto-show নেই -->
   <script>
-    (function () {
-      const script = document.createElement("script");
-      script.dataset.zone = "9905440"; // আপনার Zone ID
-      script.src = "https://groleegni.net/vignette.min.js";
-      script.async = true;
-      document.head.appendChild(script);
+(function () {
+  const script = document.createElement("script");
+  script.dataset.zone = "9912849"; // নতুন Zone ID
+  script.src = "https://groleegni.net/vignette.min.js";
+  script.async = true;
+  document.head.appendChild(script);
 
-      script.onload = () => {
-        console.log("✅ Monetag SDK Ready");
-        window.monetagReady = true; // 🔹 ready flag
-      };
-    })();
-  </script>
+  script.onload = () => {
+    console.log("✅ Monetag SDK Ready");
+    window.monetagReady = true;
+  };
+})();
+</script>
+
 
 
 
