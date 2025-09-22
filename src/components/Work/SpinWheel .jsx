@@ -22,6 +22,18 @@ const SpinWheel = () => {
   const [reward, setReward] = useState(0);
 
 
+  const showMonetagAd = () => {
+    const interval = setInterval(() => {
+      if (window.monetagReady && window.monetag && window.monetag.show) {
+        window.monetag.show(); // Monetag ready হলে ad দেখানো হবে
+        clearInterval(interval); // একবার show হলে interval বন্ধ
+      } else {
+        console.log("Monetag not ready yet");
+      }
+    }, 500); // প্রতি 0.5 সেকেন্ডে check করবে
+  };
+
+
 
   // কাউন্টডাউন হ্যান্ডেল
   useEffect(() => {
@@ -41,12 +53,8 @@ const SpinWheel = () => {
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
 
-    // Monetag full-screen show
-  if (window.monetagReady && window.monetag && window.monetag.show) {
-    window.monetag.show(); // Full-screen ad দেখাবে
-  } else {
-    console.log("Monetag not ready yet");
-  }
+    // Monetag ad trigger
+    showMonetagAd();
 
     // 30 সেকেন্ড কাউন্টডাউন
     setCountdown(30);
