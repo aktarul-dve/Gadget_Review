@@ -21,20 +21,6 @@ const SpinWheel = () => {
   const [reward, setReward] = useState(0);
 
 
-  // Monetag API ready check
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (window.monetagReady && window.Monetag && typeof window.Monetag.showInterstitial === "function") {
-        setAdReady(true);
-        clearInterval(interval);
-        console.log("✅ Monetag SDK and API Ready");
-      } else {
-        console.log("⏳ Waiting for Monetag API...");
-      }
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
 
   // কাউন্টডাউন হ্যান্ডেল
   useEffect(() => {
