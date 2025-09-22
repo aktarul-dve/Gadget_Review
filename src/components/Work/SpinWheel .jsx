@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Wheel } from "react-custom-roulette";
 
-
 const SpinWheel = () => {
   const token = localStorage.getItem("authToken");
 
@@ -21,11 +20,6 @@ const SpinWheel = () => {
   const [showModal, setShowModal] = useState(false);
   const [reward, setReward] = useState(0);
 
-
- 
-
-
-
   // কাউন্টডাউন হ্যান্ডেল
   useEffect(() => {
     let timer;
@@ -35,23 +29,18 @@ const SpinWheel = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-
   const handleSpinClick = () => {
-
     // AdCash Interstitial দেখানো
-  if (window.aclib) {
-    window.aclib.runInterstitial({
-      zoneId: '10432186',  // তোমার zoneId
-    });
-  }
-
+    if (window.aclib) {
+      window.aclib.runInterstitial({
+        zoneId: "10432186",
+      });
+    }
 
     // Spin logic
     const newPrizeNumber = Math.floor(Math.random() * data.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
-
-   
 
     // 30 সেকেন্ড কাউন্টডাউন
     setCountdown(30);
@@ -88,25 +77,27 @@ const SpinWheel = () => {
   const progressPercent = ((30 - countdown) / 30) * 100;
 
   return (
-    <div className="flex flex-col items-center mt-10">
-      <div className="p-6 mt-6 bg-white rounded-2xl shadow-md">
+    <div className="flex flex-col items-center mt-10 space-y-6">
+
+      <div className="p-6 bg-white rounded-2xl shadow-md max-w-md text-center">
         <p className="text-gray-700">
           প্রথমে 30 সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন।
           সঠিক নিয়ম মেনে কাজ করলে পেমেন্ট পাবেন। ধন্যবাদ।
         </p>
       </div>
 
-      
-
-      <Wheel
-        mustStartSpinning={mustSpin}
-        prizeNumber={prizeNumber}
-        data={data}
-        backgroundColors={["#3e3e3e", "#df3428"]}
-        textColors={["#ffffff"]}
-        spinDuration={0.2}
-        onStopSpinning={() => setMustSpin(false)}
-      />
+      {/* Wheel Container with fixed size to prevent layout shift */}
+      <div className="flex justify-center items-center w-[300px] h-[300px]">
+        <Wheel
+          mustStartSpinning={mustSpin}
+          prizeNumber={prizeNumber}
+          data={data}
+          backgroundColors={["#3e3e3e", "#df3428"]}
+          textColors={["#ffffff"]}
+          spinDuration={0.2}
+          onStopSpinning={() => setMustSpin(false)}
+        />
+      </div>
 
       <button
         onClick={handleSpinClick}
@@ -114,27 +105,29 @@ const SpinWheel = () => {
         className={`px-8 py-3 rounded-2xl font-bold shadow-md transform transition-all duration-300
             ${countdown > 0
             ? "bg-gray-300 text-gray-600 cursor-not-allowed shadow-none"
-            : "bg-gradient-to-r from-red-500 to-pink-500 text-white hover:scale-105 hover:shadow-lg"}`}
+            : "bg-gradient-to-r from-red-500 to-pink-500 text-white hover:opacity-90"}`}
       >
         {countdown > 0 ? "⏳ অপেক্ষা করুন..." : "🚀 Spin"}
       </button>
 
-      {countdown > 0 && (
-        <div className="w-64 mt-6">
-          <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-            <div
-              className="bg-green-500 h-4 transition-all duration-1000"
-              style={{ width: `${progressPercent}%` }}
-            />
+      {/* Progress bar */}
+      <div className="w-64 min-h-[60px]">
+        {countdown > 0 && (
+          <div>
+            <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+              <div
+                className="bg-green-500 h-4 transition-all duration-1000"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
+            <p className="mt-2 text-center font-semibold text-blue-600">
+              {countdown} সেকেন্ড অপেক্ষা করুন...
+            </p>
           </div>
-          <p className="mt-2 text-center font-semibold text-blue-600">
-            {countdown} সেকেন্ড অপেক্ষা করুন...
-          </p>
-        </div>
-      )}
+        )}
+      </div>
 
-
-
+      {/* Reward Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
           <div className="bg-white rounded-2xl shadow-lg p-6 w-80 text-center">
