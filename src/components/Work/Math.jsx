@@ -49,12 +49,12 @@ const Math = () => {
       alert("দয়া করে উত্তর দিন!");
       return;
     }
-
-    // ✅ Monetag Interstitial Ad show
-    if (window.Monetag && window.Monetag.showInterstitial) {
-      window.Monetag.showInterstitial();
-    }
-
+ // AdCash Interstitial দেখানো
+  if (window.aclib) {
+    window.aclib.runInterstitial({
+      zoneId: '10432186',  // তোমার zoneId
+    });
+  }
     setCountdown(30);
 
     setTimeout(() => {
