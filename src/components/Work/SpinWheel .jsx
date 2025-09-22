@@ -96,8 +96,7 @@ const SpinWheel = () => {
         </p>
       </div>
 
-      {/* Native Banner Ad এখানে দেখানো হচ্ছে */}
-      <NativeBannerAd />
+      
 
       <Wheel
         mustStartSpinning={mustSpin}
