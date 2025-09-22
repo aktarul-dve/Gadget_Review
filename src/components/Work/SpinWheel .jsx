@@ -44,9 +44,7 @@ const SpinWheel = () => {
     if (window.monetagReady && window.monetag && window.monetag.show) {
       window.monetag.show(); // Full-screen ad দেখাবে
     }
-if (window.monetagReady && window.monetag && window.monetag.show) {
-  window.monetag.show(); // Full-screen ad দেখাবে
-}
+
     // 30 সেকেন্ড কাউন্টডাউন
     setCountdown(30);
 
