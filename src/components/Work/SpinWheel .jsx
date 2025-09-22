@@ -41,9 +41,12 @@ const SpinWheel = () => {
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
 
-    if (window.monetagReady && window.monetag && window.monetag.show) {
-      window.monetag.show(); // Full-screen ad দেখাবে
-    }
+    // Monetag full-screen show
+  if (window.monetagReady && window.monetag && window.monetag.show) {
+    window.monetag.show(); // Full-screen ad দেখাবে
+  } else {
+    console.log("Monetag not ready yet");
+  }
 
     // 30 সেকেন্ড কাউন্টডাউন
     setCountdown(30);

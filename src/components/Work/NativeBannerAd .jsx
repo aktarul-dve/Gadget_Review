@@ -2,15 +2,19 @@ import React, { useEffect } from "react";
 
 const NativeBannerAd = () => {
     useEffect(() => {
-        // Monetag Native Banner script inject
         const script = document.createElement("script");
         script.src = "https://gizokraijaw.net/vignette.min.js";
-        script.dataset.zone = "9912990"; // আপনার Native Banner Zone ID
+        script.dataset.zone = "9912990"; // Vignette Banner Zone ID
         script.async = true;
 
-        const container = document.getElementById("monetag-banner");
-        if (container) container.appendChild(script);
+        script.onload = () => {
+            console.log("🎉 Monetag JS loaded");
+            window.monetagReady = true; // ready flag
+        };
+
+        document.body.appendChild(script);
     }, []);
+
 
     return (
         <div id="monetag-banner" style={{ width: "100%", minHeight: "120px", margin: "20px 0" }}>
