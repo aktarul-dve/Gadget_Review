@@ -4,7 +4,7 @@ const NativeBannerAd = () => {
   useEffect(() => {
     // Monetag Native Banner script inject
     const script = document.createElement("script");
-    script.src = "https://groleegni.net/native.min.js";
+    script.src = "9912864',s.src='https://groleegni.net/vignette.min.js";
     script.dataset.zone = "9912864"; // আপনার Native Banner Zone ID
     script.async = true;
 
