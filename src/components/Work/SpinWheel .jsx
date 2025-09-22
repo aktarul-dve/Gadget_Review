@@ -38,6 +38,13 @@ const SpinWheel = () => {
 
   const handleSpinClick = () => {
 
+    // AdCash Interstitial দেখানো
+  if (window.aclib) {
+    window.aclib.runInterstitial({
+      zoneId: '10432186',  // তোমার zoneId
+    });
+  }
+
 
     // Spin logic
     const newPrizeNumber = Math.floor(Math.random() * data.length);
