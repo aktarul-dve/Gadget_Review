@@ -20,6 +20,8 @@ const SpinWheel = () => {
   const [showModal, setShowModal] = useState(false);
   const [reward, setReward] = useState(0);
 
+  const [workCountdown, setWorkCountdown] = useState(0); // ৪ ঘণ্টার cooldown
+
   // কাউন্টডাউন হ্যান্ডেল
   useEffect(() => {
     let timer;
@@ -28,6 +30,15 @@ const SpinWheel = () => {
     }
     return () => clearInterval(timer);
   }, [countdown]);
+
+  // ৪ ঘণ্টার cooldown countdown
+    useEffect(() => {
+      let timer;
+      if (workCountdown > 0) {
+        timer = setInterval(() => setWorkCountdown(prev => prev - 1), 1000);
+      }
+      return () => clearInterval(timer);
+    }, [workCountdown]);
 
   const handleSpinClick = () => {
     // AdCash Interstitial দেখানো
@@ -68,7 +79,15 @@ const SpinWheel = () => {
         .then(res => {
           alert(`✅ New Balance: ৳${res.data.balance}`);
         })
-        .catch(err => console.error(err));
+        .catch((err) => {
+        if (err.response?.data?.remaining) {
+          const remaining = err.response.data.remaining;
+          setWorkCountdown(remaining);
+          alert(err.response.data.message);
+        } else {
+          console.error(err);
+        }
+      });
     } else {
       alert("🎉 কিছু সমস্যা হচ্ছে! আবার চেষ্টা করুন..");
     }
@@ -78,6 +97,15 @@ const SpinWheel = () => {
 
   return (
     <div className="flex flex-col items-center mt-10 space-y-6">
+
+       {/* Work cooldown উপরে দেখানো */}
+      {workCountdown > 0 && (
+        <div className="flex justify-center mt-5">
+          <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-6 py-3 rounded-2xl shadow-md">
+            ⏳ অপেক্ষা করুন: {Math.floor(workCountdown / 3600)}h {Math.floor((workCountdown % 3600) / 60)}m {workCountdown % 60}s
+          </div>
+        </div>
+      )}
 
       <div className="p-6 bg-white rounded-2xl shadow-md max-w-md text-center">
         <p className="text-gray-700">
