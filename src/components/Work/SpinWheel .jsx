@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Wheel } from "react-custom-roulette";
-import NativeBannerAd from "./NativeBannerAd ";
+
 
 const SpinWheel = () => {
   const token = localStorage.getItem("authToken");
@@ -22,16 +22,7 @@ const SpinWheel = () => {
   const [reward, setReward] = useState(0);
 
 
-  const showMonetagAd = () => {
-    const interval = setInterval(() => {
-      if (window.monetagReady && window.monetag && window.monetag.show) {
-        window.monetag.show(); // Monetag ready হলে ad দেখানো হবে
-        clearInterval(interval); // একবার show হলে interval বন্ধ
-      } else {
-        console.log("Monetag not ready yet");
-      }
-    }, 3000); // প্রতি 0.5 সেকেন্ডে check করবে
-  };
+ 
 
 
 
@@ -53,8 +44,7 @@ const SpinWheel = () => {
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
 
-    // Monetag ad trigger
-    showMonetagAd();
+   
 
     // 30 সেকেন্ড কাউন্টডাউন
     setCountdown(30);
