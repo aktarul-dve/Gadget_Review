@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Wheel } from "react-custom-roulette";
+import NativeBannerAd from "./NativeBannerAd ";
 
 const SpinWheel = () => {
   const token = localStorage.getItem("authToken");
@@ -34,14 +35,6 @@ const SpinWheel = () => {
   
   const handleSpinClick = () => {
 
-    if (window.monetagReady && window.monetag && window.monetag.show) {
-      window.monetag.show();  // 🔹 Monetag ad trigger
-      console.log("🎉 Ad triggered");
-    } else {
-      console.log("❌ Monetag not ready yet");
-    }
-   
-    
 
     // Spin logic
     const newPrizeNumber = Math.floor(Math.random() * data.length);
@@ -91,6 +84,9 @@ const SpinWheel = () => {
         </p>
       </div>
 
+       {/* Native Banner Ad এখানে দেখানো হচ্ছে */}
+      <NativeBannerAd />
+
       <Wheel
         mustStartSpinning={mustSpin}
         prizeNumber={prizeNumber}
@@ -125,6 +121,8 @@ const SpinWheel = () => {
           </p>
         </div>
       )}
+
+
 
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
