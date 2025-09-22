@@ -19,7 +19,7 @@ const SpinWheel = () => {
   const [countdown, setCountdown] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [reward, setReward] = useState(0);
-  const [adReady, setAdReady] = useState(false);
+
 
   // Monetag API ready check
   useEffect(() => {
@@ -45,16 +45,17 @@ const SpinWheel = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  // Spin + Ad trigger
+  
   const handleSpinClick = () => {
-    if (!adReady) {
-      alert("⚠️ Monetag এখনো Ready হয়নি, একটু পর আবার চেষ্টা করুন।");
-      return;
-    }
 
-    // Monetag ad trigger
-    window.Monetag.showInterstitial();
-    console.log("🎯 Monetag Ad Triggered");
+    if (window.monetagReady && window.monetag && window.monetag.show) {
+      window.monetag.show();  // 🔹 Monetag ad trigger
+      console.log("🎉 Ad triggered");
+    } else {
+      console.log("❌ Monetag not ready yet");
+    }
+   
+    
 
     // Spin logic
     const newPrizeNumber = Math.floor(Math.random() * data.length);
@@ -114,20 +115,16 @@ const SpinWheel = () => {
         onStopSpinning={() => setMustSpin(false)}
       />
 
-      <button
-        onClick={handleSpinClick}
-        disabled={countdown > 0 || !adReady}
-        className={`mt-6 px-6 py-3 rounded-lg font-bold transition
-          ${countdown > 0 || !adReady
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-red-500 text-white hover:bg-red-600"}`}
-      >
-        {countdown > 0
-          ? "⏳ অপেক্ষা করুন..."
-          : !adReady
-          ? "⏳ Ad Loading..."
-          : "🚀 Spin"}
-      </button>
+        <button
+          onClick={handleSpinClick}
+          disabled={countdown > 0}
+          className={`px-8 py-3 rounded-2xl font-bold shadow-md transform transition-all duration-300
+            ${countdown > 0
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed shadow-none"
+              : "bg-gradient-to-r from-red-500 to-pink-500 text-white hover:scale-105 hover:shadow-lg"}`}
+        >
+          {countdown > 0 ? "⏳ অপেক্ষা করুন..." : "🚀 Spin"}
+        </button>
 
       {countdown > 0 && (
         <div className="w-64 mt-6">
