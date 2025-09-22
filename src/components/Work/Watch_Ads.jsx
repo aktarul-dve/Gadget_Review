@@ -56,20 +56,17 @@ const Watch_Ads = () => {
     setCountdown(30);
 
     setTimeout(() => {
+      
       setReward(watchAds[currentIndex]?.reward || 0.2);
 
-      // answeredCount update
-      setAnsweredCount((prev) => prev + 1);
+      setAnsweredCount(answeredCount + 1);
 
-      // currentIndex update
-      setCurrentIndex((prevIndex) => {
-        if (prevIndex < watchAds.length - 1) {
-          return prevIndex + 1;
-        } else {
-          setShowModal(true); // সবশেষে Modal
-          return prevIndex;
-        }
-      });
+     // যদি শেষ প্রশ্ন হয় → Modal খুলবে
+      if (currentIndex === watchAds.length - 1) {
+        setShowModal(true);
+      } else {
+        setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+      }
 
     }, 30000);
   };
@@ -92,9 +89,12 @@ const Watch_Ads = () => {
         .catch((err) => {
           console.error(err);
         });
-
     }
-
+     // Modal বন্ধ এবং সব রিসেট
+    setShowModal(false);
+    setCurrentIndex(0);
+    setAnsweredCount(0);
+    setReward(0);
   }
 
   // progress bar এর width হিসাব করা
