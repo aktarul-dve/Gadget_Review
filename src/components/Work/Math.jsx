@@ -3,16 +3,14 @@ import math from "../../assets/math.jpg";
 import axios from 'axios';
 
 const Math = () => {
-
-  const [workCountdown, setWorkCountdown]  = useState (0);
-
-  const [countdown, setCountdown] = useState(0);
+  const [workCountdown, setWorkCountdown] = useState(0); // ৪ ঘণ্টার cooldown
+  const [countdown, setCountdown] = useState(0); // ৩০ সেকেন্ড এড countdown
   const [showModal, setShowModal] = useState(false);
 
-  const [questions, setQuestions] = useState([]); // সব প্রশ্ন
+  const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answeredCount, setAnsweredCount] = useState(0); // কোন প্রশ্ন চলছে
-  const [userAnswer, setUserAnswer] = useState(""); // ইউজারের উত্তর
+  const [answeredCount, setAnsweredCount] = useState(0);
+  const [userAnswer, setUserAnswer] = useState("");
   const [reward, setReward] = useState(0);
 
   const token = localStorage.getItem("authToken");
@@ -34,30 +32,36 @@ const Math = () => {
     fetchQuestions();
   }, []);
 
-  // কাউন্টডাউন
+  // ৩০ সেকেন্ড countdown
   useEffect(() => {
     let timer;
     if (countdown > 0) {
-      timer = setInterval(() => {
-        setCountdown((prev) => prev - 1);
-      }, 1000);
+      timer = setInterval(() => setCountdown(prev => prev - 1), 1000);
     }
     return () => clearInterval(timer);
   }, [countdown]);
 
-  // Submit করলে
+  // ৪ ঘণ্টার cooldown countdown
+  useEffect(() => {
+    let timer;
+    if (workCountdown > 0) {
+      timer = setInterval(() => setWorkCountdown(prev => prev - 1), 1000);
+    }
+    return () => clearInterval(timer);
+  }, [workCountdown]);
+
   const handleClick = () => {
     if (userAnswer.trim() === "") {
       alert("দয়া করে উত্তর দিন!");
       return;
     }
- // AdCash Interstitial দেখানো
-  if (window.aclib) {
-    window.aclib.runInterstitial({
-      zoneId: '10432186',  // তোমার zoneId
-    });
-  }
-    setCountdown(30);
+
+    // AdCash Interstitial দেখানো
+    if (window.aclib) {
+      window.aclib.runInterstitial({ zoneId: '10432186' });
+    }
+
+    setCountdown(30); // ৩০ সেকেন্ড countdown
 
     setTimeout(() => {
       const correctAnswer = questions[currentIndex]?.answer;
@@ -70,60 +74,61 @@ const Math = () => {
       setUserAnswer("");
       setAnsweredCount(answeredCount + 1);
 
-      // যদি শেষ প্রশ্ন হয় → Modal খুলবে
       if (currentIndex === questions.length - 1) {
         setShowModal(true);
       } else {
-        setCurrentIndex(currentIndex + 1); // পরের প্রশ্ন
+        setCurrentIndex(currentIndex + 1);
       }
     }, 30000);
   };
 
   const updateBalance = () => {
-  if (reward > 0) {
-    axios.put(
-      "https://aktarul.onrender.com/reward/balance",
-      { amount: parseFloat(reward) },
-      { headers: { Authorization: `Bearer ${token}` } }
-    )
-    .then((res) => {
-      alert(`✅ New Balance: ৳${res.data.balance}`);
-      // cooldown শুরু হবে backend থেকেই
-    })
-    .catch((err) => {
-      if (err.response?.data?.remaining) {
-        // যদি cooldown error আসে
-        const remaining = err.response.data.remaining;
-        setWorkCountdown(remaining); // বাকি সময় সেকেন্ডে বসাও
-        alert(err.response.data.message); // "⏳ আবার কাজ করতে পারবেন..."
-      } else {
-        console.error(err);
-      }
-    });
-  }
+    if (reward > 0) {
+      axios.put(
+        "https://aktarul.onrender.com/reward/balance",
+        { amount: parseFloat(reward) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        alert(`✅ New Balance: ৳${res.data.balance}`);
+        // backend থেকে ৪ ঘণ্টার cooldown শুরু হবে
+      })
+      .catch((err) => {
+        if (err.response?.data?.remaining) {
+          const remaining = err.response.data.remaining;
+          setWorkCountdown(remaining);
+          alert(err.response.data.message);
+        } else {
+          console.error(err);
+        }
+      });
+    }
 
-  // Modal বন্ধ এবং সব রিসেট
-  setShowModal(false);
-  setCurrentIndex(0);
-  setAnsweredCount(0);
-  setReward(0);
-  setUserAnswer("");
-};
+    // Modal বন্ধ ও reset
+    setShowModal(false);
+    setCurrentIndex(0);
+    setAnsweredCount(0);
+    setReward(0);
+    setUserAnswer("");
+  };
 
-
-  // progress bar
   const progressPercent = ((30 - countdown) / 30) * 100;
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
+      
+      {/* Work cooldown উপরে দেখানো */}
+      {workCountdown > 0 && (
+        <div className="flex justify-center mt-5">
+          <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-6 py-3 rounded-2xl shadow-md">
+            ⏳ অপেক্ষা করুন: {Math.floor(workCountdown / 3600)}h {Math.floor((workCountdown % 3600) / 60)}m {workCountdown % 60}s
+          </div>
+        </div>
+      )}
 
-
-
+      {/* Question progress */}
       <div className="flex justify-center mt-5">
         <div className="flex space-x-2 items-center bg-white rounded-2xl shadow-md w-28 justify-center p-3 hover:shadow-xl transition">
-          <p>{ `⏳ ${Math.floor(workCountdown / 3600)}h ${Math.floor(
-        (workCountdown % 3600) / 60
-      )}m অপেক্ষা করুন...`}</p>
           <p className="font-bold text-lg">{answeredCount}</p>
           <span>/</span>
           <p className="font-bold text-lg">{questions.length}</p>
@@ -132,11 +137,11 @@ const Math = () => {
 
       <div className="p-6 mt-6 bg-white rounded-2xl shadow-md">
         <p className="text-gray-700">
-          প্রথমে  30 সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন । সঠিক নিয়ম মেনে কাজ করলে পেমেন্ট পাবেন। ধন্যবাদ।
+          প্রথমে  ৩০ সেকেন্ড অপেক্ষা করে এডটি দেখুন। তার পরে টাকা কালেক্ট করুন। সঠিক নিয়ম মেনে কাজ করলে পেমেন্ট পাবেন। ধন্যবাদ।
         </p>
       </div>
 
-      {/* প্রশ্ন দেখাও */}
+      {/* প্রশ্ন দেখানো */}
       {questions.length > 0 ? (
         <div className="flex flex-col md:flex-row items-center justify-between mt-8 bg-red-500 rounded-2xl shadow-md p-6 md:p-10 hover:shadow-xl transition">
           <img src={math} className="w-20 h-20 mb-4 md:mb-0" alt="" />
@@ -160,13 +165,13 @@ const Math = () => {
         />
         <button
           onClick={handleClick}
-          disabled={countdown > 0}
+          disabled={countdown > 0 || workCountdown > 0}
           className={`mt-6 px-6 py-3 rounded-lg font-bold transition 
-                 ${countdown > 0
+            ${countdown > 0 || workCountdown > 0
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-red-500 text-white hover:bg-red-600"}`}
         >
-          {countdown > 0 ? "⏳ অপেক্ষা করুন..." : "🚀 Submit"}
+          {countdown > 0 || workCountdown > 0 ? "⏳ অপেক্ষা করুন..." : "🚀 Submit"}
         </button>
 
         {/* Progress Bar */}
