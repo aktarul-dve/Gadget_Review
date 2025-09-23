@@ -65,12 +65,12 @@ const PopularArticle = () => {
                 <div key={index} className="bg-white shadow-lg rounded-xl overflow-hidden w-full max-w-2xl flex ">
 
                     {/* Image */}
-                    <div className="md:w-1/3">
+                    <div className="w-24 h-24">
                         <img src={ads} alt="ads" className="object-cover w-full h-full" />
                     </div>
 
                     {/* Text */}
-                    <div className="p-6 md:w-2/3 flex flex-col justify-center">
+                    <div className="p-6  flex flex-col justify-center">
                         <h2 className="text-2xl font-bold mb-3">{item.Title}</h2>
 
                         <p className="text-gray-700">
