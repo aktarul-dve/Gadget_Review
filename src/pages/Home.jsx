@@ -1,6 +1,7 @@
 import React from 'react'
 import MarqueeText from '../components/Feture/MarqueeText '
 import PopularAritcle from '../components/Feture/PopularArticle'
+import CategoriesSection from '../components/Feture/CategoriesSection'
 
 
 
@@ -10,6 +11,7 @@ const Home = () => {
     <div >
       <MarqueeText/>
       <PopularAritcle/>
+      <CategoriesSection/>
     </div>
   )
 }
