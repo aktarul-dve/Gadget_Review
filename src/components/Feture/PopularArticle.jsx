@@ -11,10 +11,17 @@ const PopularArticle = ({ onItemClick }) => {
   ];
 
   const [readMoreIndex, setReadMoreIndex] = useState(null);
+   const [visited, setVisited] = useState([]); // ✅ কোন কোন article ভিজিট হয়েছে সেটা track করবে
 
   const toggleReadMore = (index) => {
     setReadMoreIndex(prev => (prev === index ? null : index));
-    onItemClick(); // trigger click for reward
+   
+
+    // যদি প্রথমবার ভিজিট করে তাহলে count বাড়ানো হবে
+    if (!visited.includes(index)) {
+      setVisited(prev => [...prev, index]);
+      onItemClick(); // ✅ reward trigger only once per article
+    }
   };
 
   return (
