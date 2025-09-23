@@ -45,7 +45,7 @@ const Job1 = () => {
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={spin} alt="Spin & Earn" className="w-10 h-10 object-cover mb-3" />
-          <p className="text-sm text-center font-medium text-gray-700">স্পিন করে টাকা</p>
+          <p className="text-sm text-center font-medium text-gray-700">স্পিন</p>
         </div>
 
         {/* Math */}
@@ -54,7 +54,7 @@ const Job1 = () => {
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={math} alt="Math & Earn" className="w-10 h-10 object-cover mb-3" />
-          <p className="text-sm text-center font-medium text-gray-700">অংক করে টাকা</p>
+          <p className="text-sm text-center font-medium text-gray-700">Blog</p>
         </div>
 
         {/* Ads */}
@@ -63,7 +63,7 @@ const Job1 = () => {
           className="bg-white flex flex-col rounded-2xl shadow-lg p-3 justify-center items-center transition-transform cursor-pointer hover:scale-105"
         >
           <img src={ads} alt="Watch Ads & Earn" className="w-10 h-10 object-cover mb-3" />
-          <p className="text-sm text-center font-medium text-gray-700">অ্যাড দেখে টাকা</p>
+          <p className="text-sm text-center font-medium text-gray-700">Article পড়ুন</p>
         </div>
       </div>
 
