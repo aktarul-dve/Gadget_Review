@@ -48,6 +48,9 @@ const PopularArticle = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-800 text-center">
+        📂 Latest Posts
+      </h2>
       {/* Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {Article.map((item, index) => (
