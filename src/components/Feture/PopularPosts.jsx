@@ -18,7 +18,7 @@ const PopularPosts = ({ onItemClick }) => {
           <div
             key={index}
             className="p-4 flex items-center gap-3 hover:bg-gray-50 cursor-pointer transition"
-            onClick={onItemClick} // trigger click
+            onClick={onItemClick} // 
           >
             <span className="w-8 h-8 flex items-center justify-center bg-red-100 text-red-600 font-bold rounded-full">{index + 1}</span>
             <p className="text-gray-700 font-medium">{post}</p>
