@@ -62,7 +62,7 @@ const PopularArticle = () => {
         <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6 space-y-6">
 
             {Article.map((item, index) => (
-                <div key={index} className="bg-white shadow-lg rounded-xl overflow-hidden w-full max-w-2xl flex flex-col ">
+                <div key={index} className="bg-white shadow-lg rounded-xl overflow-hidden w-full max-w-2xl flex ">
 
                     {/* Image */}
                     <div className="md:w-1/3">
