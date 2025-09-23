@@ -11,6 +11,7 @@ import BanglaQuiz from './components/Work/BanglaQuiz'
 import MathQuiz from './components/Work/MathQuiz'
 import EnglishQuiz from './components/Work/EnglishQuiz'
 import Profile from './components/Work/Profile'
+import ArticleDetails from './components/Feture/ArticleDetails'
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="refer" element={<Refer />} />
           <Route path="withdrow" element={<Withdrow />} />
           <Route path="profile" element={<Profile/>} />
+          <Route path="/article/:id" element={<ArticleDetails/>} />
         </Route>
       </Routes>
     </BrowserRouter>
