@@ -90,7 +90,7 @@ const Watch_Ads = () => {
 
       {/* Reward UI */}
       {reward > 0 && (
-        <div className="fixed bottom-5 mb-5 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg animate-bounce">
+        <div className="fixed bottom-10 right-5 bg-green-500 text-white p-4 rounded-lg shadow-lg animate-bounce">
           🎉 আপনি {reward} কয়েন পেয়েছেন!
         </div>
       )}
