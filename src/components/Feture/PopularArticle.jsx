@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import ads from "../../assets/ads.jpg";
+import { useNavigate } from "react-router-dom";
 
 const PopularArticle = ({ onItemClick }) => {
+
   const Article = [
     { Title: "অনলাইনে আয় করার ৫টি জনপ্রিয় উপায়", Description: "অনলাইনে আয় করা..." },
     { Title: "ফ্রিল্যান্সিং এর মাধ্যমে আয়", Description: "ফ্রিল্যান্সিং হলো..." },
@@ -10,18 +12,20 @@ const PopularArticle = ({ onItemClick }) => {
     { Title: "অ্যাফিলিয়েট মার্কেটিং এর মাধ্যমে আয়", Description: "অ্যাফিলিয়েট মার্কেটিং হলো..." },
   ];
 
+  const navigate = useNavigate();
+
   const [readMoreIndex, setReadMoreIndex] = useState(null);
-   const [visited, setVisited] = useState([]); // ✅ কোন কোন article ভিজিট হয়েছে সেটা track করবে
+  const [visited, setVisited] = useState([]); // ✅ কোন কোন article ভিজিট হয়েছে সেটা track করবে
 
   const toggleReadMore = (index) => {
-    setReadMoreIndex(prev => (prev === index ? null : index));
-   
 
     // যদি প্রথমবার ভিজিট করে তাহলে count বাড়ানো হবে
     if (!visited.includes(index)) {
       setVisited(prev => [...prev, index]);
       onItemClick(); // ✅ reward trigger only once per article
     }
+    navigate(`/article/${index}`, { state: { article: Article[index] } });
+
   };
 
   return (
@@ -35,13 +39,13 @@ const PopularArticle = ({ onItemClick }) => {
             <div className="p-4">
               <h2 className="text-lg font-bold mb-2">{item.Title}</h2>
               <p className="text-sm text-gray-700">
-                {readMoreIndex === index ? item.Description : item.Description.substring(0, 80) + '...'}
+                {item.Description.substring(0, 80) + "..."}
               </p>
               <button
                 onClick={() => toggleReadMore(index)}
                 className="text-blue-600 mt-2 text-sm font-medium hover:underline"
               >
-                {readMoreIndex === index ? 'Read Less' : 'Read More'}
+                Read More
               </button>
             </div>
           </div>
