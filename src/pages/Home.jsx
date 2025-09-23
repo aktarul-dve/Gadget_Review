@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MarqueeText from "../components/Feture/MarqueeText";
+import MarqueeText from "../components/Feture/MarqueeText ";
 import PopularArticle from "../components/Feture/PopularArticle";
 import CategoriesSection from "../components/Feture/CategoriesSection";
 import PopularPosts from "../components/Feture/PopularPosts";
