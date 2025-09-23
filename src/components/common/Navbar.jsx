@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className='fixed w-full z-50 bg-red-500 flex items-center justify-center py-1 px-6'>
+      <nav className='fixed w-full z-50 bg-red-500 flex items-center justify-center py-4 px-6'>
         <button onClick={toggleNavDrawer} className='absolute left-4'>
           <FiAlignJustify className='h-6 w-6 text-white' />
         </button>
