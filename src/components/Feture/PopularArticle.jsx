@@ -76,7 +76,7 @@ const PopularArticle = () => {
                         <p className="text-gray-700">
                             {readMoreIndex === index
                                 ? item.Description
-                                : item.Description.substring(0, 120) + '...'}
+                                : item.Description.substring(0, 60) + '...'}
                         </p>
 
                         <button
