@@ -24,7 +24,7 @@ const PopularArticle = ({ onItemClick }) => {
       setVisited(prev => [...prev, index]);
       onItemClick(); // ✅ reward trigger only once per article
     }
-    navigate(`/article/${index}`, { state: { article: Article[index] } });
+    navigate(`article/${index}`, { state: { article: Article[index] } });
 
   };
 
