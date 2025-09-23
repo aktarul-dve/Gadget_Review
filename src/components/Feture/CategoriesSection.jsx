@@ -23,19 +23,25 @@ const CategoriesSection = () => {
       description: "বিভিন্ন সফটওয়্যার, অ্যাপস ও টুলস এর রিভিউ পড়ুন।",
       icon: <FaStar className="text-purple-600 text-3xl" />,
     },
+    {
+      title: "Extra Category",
+      description: "এটা শুধু স্ক্রল চেক করার জন্য যোগ করা হলো।",
+      icon: <FaStar className="text-red-600 text-3xl" />,
+    },
   ];
 
   return (
-    <div className="bg-gray-100 py-12 px-6 flex flex-col items-center">
-      <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-800">
+    <div className="bg-gray-100 py-12 px-6">
+      <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-800 text-center">
         📂 Categories
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+      {/* Scrollable Row */}
+      <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
         {categories.map((cat, index) => (
           <div
             key={index}
-            className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition duration-300"
+            className="bg-white rounded-xl shadow-md p-6 min-w-[200px] w-[200px] flex-shrink-0 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition duration-300"
           >
             {cat.icon}
             <h3 className="text-lg font-semibold mt-4">{cat.title}</h3>
