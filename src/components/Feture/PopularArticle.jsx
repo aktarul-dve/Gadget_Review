@@ -29,8 +29,9 @@ const PopularArticle = ({ onItemClick }) => {
       <h2 className="text-2xl font-bold mb-8 text-center">📂 Latest Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {Article.map((item, index) => (
-          <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300">
-            <img src={ads} alt="ads" className="w-full h-32 object-cover" />
+
+          <div key={index} className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300">
+            <img src={ads} alt="ads" className="w-32 h-32 object-cover" />
             <div className="p-4">
               <h2 className="text-lg font-bold mb-2">{item.Title}</h2>
               <p className="text-sm text-gray-700">
