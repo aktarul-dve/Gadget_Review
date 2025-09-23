@@ -33,7 +33,7 @@ function App() {
           <Route path="refer" element={<Refer />} />
           <Route path="withdrow" element={<Withdrow />} />
           <Route path="profile" element={<Profile/>} />
-          <Route path="/article/:id" element={<ArticleDetails/>} />
+          <Route path="article/:id" element={<ArticleDetails/>} />
         </Route>
       </Routes>
     </BrowserRouter>
