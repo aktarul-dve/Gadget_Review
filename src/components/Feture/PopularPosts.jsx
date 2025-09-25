@@ -19,7 +19,7 @@ const PopularPosts = ({ onItemClick }) => {
 
   return (
     <div className="bg-gray-100 py-10 px-6 flex flex-col items-center">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
+      <h2 className="text-sm font-bold mb-6 text-gray-800 flex  gap-2">
         <FaFire className="text-red-500" /> 🏆 Popular Posts
       </h2>
       <div className="bg-white rounded-xl shadow-lg w-full max-w-2xl divide-y">

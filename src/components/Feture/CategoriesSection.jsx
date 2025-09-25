@@ -20,7 +20,7 @@ const CategoriesSection = ({ onItemClick }) => {
 
   return (
     <div className="bg-gray-100 py-12 px-6">
-      <h2 className="text-2xl font-bold mb-8 text-center">📂 Categories</h2>
+      <h2 className="text-sm font-bold mb-8">📂 Categories</h2>
       <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
         {categories.map((cat, index) => (
           <div
