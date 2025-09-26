@@ -29,7 +29,7 @@ const PopularArticle = ({ onItemClick }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col  p-4">
+    <div className="bg-gray-100 py-6 px-4">
       <h2 className="text-[16px] font-bold mb-8">📂 Latest Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {Article.map((item, index) => (
