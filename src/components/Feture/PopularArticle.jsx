@@ -29,16 +29,16 @@ const PopularArticle = ({ onItemClick }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
-      <h2 className="text-sm font-bold mb-8">📂 Latest Posts</h2>
+    <div className="min-h-screen bg-gray-100 flex flex-col  p-4">
+      <h2 className="text-[16px] font-bold mb-8">📂 Latest Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {Article.map((item, index) => (
 
           <div key={index} className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300">
             <img src={ads} alt="ads" className="w-32 h-32 object-cover" />
             <div className="p-4">
-              <h2 className="text-xs  mb-2">{item.Title}</h2>
-              <p className="text-[15px] text-gray-700">
+              <h2 className="text-[15px]  mb-2">{item.Title}</h2>
+              <p className="text-sm text-gray-700">
                 {item.Description.substring(0, 80) + "..."}
               </p>
               <button
