@@ -13,7 +13,7 @@ const PopularArticle = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null); // ✅ ক্লিক করা article index
-
+  const reward =50;
   const navigate = useNavigate();
 
   const toggleReadMore = async (index) => {
