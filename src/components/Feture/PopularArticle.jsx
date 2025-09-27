@@ -12,7 +12,8 @@ const PopularArticle = () => {
   ];
 
   const [showModal, setShowModal] = useState(false);
-  const [reward, setReward] = useState(0); // ✅ reward state রাখা হলো
+  const [reward, setReward] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(null); // ✅ ক্লিক করা article index
 
   const navigate = useNavigate();
 
@@ -24,17 +25,19 @@ const PopularArticle = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        }
+          "Authorization": `Bearer ${token}`,
+        },
       });
       const data = await res.json();
 
-      if (data.rewardTriggered) {
-        setReward(50); // ✅ backend reward amount অনুযায়ী update করবে
-        setShowModal(true);
-      }
+      setSelectedIndex(index); // ✅ ক্লিক করা index স্টোর করা হলো
 
-      navigate(`article/${index}`, { state: { article: Article[index] } });
+      if (data.rewardTriggered) {
+        setReward(data.rewardAmount || 50);
+        setShowModal(true);
+      } else {
+        navigate(`article/${index}`, { state: { article: Article[index] } });
+      }
     } catch (err) {
       console.error("Error:", err);
     }
@@ -45,7 +48,10 @@ const PopularArticle = () => {
       <h2 className="text-[16px] font-bold mb-8">📂 Latest Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {Article.map((item, index) => (
-          <div key={index} className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300">
+          <div
+            key={index}
+            className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
+          >
             <img src={ads} alt="ads" className="w-32 h-32 object-cover" />
             <div className="p-1">
               <h2 className="text-[15px] mb-2">{item.Title}</h2>
@@ -77,7 +83,14 @@ const PopularArticle = () => {
               </p>
             )}
             <button
-              onClick={() => setShowModal(false)} // ✅ Modal বন্ধ করার জন্য
+              onClick={() => {
+                setShowModal(false);
+                if (selectedIndex !== null) {
+                  navigate(`article/${selectedIndex}`, {
+                    state: { article: Article[selectedIndex] },
+                  });
+                }
+              }}
               className="bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
             >
               গ্রহণ করুন
