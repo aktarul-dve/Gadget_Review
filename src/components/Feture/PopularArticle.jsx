@@ -3,18 +3,29 @@ import ads from "../../assets/ads.jpg";
 import { useNavigate } from "react-router-dom";
 
 const PopularArticle = () => {
-  const Article = [
-    { Title: "অনলাইনে আয় করার ৫টি জনপ্রিয় উপায়", Description: "অনলাইনে আয় করা..." },
-    { Title: "ফ্রিল্যান্সিং এর মাধ্যমে আয়", Description: "ফ্রিল্যান্সিং হলো..." },
-    { Title: "ব্লগিং এর মাধ্যমে আয়", Description: "ব্লগিং হলো..." },
-    { Title: "ইউটিউব চ্যানেল থেকে আয়", Description: "ভিডিও কনটেন্ট তৈরি..." },
-    { Title: "অ্যাফিলিয়েট মার্কেটিং এর মাধ্যমে আয়", Description: "অ্যাফিলিয়েট মার্কেটিং হলো..." },
-  ];
 
+  const [article, setArticle] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null); // ✅ ক্লিক করা article index
   const reward =50;
   const navigate = useNavigate();
+
+  // ✅ MongoDB থেকে প্রশ্ন আনা
+    useEffect(() => {
+      const fetchQuestions = async () => {
+        try {
+          const res = await fetch("https://aktarul.onrender.com/allarticle");
+          const data = await res.json();
+          if (data.success) {
+            setArticle(data.articles);
+          }
+        } catch (err) {
+          console.error("Error fetching questions:", err);
+        }
+      };
+  
+      fetchQuestions();
+    }, []);
 
   const toggleReadMore = async (index) => {
     const token = localStorage.getItem("authToken");
@@ -46,7 +57,7 @@ const PopularArticle = () => {
     <div className="bg-gray-100 px-4">
       <h2 className="text-[16px] font-bold mb-8">📂 Latest Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-        {Article.map((item, index) => (
+        {article.map((item, index) => (
           <div
             key={index}
             className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
