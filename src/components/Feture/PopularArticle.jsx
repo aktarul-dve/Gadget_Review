@@ -12,7 +12,6 @@ const PopularArticle = () => {
   ];
 
   const [showModal, setShowModal] = useState(false);
-  const [reward, setReward] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(null); // ✅ ক্লিক করা article index
 
   const navigate = useNavigate();
@@ -29,11 +28,11 @@ const PopularArticle = () => {
         },
       });
       const data = await res.json();
+      console.log("data", data);
 
       setSelectedIndex(index); // ✅ ক্লিক করা index স্টোর করা হলো
 
       if (data.rewardTriggered) {
-        setReward(data.rewardAmount || 50);
         setShowModal(true);
       } else {
         navigate(`article/${index}`, { state: { article: Article[index] } });
