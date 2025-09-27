@@ -15,7 +15,7 @@ const PopularArticle = () => {
     useEffect(() => {
       const fetchQuestions = async () => {
         try {
-          const res = await fetch("https://aktarul.onrender.com/allarticle");
+          const res = await fetch("https://aktarul.onrender.com/article/allarticle");
           const data = await res.json();
           if (data.success) {
             setArticle(data.articles);
