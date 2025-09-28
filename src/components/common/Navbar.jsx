@@ -15,22 +15,24 @@ const Navbar = () => {
    const [user, setUser] = useState(null);
 
    useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("authToken");
-        const res = await axios.get("https://aktarul.onrender.com/auth/profile", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log(res.data)
-        setUser(res.data);
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const res = await axios.get("https://aktarul.onrender.com/auth/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUser(res.data);
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+    }
+  };
 
-      } catch (err) {
-        console.error("Error fetching profile or withdraws:", err);
-      }
-    };
+  fetchUser(); // প্রথমবার চালানো
+  const interval = setInterval(fetchUser, 1000); // প্রতি 10 সেকেন্ডে আপডেট
 
-    fetchUser();
-  }, []);
+  return () => clearInterval(interval); // cleanup
+}, []);
+
 
   // 🔹 Logout ফাংশন
   const handleLogout = () => {
