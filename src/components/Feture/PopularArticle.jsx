@@ -7,10 +7,13 @@ const PopularArticle = () => {
   const [article, setArticle] = useState([]); // MongoDB থেকে আসা article
   const [showModal, setShowModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null); // ক্লিক করা article index
+  const [currentPage, setCurrentPage] = useState(1); // pagination state
+
   const reward = 0.20;
   const navigate = useNavigate();
+  const token = localStorage.getItem("authToken");
 
-   const token = localStorage.getItem("authToken");
+  const articlesPerPage = 10;
 
   // MongoDB থেকে article fetch
   useEffect(() => {
@@ -19,7 +22,7 @@ const PopularArticle = () => {
         const res = await fetch("https://aktarul.onrender.com/article/allarticle");
         const data = await res.json();
         if (data.success) {
-          setArticle(data.article); // <-- server response এ 'article'
+          setArticle(data.article);
         }
       } catch (err) {
         console.error("Error fetching articles:", err);
@@ -28,6 +31,24 @@ const PopularArticle = () => {
 
     fetchArticles();
   }, []);
+
+  // pagination calculation
+  const indexOfLastArticle = currentPage * articlesPerPage;
+  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
+  const currentArticles = article.slice(indexOfFirstArticle, indexOfLastArticle);
+  const totalPages = Math.ceil(article.length / articlesPerPage);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   const toggleReadMore = async (index) => {
     const token = localStorage.getItem("authToken");
@@ -43,12 +64,14 @@ const PopularArticle = () => {
       const data = await res.json();
       console.log("data", data);
 
-      setSelectedIndex(index);
+      setSelectedIndex(indexOfFirstArticle + index);
 
       if (data.rewardTriggered) {
         setShowModal(true);
       } else {
-        navigate(`article/${index}`, { state: { article: article[index] } }); // <-- 'article' state use করা হয়েছে
+        navigate(`article/${indexOfFirstArticle + index}`, {
+          state: { article: article[indexOfFirstArticle + index] },
+        });
       }
     } catch (err) {
       console.error("Error:", err);
@@ -57,29 +80,29 @@ const PopularArticle = () => {
 
   const updateBalance = () => {
     if (reward > 0) {
-      axios.put(
-        "https://aktarul.onrender.com/reward/balance",
-        { amount: parseFloat(reward) },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-      .then((res) => {
-        alert(`✅ New Balance: ৳${res.data.balance}`);
-        
-      })
-      .catch((err) => {
-         console.error(err); 
-      });
+      axios
+        .put(
+          "https://aktarul.onrender.com/reward/balance",
+          { amount: parseFloat(reward) },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          alert(`✅ New Balance: ৳${res.data.balance}`);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
     setShowModal(false);
-
-   
   };
 
   return (
     <div className="bg-gray-100 px-4">
       <h2 className="text-[16px] font-bold mb-8">📂 Latest Posts</h2>
+
+      {/* Article Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-        {article && article.map((item, index) => ( // <-- article check
+        {currentArticles.map((item, index) => (
           <div
             key={index}
             className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
@@ -101,6 +124,31 @@ const PopularArticle = () => {
         ))}
       </div>
 
+      {/* Pagination Controls */}
+      {article.length > articlesPerPage && (
+        <div className="flex justify-center items-center gap-4 mt-6">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+          >
+            ◀ Previous
+          </button>
+
+          <span className="px-4 py-2 font-semibold">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+          >
+            Next ▶
+          </button>
+        </div>
+      )}
+
       {/* Reward Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
@@ -116,11 +164,11 @@ const PopularArticle = () => {
             )}
             <button
               onClick={() => {
+                if (!showModal) return; // বারবার কল আটকাতে
                 updateBalance();
-                
                 if (selectedIndex !== null) {
                   navigate(`article/${selectedIndex}`, {
-                    state: { article: article[selectedIndex] }, // <-- article state ব্যবহার
+                    state: { article: article[selectedIndex] },
                   });
                 }
               }}
