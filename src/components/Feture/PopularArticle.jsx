@@ -52,7 +52,6 @@ const PopularArticle = () => {
 
   const toggleReadMore = async (index) => {
     const token = localStorage.getItem("authToken");
-
     try {
       const res = await fetch("https://aktarul.onrender.com/action/count", {
         method: "POST",
@@ -111,7 +110,7 @@ const PopularArticle = () => {
             <div className="p-1">
               <h2 className="text-[15px] mb-2">{item.Title}</h2>
               <p className="text-sm text-gray-700">
-                {item.Description.substring(0, 80) + "..."}
+                {item.Description.substring(0, 50) + "..."}
               </p>
               <button
                 onClick={() => toggleReadMore(index)}
