@@ -3,6 +3,7 @@ import MarqueeText from "../components/Feture/MarqueeText ";
 import PopularArticle from "../components/Feture/PopularArticle";
 import CategoriesSection from "../components/Feture/CategoriesSection";
 import PopularPosts from "../components/Feture/PopularPosts";
+import Work_regulations from "../components/Feture/Work_regulations";
 
 const Home = () => {
   const [clickCount, setClickCount] = useState(0); // cumulative click counter
@@ -22,6 +23,7 @@ const Home = () => {
 
   return (
     <div>
+      <Work_regulations/>
       <MarqueeText onItemClick={handleItemClick} />
       <PopularArticle onItemClick={handleItemClick} />
       <CategoriesSection onItemClick={handleItemClick} />
