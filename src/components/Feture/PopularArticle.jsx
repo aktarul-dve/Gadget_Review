@@ -6,8 +6,10 @@ const PopularArticle = () => {
   const [article, setArticle] = useState([]); // MongoDB থেকে আসা article
   const [showModal, setShowModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null); // ক্লিক করা article index
-  const reward = 50;
+  const reward = 0.20;
   const navigate = useNavigate();
+
+   const token = localStorage.getItem("authToken");
 
   // MongoDB থেকে article fetch
   useEffect(() => {
@@ -52,6 +54,25 @@ const PopularArticle = () => {
     }
   };
 
+  const updateBalance = () => {
+    if (reward > 0) {
+      axios.put(
+        "https://aktarul.onrender.com/reward/balance",
+        { amount: parseFloat(reward) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        alert(`✅ New Balance: ৳${res.data.balance}`);
+        
+      })
+      .catch((err) => {
+         console.error(err); 
+      });
+    }
+
+   
+  };
+
   return (
     <div className="bg-gray-100 px-4">
       <h2 className="text-[16px] font-bold mb-8">📂 Latest Posts</h2>
@@ -93,6 +114,7 @@ const PopularArticle = () => {
             )}
             <button
               onClick={() => {
+                updateBalance();
                 setShowModal(false);
                 if (selectedIndex !== null) {
                   navigate(`article/${selectedIndex}`, {
