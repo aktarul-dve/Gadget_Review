@@ -13,7 +13,7 @@ const PopularArticle = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
 
-  const articlesPerPage = 10;
+  const articlesPerPage = 3;
 
   // MongoDB থেকে article fetch
   useEffect(() => {
