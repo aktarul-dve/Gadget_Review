@@ -21,6 +21,7 @@ const Navbar = () => {
         const res = await axios.get("https://aktarul.onrender.com/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log(res.data)
         setUser(res.data);
 
       } catch (err) {
