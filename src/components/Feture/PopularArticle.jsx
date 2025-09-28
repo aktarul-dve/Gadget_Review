@@ -69,6 +69,7 @@ const PopularArticle = () => {
          console.error(err); 
       });
     }
+    setShowModal(false);
 
    
   };
@@ -115,7 +116,7 @@ const PopularArticle = () => {
             <button
               onClick={() => {
                 updateBalance();
-                setShowModal(false);
+                
                 if (selectedIndex !== null) {
                   navigate(`article/${selectedIndex}`, {
                     state: { article: article[selectedIndex] }, // <-- article state ব্যবহার
