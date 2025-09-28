@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiAlignJustify } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,10 +7,29 @@ import { MdLeaderboard } from "react-icons/md";
 import { GiBank } from "react-icons/gi";
 import { PiChatText } from "react-icons/pi";
 import { BiLogOut } from "react-icons/bi";
+import axios from 'axios';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [navDrawerOpen, setnavDrawerOpen] = useState(false);
+   const [user, setUser] = useState(null);
+
+   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const res = await axios.get("https://aktarul.onrender.com/auth/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(res.data);
+
+      } catch (err) {
+        console.error("Error fetching profile or withdraws:", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   // 🔹 Logout ফাংশন
   const handleLogout = () => {
@@ -28,6 +47,8 @@ const Navbar = () => {
         <button onClick={toggleNavDrawer} className='absolute left-4'>
           <FiAlignJustify className='h-6 w-6 text-white' />
         </button>
+         <P className="text-white font-bold text-[12px] absolute right-4">Task: {user.actionCount}</P> 
+        
       </nav>
 
       {/* Mobile Navigation Drawer */}
