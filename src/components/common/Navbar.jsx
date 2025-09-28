@@ -47,7 +47,7 @@ const Navbar = () => {
         <button onClick={toggleNavDrawer} className='absolute left-4'>
           <FiAlignJustify className='h-6 w-6 text-white' />
         </button>
-         <P className="text-white font-bold text-[12px] absolute right-4">Task: {user.actionCount}</P> 
+         <p className="text-white font-bold text-[12px] absolute right-4">Task: {user ?. actionCount}</p> 
         
       </nav>
 
