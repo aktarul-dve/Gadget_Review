@@ -15,7 +15,6 @@ const Work_regulations = () => {
 
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-      <h1>Youtube Video</h1>
       <div style={{
         position: "relative",
         paddingBottom: "56.25%", // 16:9 aspect ratio
