@@ -21,8 +21,8 @@ const Navbar = () => {
         const res = await axios.get("https://aktarul.onrender.com/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(res.data.user)
-        setUser(res.data.user);
+        console.log(res.data)
+        setUser(res.data);
 
       } catch (err) {
         console.error("Error fetching profile or withdraws:", err);
@@ -48,7 +48,7 @@ const Navbar = () => {
         <button onClick={toggleNavDrawer} className='absolute left-4'>
           <FiAlignJustify className='h-6 w-6 text-white' />
         </button>
-         <p className="text-white font-bold text-[12px] absolute right-8">Task: {user ?. actionCount}</p> 
+         <p className="text-white font-bold text-[12px] absolute right-8">Task: {user?.actionCount}</p> 
         
       </nav>
 
