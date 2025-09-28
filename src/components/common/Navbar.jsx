@@ -21,8 +21,8 @@ const Navbar = () => {
         const res = await axios.get("https://aktarul.onrender.com/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(res.data)
-        setUser(res.data);
+        console.log(res.data.user)
+        setUser(res.data.user);
 
       } catch (err) {
         console.error("Error fetching profile or withdraws:", err);
