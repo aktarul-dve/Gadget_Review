@@ -50,16 +50,18 @@ const PopularArticle = () => {
     }
   };
 
- const toggleReadMore = async (index) => {
+const toggleReadMore = async (index) => {
   const token = localStorage.getItem("authToken");
-  const articleId = article[indexOfFirstArticle + index]._id; // ধরে নিচ্ছি _id আছে
+  const articleItem = article[indexOfFirstArticle + index];
 
-  // sessionStorage এ চেক করো, আগেই কল হয়েছে কিনা
+  if (!articleItem) return; // safety check
+  const articleId = articleItem._id; 
+
+  // sessionStorage check
   const calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
   if (calledArticles.includes(articleId)) {
-    // ✅ আগেই কল করা হয়েছে → সরাসরি navigate করো
     navigate(`article/${indexOfFirstArticle + index}`, {
-      state: { article: article[indexOfFirstArticle + index] },
+      state: { article: articleItem },
     });
     return;
   }
@@ -72,13 +74,11 @@ const PopularArticle = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     const data = await res.json();
-    console.log("data", data);
 
     setSelectedIndex(indexOfFirstArticle + index);
 
-    // ✅ কল হয়ে গেলে sessionStorage এ সংরক্ষণ করো
+    // sessionStorage update
     sessionStorage.setItem(
       "calledArticles",
       JSON.stringify([...calledArticles, articleId])
@@ -88,13 +88,14 @@ const PopularArticle = () => {
       setShowModal(true);
     } else {
       navigate(`article/${indexOfFirstArticle + index}`, {
-        state: { article: article[indexOfFirstArticle + index] },
+        state: { article: articleItem },
       });
     }
   } catch (err) {
     console.error("Error:", err);
   }
 };
+
 
 
   const updateBalance = () => {
