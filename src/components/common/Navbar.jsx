@@ -10,7 +10,7 @@ import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:3000"); // ✅ সার্ভার URL
+const socket = io("https://aktarul.onrender.com"); // ✅ সার্ভার URL
 
 const Navbar = () => {
   const navigate = useNavigate();
