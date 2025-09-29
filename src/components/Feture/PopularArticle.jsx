@@ -50,32 +50,52 @@ const PopularArticle = () => {
     }
   };
 
-  const toggleReadMore = async (index) => {
-    const token = localStorage.getItem("authToken");
-    try {
-      const res = await fetch("https://aktarul.onrender.com/action/count", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
+ const toggleReadMore = async (index) => {
+  const token = localStorage.getItem("authToken");
+  const articleId = article[indexOfFirstArticle + index]._id; // ধরে নিচ্ছি _id আছে
+
+  // sessionStorage এ চেক করো, আগেই কল হয়েছে কিনা
+  const calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
+  if (calledArticles.includes(articleId)) {
+    // ✅ আগেই কল করা হয়েছে → সরাসরি navigate করো
+    navigate(`article/${indexOfFirstArticle + index}`, {
+      state: { article: article[indexOfFirstArticle + index] },
+    });
+    return;
+  }
+
+  try {
+    const res = await fetch("https://aktarul.onrender.com/action/count", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+    console.log("data", data);
+
+    setSelectedIndex(indexOfFirstArticle + index);
+
+    // ✅ কল হয়ে গেলে sessionStorage এ সংরক্ষণ করো
+    sessionStorage.setItem(
+      "calledArticles",
+      JSON.stringify([...calledArticles, articleId])
+    );
+
+    if (data.rewardTriggered) {
+      setShowModal(true);
+    } else {
+      navigate(`article/${indexOfFirstArticle + index}`, {
+        state: { article: article[indexOfFirstArticle + index] },
       });
-      const data = await res.json();
-      console.log("data", data);
-
-      setSelectedIndex(indexOfFirstArticle + index);
-
-      if (data.rewardTriggered) {
-        setShowModal(true);
-      } else {
-        navigate(`article/${indexOfFirstArticle + index}`, {
-          state: { article: article[indexOfFirstArticle + index] },
-        });
-      }
-    } catch (err) {
-      console.error("Error:", err);
     }
-  };
+  } catch (err) {
+    console.error("Error:", err);
+  }
+};
+
 
   const updateBalance = () => {
     if (reward > 0) {
