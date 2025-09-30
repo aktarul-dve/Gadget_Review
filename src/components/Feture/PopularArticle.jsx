@@ -6,12 +6,10 @@ const PopularArticle = () => {
   const [article, setArticle] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(5); // প্রথমে 5টি আইটেম দেখাবে
 
   const reward = 0.20;
   const navigate = useNavigate();
-
-  const articlesPerPage = 3;
 
   // Fetch articles
   useEffect(() => {
@@ -21,27 +19,15 @@ const PopularArticle = () => {
         const data = await res.json();
         if (data.success) setArticle(data.article);
       } catch (err) {
-        console.error("Error fetching articles:", err);
+        console.error(err);
       }
     };
     fetchArticles();
   }, []);
 
-  // Pagination
-  const indexOfLastArticle = currentPage * articlesPerPage;
-  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-  const currentArticles = article.slice(indexOfFirstArticle, indexOfLastArticle);
-  const totalPages = Math.ceil(article.length / articlesPerPage);
-
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-  const handlePrev = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
+  // Read more / action count logic
   const toggleReadMore = (index) => {
-    const articleItem = article[indexOfFirstArticle + index];
+    const articleItem = article[index];
     if (!articleItem) return;
 
     const calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
@@ -62,15 +48,18 @@ const PopularArticle = () => {
       if (newCount >= 10) setShowModal(true);
     }
 
-    setSelectedIndex(indexOfFirstArticle + index);
-    navigate(`article/${indexOfFirstArticle + index}`, { state: { article: articleItem } });
+    setSelectedIndex(index);
+    navigate(`article/${index}`, { state: { article: articleItem } });
   };
 
   const handleModalClose = () => {
     setShowModal(false);
     sessionStorage.setItem("actionCount", 0);
-    // Broadcast reset event
     window.dispatchEvent(new Event("actionCountUpdate"));
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 5); // Next 5 items দেখাবে
   };
 
   return (
@@ -78,7 +67,7 @@ const PopularArticle = () => {
       <h2 className="text-[16px] font-bold mb-8">📂 Latest Posts</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
-        {currentArticles.map((item, index) => (
+        {article.slice(0, visibleCount).map((item, index) => (
           <div
             key={index}
             className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
@@ -100,27 +89,14 @@ const PopularArticle = () => {
         ))}
       </div>
 
-      {/* Pagination */}
-      {article.length > articlesPerPage && (
-        <div className="flex justify-center items-center gap-4 mt-6">
+      {/* Load More button */}
+      {visibleCount < article.length && (
+        <div className="flex justify-center mt-6">
           <button
-            onClick={handlePrev}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+            onClick={handleLoadMore}
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
           >
-            ◀ Previous
-          </button>
-
-          <span className="px-4 py-2 font-semibold">
-            Page {currentPage} of {totalPages}
-          </span>
-
-          <button
-            onClick={handleNext}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
-          >
-            Next ▶
+            See More
           </button>
         </div>
       )}
@@ -129,15 +105,9 @@ const PopularArticle = () => {
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
           <div className="bg-white rounded-2xl shadow-lg p-6 w-80 text-center">
-            {reward > 0 ? (
-              <p className="text-lg font-bold text-green-600 mb-4">
-                🎉 অভিনন্দন! আপনি {reward.toFixed(2)} টাকা পেয়েছেন!
-              </p>
-            ) : (
-              <p className="text-lg font-bold text-red-600 mb-4">
-                😔 দুঃখিত, আবার চেষ্টা করুন।
-              </p>
-            )}
+            <p className="text-lg font-bold text-green-600 mb-4">
+              🎉 অভিনন্দন! আপনি {reward.toFixed(2)} টাকা পেয়েছেন!
+            </p>
             <button
               onClick={handleModalClose}
               className="bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
