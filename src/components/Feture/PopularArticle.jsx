@@ -57,6 +57,7 @@ const PopularArticle = () => {
     navigate(`article/${index}`, { state: { article: articleItem } });
   };
   const updateBalance = () => {
+      const token = localStorage.getItem("authToken");
       if (reward > 0) {
         axios.put(
           "https://aktarul.onrender.com/reward/balance",
