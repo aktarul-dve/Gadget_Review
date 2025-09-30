@@ -31,26 +31,25 @@ const PopularArticle = () => {
     if (!articleItem) return;
 
     // sessionStorage থেকে calledArticles নিয়ে আসা
-    const calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
+    let calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
 
     // যদি নতুন article হয়, actionCount বাড়াবে
     if (!calledArticles.includes(articleItem._id)) {
-      // Add to calledArticles
-      sessionStorage.setItem(
-        "calledArticles",
-        JSON.stringify([...calledArticles, articleItem._id])
-      );
+      calledArticles.push(articleItem._id);
+      sessionStorage.setItem("calledArticles", JSON.stringify(calledArticles));
 
       // Update actionCount
-      const currentCount = parseInt(sessionStorage.getItem("actionCount") || "0");
-      const newCount = currentCount + 1;
-      sessionStorage.setItem("actionCount", newCount);
+      let currentCount = Number(sessionStorage.getItem("actionCount") || 0);
+      currentCount += 1;
+      sessionStorage.setItem("actionCount", currentCount);
 
-      // Navbar কে update করার জন্য custom event
+      // Navbar update করার জন্য custom event
       window.dispatchEvent(new Event("actionCountUpdate"));
 
       // Reward modal trigger
-      if (newCount >= 10) setShowModal(true);
+      if (currentCount >= 10) {
+        setShowModal(true);
+      }
     }
 
     setSelectedIndex(index);
@@ -60,9 +59,9 @@ const PopularArticle = () => {
   const handleModalClose = () => {
     setShowModal(false);
 
-    // actionCount reset
+    // Reset count & calledArticles
     sessionStorage.setItem("actionCount", 0);
-    sessionStorage.setItem("calledArticles", "[]"); // reset called articles too
+    sessionStorage.setItem("calledArticles", "[]");
     window.dispatchEvent(new Event("actionCountUpdate"));
   };
 
@@ -81,7 +80,7 @@ const PopularArticle = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {article.slice(0, visibleCount).map((item, index) => (
           <div
-            key={index}
+            key={item._id}
             className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
           >
             <img src={ads} alt="ads" className="w-32 h-32 object-cover" />
