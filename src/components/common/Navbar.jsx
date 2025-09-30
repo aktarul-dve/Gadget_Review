@@ -7,55 +7,30 @@ import { MdLeaderboard } from "react-icons/md";
 import { GiBank } from "react-icons/gi";
 import { PiChatText } from "react-icons/pi";
 import { BiLogOut } from "react-icons/bi";
-import axios from "axios";
-import { io } from "socket.io-client";
-
-const socket = io("https://aktarul.onrender.com");
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [actionCount, setActionCount] = useState(0);
 
-  // Fetch user profile
+  const toggleNavDrawer = () => setNavDrawerOpen(!navDrawerOpen);
+
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("authToken");
-        const res = await axios.get("https://aktarul.onrender.com/auth/profile", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setUser(res.data);
-
-        // Join socket.io user room
-        socket.emit("join_user_room", res.data._id);
-      } catch (err) {
-        console.error("Error fetching profile:", err);
-      }
-    };
-    fetchUser();
-  }, []);
-
-  // Listen to real-time updates
-  useEffect(() => {
-    const handleUpdate = ({ userId, updatedFields }) => {
-      setUser(prev =>
-        prev && prev._id?.toString() === userId
-          ? { ...prev, ...updatedFields }
-          : prev
-      );
+    const updateCount = () => {
+      const count = parseInt(sessionStorage.getItem("actionCount")) || 0;
+      setActionCount(count);
     };
 
-    socket.on("user_update", handleUpdate);
-    return () => socket.off("user_update", handleUpdate);
+    updateCount(); // প্রথমে load
+
+    const interval = setInterval(updateCount, 500); // প্রতি 0.5 সেকেন্ডে sync
+    return () => clearInterval(interval);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     navigate("/");
   };
-
-  const toggleNavDrawer = () => setNavDrawerOpen(!navDrawerOpen);
 
   return (
     <div>
@@ -64,10 +39,11 @@ const Navbar = () => {
           <FiAlignJustify className="h-6 w-6 text-white" />
         </button>
         <p className="text-white font-bold text-[12px] absolute right-8">
-          Task: {user?.actionCount || 0}
+          Task: {actionCount}
         </p>
       </nav>
 
+      {/* Drawer */}
       <div className={`fixed top-10 left-0 w-2/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-lg transform transition-transform duration-300 z-50 ${navDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="flex justify-end p-4">
           <button onClick={toggleNavDrawer}>
