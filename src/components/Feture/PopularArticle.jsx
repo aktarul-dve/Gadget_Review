@@ -6,7 +6,7 @@ const PopularArticle = () => {
   const [article, setArticle] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(5); // প্রথমে 5টি আইটেম দেখাবে
+  const [visibleCount, setVisibleCount] = useState(5);
 
   const reward = 0.20;
   const navigate = useNavigate();
@@ -30,21 +30,26 @@ const PopularArticle = () => {
     const articleItem = article[index];
     if (!articleItem) return;
 
+    // sessionStorage থেকে calledArticles নিয়ে আসা
     const calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
+
+    // যদি নতুন article হয়, actionCount বাড়াবে
     if (!calledArticles.includes(articleItem._id)) {
+      // Add to calledArticles
       sessionStorage.setItem(
         "calledArticles",
         JSON.stringify([...calledArticles, articleItem._id])
       );
 
-      // Update action count
+      // Update actionCount
       const currentCount = parseInt(sessionStorage.getItem("actionCount") || "0");
       const newCount = currentCount + 1;
       sessionStorage.setItem("actionCount", newCount);
 
-      // Broadcast custom event for Navbar
+      // Navbar কে update করার জন্য custom event
       window.dispatchEvent(new Event("actionCountUpdate"));
 
+      // Reward modal trigger
       if (newCount >= 10) setShowModal(true);
     }
 
@@ -54,7 +59,10 @@ const PopularArticle = () => {
 
   const handleModalClose = () => {
     setShowModal(false);
+
+    // actionCount reset
     sessionStorage.setItem("actionCount", 0);
+    sessionStorage.setItem("calledArticles", "[]"); // reset called articles too
     window.dispatchEvent(new Event("actionCountUpdate"));
   };
 
@@ -63,7 +71,7 @@ const PopularArticle = () => {
     setVisibleCount(prev => Math.min(prev + 5, article.length));
   };
   const handleShowLess = () => {
-    setVisibleCount(5); // আবার প্রথম 5টি দেখাবে
+    setVisibleCount(5);
   };
 
   return (
