@@ -10,15 +10,15 @@ import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const socket = io("https://aktarul.onrender.com"); // ✅ সার্ভার URL
+const socket = io("https://aktarul.onrender.com");
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [navDrawerOpen, setnavDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
 
+  // ✅ Fetch profile once on mount
   useEffect(() => {
-    // প্রথমবার প্রোফাইল ডাটা আনা
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("authToken");
@@ -30,10 +30,11 @@ const Navbar = () => {
         console.error("Error fetching profile:", err);
       }
     };
-
     fetchUser();
+  }, []); // [] dependency → only run once
 
-    // 🔹 Socket.io থেকে রিয়েলটাইম আপডেট শোনা
+  // ✅ Listen to socket.io updates
+  useEffect(() => {
     socket.on("user_update", ({ userId, updatedFields }) => {
       if (user && user._id === userId) {
         setUser((prev) => ({ ...prev, ...updatedFields }));
@@ -45,15 +46,12 @@ const Navbar = () => {
     };
   }, [user]);
 
-  // Logout
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     navigate("/");
   };
 
-  const toggleNavDrawer = () => {
-    setnavDrawerOpen(!navDrawerOpen);
-  };
+  const toggleNavDrawer = () => setnavDrawerOpen(!navDrawerOpen);
 
   return (
     <div>
@@ -62,16 +60,14 @@ const Navbar = () => {
           <FiAlignJustify className="h-6 w-6 text-white" />
         </button>
         <p className="text-white font-bold text-[12px] absolute right-8">
-          Task: {user?.actionCount}
+          Task: {user?.actionCount || 0}
         </p>
       </nav>
 
       {/* Mobile Navigation Drawer */}
       <div
         className={`fixed top-10 left-0 w-2/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-lg transform
-        transition-transform duration-300 z-50 ${
-          navDrawerOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        transition-transform duration-300 z-50 ${navDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex justify-end p-4">
           <button onClick={toggleNavDrawer}>
@@ -81,7 +77,6 @@ const Navbar = () => {
 
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-4">Menu</h2>
-
           <nav className="space-y-4">
             <Link to="/" onClick={toggleNavDrawer} className="flex items-center space-x-3 text-gray-600 hover:text-black">
               <FcHome />
