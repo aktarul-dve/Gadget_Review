@@ -30,47 +30,72 @@ const PopularArticle = () => {
     const articleItem = article[index];
     if (!articleItem) return;
 
-    // sessionStorage থেকে calledArticles নিয়ে আসা
     let calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
 
-    // যদি নতুন article হয়, actionCount বাড়াবে
     if (!calledArticles.includes(articleItem._id)) {
       calledArticles.push(articleItem._id);
       sessionStorage.setItem("calledArticles", JSON.stringify(calledArticles));
 
-      // Update actionCount
       let currentCount = Number(sessionStorage.getItem("actionCount") || 0);
       currentCount += 1;
       sessionStorage.setItem("actionCount", currentCount);
 
-      // Navbar update করার জন্য custom event
+      // Navbar update জন্য custom event
       window.dispatchEvent(new Event("actionCountUpdate"));
 
       // Reward modal trigger
       if (currentCount >= 10) {
         setShowModal(true);
+        setSelectedIndex(index); // modal থেকে navigate করা যাবে
+        return; // এখনই navigate হবে না
       }
     }
 
+    // যদি count < 10 অথবা already called article
     setSelectedIndex(index);
     navigate(`article/${index}`, { state: { article: articleItem } });
   };
+  const updateBalance = () => {
+      if (reward > 0) {
+        axios.put(
+          "https://aktarul.onrender.com/reward/balance",
+          { amount: parseFloat(reward) },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          alert(`✅ New Balance: ৳${res.data.balance}`);
+          // backend থেকে ৪ ঘণ্টার cooldown শুরু হবে
+        })
+        .catch((err) => {
+            console.error(err);
+          
+        });
+      }
+  
+      ;
+    };
 
   const handleModalClose = () => {
+    updateBalance();
     setShowModal(false);
 
     // Reset count & calledArticles
     sessionStorage.setItem("actionCount", 0);
     sessionStorage.setItem("calledArticles", "[]");
     window.dispatchEvent(new Event("actionCountUpdate"));
+
+    // Modal থেকে navigate
+    if (selectedIndex !== null) {
+      navigate(`article/${selectedIndex}`, { state: { article: article[selectedIndex] } });
+    }
   };
 
   // See More / Show Less
   const handleLoadMore = () => {
-    setVisibleCount(prev => Math.min(prev + 5, article.length));
+    setVisibleCount(prev => Math.min(prev + 10, article.length));
   };
   const handleShowLess = () => {
-    setVisibleCount(5);
+    setVisibleCount(10);
   };
 
   return (
@@ -101,7 +126,7 @@ const PopularArticle = () => {
       </div>
 
       {/* Load More / Show Less button */}
-      {article.length > 5 && (
+      {article.length > 10 && (
         <div className="flex justify-center mt-6 gap-4">
           {visibleCount < article.length && (
             <button
@@ -111,7 +136,7 @@ const PopularArticle = () => {
               See More
             </button>
           )}
-          {visibleCount > 5 && (
+          {visibleCount > 10 && (
             <button
               onClick={handleShowLess}
               className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition"
