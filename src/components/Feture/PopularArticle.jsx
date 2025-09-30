@@ -13,7 +13,7 @@ const PopularArticle = () => {
 
   const articlesPerPage = 3;
 
-  // Fetch articles from API
+  // Fetch articles
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -44,7 +44,6 @@ const PopularArticle = () => {
     const articleItem = article[indexOfFirstArticle + index];
     if (!articleItem) return;
 
-    // sessionStorage check
     const calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
     if (!calledArticles.includes(articleItem._id)) {
       sessionStorage.setItem(
@@ -52,12 +51,14 @@ const PopularArticle = () => {
         JSON.stringify([...calledArticles, articleItem._id])
       );
 
-      // Action count update
+      // Update action count
       const currentCount = parseInt(sessionStorage.getItem("actionCount") || "0");
       const newCount = currentCount + 1;
       sessionStorage.setItem("actionCount", newCount);
 
-      // 10 action হলে মডাল দেখানো
+      // Broadcast custom event for Navbar
+      window.dispatchEvent(new Event("actionCountUpdate"));
+
       if (newCount >= 10) setShowModal(true);
     }
 
@@ -67,8 +68,9 @@ const PopularArticle = () => {
 
   const handleModalClose = () => {
     setShowModal(false);
-    // Reset action count
     sessionStorage.setItem("actionCount", 0);
+    // Broadcast reset event
+    window.dispatchEvent(new Event("actionCountUpdate"));
   };
 
   return (

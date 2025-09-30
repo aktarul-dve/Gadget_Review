@@ -21,10 +21,13 @@ const Navbar = () => {
       setActionCount(count);
     };
 
-    updateCount(); // প্রথমে load
+    // Initial load
+    updateCount();
 
-    const interval = setInterval(updateCount, 500); // প্রতি 0.5 সেকেন্ডে sync
-    return () => clearInterval(interval);
+    // Listen to custom event
+    window.addEventListener("actionCountUpdate", updateCount);
+
+    return () => window.removeEventListener("actionCountUpdate", updateCount);
   }, []);
 
   const handleLogout = () => {
