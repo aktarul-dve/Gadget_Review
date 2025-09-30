@@ -10,14 +10,15 @@ import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import { io } from "socket.io-client";
 
+// Socket.io connect
 const socket = io("https://aktarul.onrender.com");
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [navDrawerOpen, setnavDrawerOpen] = useState(false);
+  const [navDrawerOpen, setNavDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
 
-  // ✅ Fetch profile once on mount
+  // Fetch user profile on mount
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -31,27 +32,29 @@ const Navbar = () => {
       }
     };
     fetchUser();
-  }, []); // [] dependency → only run once
+  }, []);
 
-  // ✅ Listen to socket.io updates
+  // Listen to real-time user updates via socket.io
   useEffect(() => {
-    socket.on("user_update", ({ userId, updatedFields }) => {
-      if (user && user._id === userId) {
-        setUser((prev) => ({ ...prev, ...updatedFields }));
-      }
-    });
+    const handleUpdate = ({ userId, updatedFields }) => {
+      setUser((prev) =>
+        prev && prev._id === userId ? { ...prev, ...updatedFields } : prev
+      );
+    };
+
+    socket.on("user_update", handleUpdate);
 
     return () => {
-      socket.off("user_update");
+      socket.off("user_update", handleUpdate);
     };
-  }, [user]);
+  }, []); // Run once on mount
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     navigate("/");
   };
 
-  const toggleNavDrawer = () => setnavDrawerOpen(!navDrawerOpen);
+  const toggleNavDrawer = () => setNavDrawerOpen(!navDrawerOpen);
 
   return (
     <div>
@@ -67,7 +70,9 @@ const Navbar = () => {
       {/* Mobile Navigation Drawer */}
       <div
         className={`fixed top-10 left-0 w-2/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-lg transform
-        transition-transform duration-300 z-50 ${navDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}
+          transition-transform duration-300 z-50 ${
+            navDrawerOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex justify-end p-4">
           <button onClick={toggleNavDrawer}>
@@ -78,23 +83,43 @@ const Navbar = () => {
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-4">Menu</h2>
           <nav className="space-y-4">
-            <Link to="/" onClick={toggleNavDrawer} className="flex items-center space-x-3 text-gray-600 hover:text-black">
+            <Link
+              to="/"
+              onClick={toggleNavDrawer}
+              className="flex items-center space-x-3 text-gray-600 hover:text-black"
+            >
               <FcHome />
               <span>Home</span>
             </Link>
-            <Link to="/blog" onClick={toggleNavDrawer} className="flex items-center space-x-3 text-gray-600 hover:text-black">
+            <Link
+              to="/blog"
+              onClick={toggleNavDrawer}
+              className="flex items-center space-x-3 text-gray-600 hover:text-black"
+            >
               <MdLeaderboard />
               <span>Blog</span>
             </Link>
-            <Link to="/articles" onClick={toggleNavDrawer} className="flex items-center space-x-3 text-gray-600 hover:text-black">
+            <Link
+              to="/articles"
+              onClick={toggleNavDrawer}
+              className="flex items-center space-x-3 text-gray-600 hover:text-black"
+            >
               <GiBank />
               <span>Articles</span>
             </Link>
-            <Link to="/contact" onClick={toggleNavDrawer} className="flex items-center space-x-3 text-gray-600 hover:text-black">
+            <Link
+              to="/contact"
+              onClick={toggleNavDrawer}
+              className="flex items-center space-x-3 text-gray-600 hover:text-black"
+            >
               <FcCustomerSupport />
               <span>Contact</span>
             </Link>
-            <Link to="/about" onClick={toggleNavDrawer} className="flex items-center space-x-3 text-gray-600 hover:text-black">
+            <Link
+              to="/about"
+              onClick={toggleNavDrawer}
+              className="flex items-center space-x-3 text-gray-600 hover:text-black"
+            >
               <PiChatText />
               <span>About Us</span>
             </Link>
