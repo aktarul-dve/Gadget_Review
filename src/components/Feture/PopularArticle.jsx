@@ -58,8 +58,12 @@ const PopularArticle = () => {
     window.dispatchEvent(new Event("actionCountUpdate"));
   };
 
+  // See More / Show Less
   const handleLoadMore = () => {
-    setVisibleCount(prev => prev + 5); // Next 5 items দেখাবে
+    setVisibleCount(prev => Math.min(prev + 5, article.length));
+  };
+  const handleShowLess = () => {
+    setVisibleCount(5); // আবার প্রথম 5টি দেখাবে
   };
 
   return (
@@ -89,15 +93,25 @@ const PopularArticle = () => {
         ))}
       </div>
 
-      {/* Load More button */}
-      {visibleCount < article.length && (
-        <div className="flex justify-center mt-6">
-          <button
-            onClick={handleLoadMore}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-          >
-            See More
-          </button>
+      {/* Load More / Show Less button */}
+      {article.length > 5 && (
+        <div className="flex justify-center mt-6 gap-4">
+          {visibleCount < article.length && (
+            <button
+              onClick={handleLoadMore}
+              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            >
+              See More
+            </button>
+          )}
+          {visibleCount > 5 && (
+            <button
+              onClick={handleShowLess}
+              className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition"
+            >
+              Show Less
+            </button>
+          )}
         </div>
       )}
 
