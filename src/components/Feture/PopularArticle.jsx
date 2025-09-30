@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ads from "../../assets/ads.jpg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const PopularArticle = () => {
   const [article, setArticle] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(5);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const reward = 0.20;
   const navigate = useNavigate();
