@@ -1,65 +1,101 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ads from "../../assets/ads.jpg";
 
-// Custom hook: route navigation block
-function useBlockNavigation(when, message) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!when) return;
-
-    const handleBeforeUnload = (e) => {
-      e.preventDefault();
-      e.returnValue = message; // Chrome এ alert দেখানোর জন্য
-    };
-
-    const handleRouteChange = (e) => {
-      if (when) {
-        if (!window.confirm(message)) {
-          e.preventDefault();
-        }
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    window.addEventListener("popstate", handleRouteChange);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      window.removeEventListener("popstate", handleRouteChange);
-    };
-  }, [when, message]);
-}
 
 const ArticleDetails = () => {
   const { state } = useLocation();
-  const navigate = useNavigate();
-  const [blocked, setBlocked] = useState(true);
+  const [article, setArticle] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(10);
 
-  // ২০ সেকেন্ড পর unblock
+  // Fetch articles
   useEffect(() => {
-    const timer = setTimeout(() => setBlocked(false), 20000); // 20 seconds
-    return () => clearTimeout(timer);
+    const fetchArticles = async () => {
+      try {
+        const res = await fetch("https://aktarul.onrender.com/article/allarticle");
+        const data = await res.json();
+        if (data.success) setArticle(data.article);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchArticles();
   }, []);
 
-  // navigation block during blocked state
-  useBlockNavigation(blocked, "⏳ ২০ সেকেন্ড শেষ হওয়ার আগে আপনি যেতে পারবেন না!");
+   // Read more / action count logic
+  const toggleReadMore = (index) => {
+    const articleItem = article[index];
+    navigate(`article/${index}`, { state: { article: articleItem } });
+  };
+
+   // See More / Show Less
+  const handleLoadMore = () => {
+    setVisibleCount(prev => Math.min(prev + 10, article.length));
+  };
+  const handleShowLess = () => {
+    setVisibleCount(10);
+  };
 
   if (!state?.article) {
     return <p>❌ Article not found</p>;
   }
 
-  const { Title, Description } = state.article;
+  const { Title, Description, photo } = state.article;
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-lg">
+    <div className="p-2 max-w-3xl mx-auto bg-white ">
+      <img src={photo?.url} alt="photo" className="w-full h-52" />
       <h1 className="text-2xl font-bold mb-4">{Title}</h1>
       <p className="text-gray-700">{Description}</p>
-      {blocked && (
-        <p className="mt-4 text-red-500 font-semibold">
-          ⏳ ২০ সেকেন্ড অপেক্ষা করুন
-        </p>
-      )}
+      <h1 className="font-bold mt-5 mb-5">Releted Aritcle & Blog</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
+              {article.slice(0, visibleCount).map((item, index) => (
+                <div
+                  key={item._id}
+                  className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
+                >
+                  <img src={item?.photo?.url  || ads} alt="ads" className="w-32 h-32 object-cover" />
+                  <div className="p-1">
+                    <h2 className="text-[15px] mb-2">{item.Title}</h2>
+                    <p className="text-sm text-gray-700">
+                      {item.Description.substring(0, 50) + "..."}
+                    </p>
+                    <button
+                      onClick={() => toggleReadMore(index)}
+                      className="text-blue-600 mt-2 text-sm font-medium hover:underline"
+                    >
+                      Read More
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+      
+            {/* Load More / Show Less button */}
+            {article.length > 10 && (
+              <div className="flex justify-center mt-6 gap-4">
+                {visibleCount < article.length && (
+                  <button
+                    onClick={handleLoadMore}
+                    className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                  >
+                    See More
+                  </button>
+                )}
+                {visibleCount > 10 && (
+                  <button
+                    onClick={handleShowLess}
+                    className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition"
+                  >
+                    Show Less
+                  </button>
+                )}
+              </div>
+            )}
+
+
+
+
     </div>
   );
 };
