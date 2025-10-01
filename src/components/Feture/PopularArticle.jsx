@@ -32,29 +32,48 @@ const PopularArticle = () => {
   // ✅ Show Interstitial Ad
   const showInterstitialAd = () => {
     return new Promise((resolve) => {
-      if (adLoadedRef.current) {
-        setTimeout(() => resolve(true), 2000);
-        return;
+      // Load script only once
+      if (!adLoadedRef.current) {
+        const script = document.createElement("script");
+        script.src = "https://groleegni.net/vignette.min.js";
+        script.dataset.zone = "9957899"; // আপনার zone ID
+        script.async = true;
+
+        script.onload = () => {
+          console.log("✅ Interstitial Ad Script Loaded");
+          adLoadedRef.current = true;
+          triggerAd(resolve);
+        };
+
+        script.onerror = () => {
+          console.warn("⚠️ Ad Load Failed");
+          resolve(true);
+        };
+
+        document.body.appendChild(script);
+      } else {
+        triggerAd(resolve);
       }
-
-      const script = document.createElement("script");
-      script.src = "https://groleegni.net/vignette.min.js";
-      script.dataset.zone = "9957899"; // আপনার zone ID
-      script.async = true;
-
-      script.onload = () => {
-        console.log("✅ Interstitial Ad Loaded");
-        adLoadedRef.current = true;
-        setTimeout(() => resolve(true), 2000); // 2 sec delay
-      };
-
-      script.onerror = () => {
-        console.warn("⚠️ Ad Load Failed");
-        resolve(true); // এড না loaded হলেও navigate হবে
-      };
-
-      document.body.appendChild(script);
     });
+  };
+
+  // ✅ Trigger Vignette Ad
+  const triggerAd = (resolve) => {
+    if (window.Vignette && typeof window.Vignette.show === "function") {
+      window.Vignette.show({
+        onClose: () => {
+          console.log("Ad closed");
+          resolve(true);
+        },
+        onError: () => {
+          console.warn("Ad failed");
+          resolve(true);
+        },
+      });
+    } else {
+      console.warn("Vignette not available");
+      resolve(true);
+    }
   };
 
   // ✅ Read More / Action Count
@@ -87,10 +106,8 @@ const PopularArticle = () => {
 
     setSelectedIndex(index);
 
-    // Navigate after 2 sec to let ad show
-    setTimeout(() => {
-      navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
-    }, 2000);
+    // Navigate after ad closed
+    navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
   };
 
   // ✅ Update Balance
@@ -133,7 +150,7 @@ const PopularArticle = () => {
   const handleShowLess = () => setVisibleCount(10);
 
   return (
-    <div className="bg-gray-100 ">
+    <div className="bg-gray-100">
       <h2 className="text-[16px] font-bold mb-8">📂 Latest Posts</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
