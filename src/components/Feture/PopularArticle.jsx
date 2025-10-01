@@ -54,28 +54,30 @@ const PopularArticle = () => {
 
     // যদি count < 10 অথবা already called article
     setSelectedIndex(index);
-    navigate(`article/${index}`, { state: { article: articleItem } });
+    // navigate করার সময়
+    navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
+
   };
   const updateBalance = () => {
-      const token = localStorage.getItem("authToken");
-      if (reward > 0) {
-        axios.put(
-          "https://aktarul.onrender.com/reward/balance",
-          { amount: parseFloat(reward) },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
+    const token = localStorage.getItem("authToken");
+    if (reward > 0) {
+      axios.put(
+        "https://aktarul.onrender.com/reward/balance",
+        { amount: parseFloat(reward) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
         .then((res) => {
           alert(`✅ New Balance: ৳${res.data.balance}`);
           // backend থেকে ৪ ঘণ্টার cooldown শুরু হবে
         })
         .catch((err) => {
-            console.error(err);
-          
+          console.error(err);
+
         });
-      }
-  
-      ;
-    };
+    }
+
+    ;
+  };
 
   const handleModalClose = () => {
     updateBalance();
@@ -88,7 +90,10 @@ const PopularArticle = () => {
 
     // Modal থেকে navigate
     if (selectedIndex !== null) {
-      navigate(`article/${selectedIndex}`, { state: { article: article[selectedIndex] } });
+      navigate(`/userLayout/article/${article[selectedIndex]._id}`, {
+        state: { article: article[selectedIndex] }
+      });
+
     }
   };
 
@@ -110,7 +115,7 @@ const PopularArticle = () => {
             key={item._id}
             className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
           >
-            <img src={item?.photo?.url  || ads} alt="ads" className="w-32 h-32 object-cover" />
+            <img src={item?.photo?.url || ads} alt="ads" className="w-32 h-32 object-cover" />
             <div className="p-1">
               <h2 className="text-[15px] mb-2">{item.Title}</h2>
               <p className="text-sm text-gray-700">
