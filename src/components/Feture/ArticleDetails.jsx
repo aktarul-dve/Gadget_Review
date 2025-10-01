@@ -29,7 +29,7 @@ const ArticleDetails = () => {
     const articleItem = article[index];
     // navigate করার সময়
     navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
-
+     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // See More / Show Less
