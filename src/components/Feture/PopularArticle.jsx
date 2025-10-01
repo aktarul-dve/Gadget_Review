@@ -34,7 +34,7 @@ const PopularArticle = () => {
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://groleegni.net/vignette.min.js";
-    script.dataset.zone = "9957899"; // আপনার Zone ID
+    script.dataset.zone = "9958430"; // আপনার Zone ID
     script.async = true;
 
     script.onload = () => {
