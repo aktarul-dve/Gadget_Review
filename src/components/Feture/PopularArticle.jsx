@@ -110,7 +110,7 @@ const PopularArticle = () => {
             key={item._id}
             className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
           >
-            <img src={item.photo.url} alt="ads" className="w-32 h-32 object-cover" />
+            <img src={item?.photo?.url  || ads} alt="ads" className="w-32 h-32 object-cover" />
             <div className="p-1">
               <h2 className="text-[15px] mb-2">{item.Title}</h2>
               <p className="text-sm text-gray-700">
