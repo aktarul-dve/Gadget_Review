@@ -12,8 +12,9 @@ const PopularArticle = () => {
   const reward = 0.20;
   const navigate = useNavigate();
 
-  // ✅ Interstitial Ad Loaded Ref
-  const adLoadedRef = useRef(false);
+  // ✅ Ref to track if ad script loaded
+  const adScriptLoadedRef = useRef(false);
+  const adPreloadedRef = useRef(false);
 
   // ✅ Fetch Articles
   useEffect(() => {
@@ -29,51 +30,50 @@ const PopularArticle = () => {
     fetchArticles();
   }, []);
 
-  // ✅ Show Interstitial Ad
+  // ✅ Preload Ad on component mount
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://groleegni.net/vignette.min.js";
+    script.dataset.zone = "9957899"; // আপনার Zone ID
+    script.async = true;
+
+    script.onload = () => {
+      console.log("✅ Interstitial Ad Script Loaded");
+      adScriptLoadedRef.current = true;
+
+      if (window.Vignette && typeof window.Vignette.preload === "function") {
+        window.Vignette.preload();
+        adPreloadedRef.current = true;
+        console.log("✅ Ad Preloaded");
+      }
+    };
+
+    script.onerror = () => {
+      console.warn("⚠️ Ad Script Load Failed");
+    };
+
+    document.body.appendChild(script);
+  }, []);
+
+  // ✅ Show Interstitial Ad on click
   const showInterstitialAd = () => {
     return new Promise((resolve) => {
-      // Load script only once
-      if (!adLoadedRef.current) {
-        const script = document.createElement("script");
-        script.src = "https://groleegni.net/vignette.min.js";
-        script.dataset.zone = "9957899"; // আপনার zone ID
-        script.async = true;
-
-        script.onload = () => {
-          console.log("✅ Interstitial Ad Script Loaded");
-          adLoadedRef.current = true;
-          triggerAd(resolve);
-        };
-
-        script.onerror = () => {
-          console.warn("⚠️ Ad Load Failed");
-          resolve(true);
-        };
-
-        document.body.appendChild(script);
+      if (window.Vignette && typeof window.Vignette.show === "function") {
+        window.Vignette.show({
+          onClose: () => {
+            console.log("Ad closed");
+            resolve(true);
+          },
+          onError: () => {
+            console.warn("Ad failed to show");
+            resolve(true);
+          },
+        });
       } else {
-        triggerAd(resolve);
+        console.warn("Vignette not available");
+        resolve(true);
       }
     });
-  };
-
-  // ✅ Trigger Vignette Ad
-  const triggerAd = (resolve) => {
-    if (window.Vignette && typeof window.Vignette.show === "function") {
-      window.Vignette.show({
-        onClose: () => {
-          console.log("Ad closed");
-          resolve(true);
-        },
-        onError: () => {
-          console.warn("Ad failed");
-          resolve(true);
-        },
-      });
-    } else {
-      console.warn("Vignette not available");
-      resolve(true);
-    }
   };
 
   // ✅ Read More / Action Count
@@ -81,7 +81,7 @@ const PopularArticle = () => {
     const articleItem = article[index];
     if (!articleItem) return;
 
-    // Show Interstitial Ad
+    // Show Interstitial Ad (preloaded)
     await showInterstitialAd();
 
     let calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
@@ -94,7 +94,6 @@ const PopularArticle = () => {
       currentCount += 1;
       sessionStorage.setItem("actionCount", currentCount);
 
-      // Update Navbar or other UI
       window.dispatchEvent(new Event("actionCountUpdate"));
 
       if (currentCount >= 10) {
