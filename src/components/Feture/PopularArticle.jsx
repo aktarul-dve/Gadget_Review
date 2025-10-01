@@ -15,7 +15,7 @@ const PopularArticle = () => {
   // ✅ Interstitial Ad Loaded Ref
   const adLoadedRef = useRef(false);
 
-  // Fetch articles
+  // ✅ Fetch Articles
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -30,42 +30,39 @@ const PopularArticle = () => {
   }, []);
 
   // ✅ Show Interstitial Ad
- const showInterstitialAd = () => {
-  return new Promise((resolve) => {
-    // Already loaded?
-    if (adLoadedRef.current) {
-      setTimeout(() => resolve(true), 2000);
-      return;
-    }
+  const showInterstitialAd = () => {
+    return new Promise((resolve) => {
+      if (adLoadedRef.current) {
+        setTimeout(() => resolve(true), 2000);
+        return;
+      }
 
-    const script = document.createElement("script");
-    script.src = "https://groleegni.net/vignette.min.js";
-    script.dataset.zone = "9957899"; // আপনার zone id
-    script.async = true;
+      const script = document.createElement("script");
+      script.src = "https://groleegni.net/vignette.min.js";
+      script.dataset.zone = "9957899"; // আপনার zone ID
+      script.async = true;
 
-    script.onload = () => {
-      console.log("✅ Interstitial Ad Loaded");
-      adLoadedRef.current = true;
-      setTimeout(() => resolve(true), 2000);
-    };
+      script.onload = () => {
+        console.log("✅ Interstitial Ad Loaded");
+        adLoadedRef.current = true;
+        setTimeout(() => resolve(true), 2000); // 2 sec delay
+      };
 
-    script.onerror = () => {
-      console.warn("⚠️ Ad Load Failed");
-      resolve(true);
-    };
+      script.onerror = () => {
+        console.warn("⚠️ Ad Load Failed");
+        resolve(true); // এড না loaded হলেও navigate হবে
+      };
 
-    document.body.appendChild(script);
-  });
-};
-
-
+      document.body.appendChild(script);
+    });
+  };
 
   // ✅ Read More / Action Count
   const toggleReadMore = async (index) => {
     const articleItem = article[index];
     if (!articleItem) return;
 
-    // Show interstitial ad
+    // Show Interstitial Ad
     await showInterstitialAd();
 
     let calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
@@ -78,6 +75,7 @@ const PopularArticle = () => {
       currentCount += 1;
       sessionStorage.setItem("actionCount", currentCount);
 
+      // Update Navbar or other UI
       window.dispatchEvent(new Event("actionCountUpdate"));
 
       if (currentCount >= 10) {
@@ -118,7 +116,7 @@ const PopularArticle = () => {
     updateBalance();
     setShowModal(false);
 
-    // Reset
+    // Reset action count & called articles
     sessionStorage.setItem("actionCount", 0);
     sessionStorage.setItem("calledArticles", "[]");
     window.dispatchEvent(new Event("actionCountUpdate"));
@@ -195,13 +193,13 @@ const PopularArticle = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
           <div className="bg-white rounded-2xl shadow-lg p-6 w-80 text-center">
             <p className="text-lg font-bold text-green-600 mb-4">
-              🎉 অভিনন্দন! আপনি {reward.toFixed(2)} টাকা পেয়েছেন!
+              🎉 Congratulations! You received ৳{reward.toFixed(2)}!
             </p>
             <button
               onClick={handleModalClose}
               className="bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
             >
-              গ্রহণ করুন
+              Accept
             </button>
           </div>
         </div>
