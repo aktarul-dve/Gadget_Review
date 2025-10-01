@@ -13,11 +13,6 @@ const Hero = () => {
         <p className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-8">
           Learn, Explore & Grow Your Skills Online
         </p>
-
-        {/* Call-to-Action Button */}
-        <button className="bg-rose-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-rose-600 transition duration-300">
-          Get Started
-        </button>
       </div>
     </section>
   );
