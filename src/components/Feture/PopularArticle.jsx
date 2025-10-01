@@ -115,7 +115,7 @@ const PopularArticle = () => {
             key={item._id}
             className="flex bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
           >
-            <div className="w-32 aspect-square overflow-hidden rounded">
+            <div className="w-32 h-32 overflow-hidden rounded">
               <img
                 src={item?.photo?.url || ads}
                 alt="ads"
