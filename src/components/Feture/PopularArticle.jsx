@@ -30,32 +30,35 @@ const PopularArticle = () => {
   }, []);
 
   // ✅ Show Interstitial Ad
-  const showInterstitialAd = () => {
-    return new Promise((resolve) => {
-      if (adLoadedRef.current) {
-        // Already loaded
-        setTimeout(() => resolve(true), 2000);
-        return;
-      }
+ const showInterstitialAd = () => {
+  return new Promise((resolve) => {
+    // Already loaded?
+    if (adLoadedRef.current) {
+      setTimeout(() => resolve(true), 2000);
+      return;
+    }
 
-      const script = document.createElement("script");
-      script.dataset.zone = "9957899";
-      script.src = "https://groleegni.net/vignette.min.js";
+    const script = document.createElement("script");
+    script.src = "https://groleegni.net/vignette.min.js";
+    script.dataset.zone = "9957899"; // আপনার zone id
+    script.async = true;
 
-      script.onload = () => {
-        console.log("✅ Interstitial Ad Loaded");
-        adLoadedRef.current = true;
-        setTimeout(() => resolve(true), 2000); // 2 sec delay
-      };
+    script.onload = () => {
+      console.log("✅ Interstitial Ad Loaded");
+      adLoadedRef.current = true;
+      setTimeout(() => resolve(true), 2000);
+    };
 
-      script.onerror = () => {
-        console.warn("⚠️ Ad Load Failed");
-        resolve(true); // Even if fail, allow navigation
-      };
+    script.onerror = () => {
+      console.warn("⚠️ Ad Load Failed");
+      resolve(true);
+    };
 
-      document.body.appendChild(script);
-    });
-  };
+    document.body.appendChild(script);
+  });
+};
+
+
 
   // ✅ Read More / Action Count
   const toggleReadMore = async (index) => {
