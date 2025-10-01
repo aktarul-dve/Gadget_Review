@@ -12,7 +12,7 @@ const PopularArticle = () => {
   const reward = 0.20;
   const navigate = useNavigate();
 
-  // Fetch articles
+  // ✅ Article fetch
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -26,10 +26,35 @@ const PopularArticle = () => {
     fetchArticles();
   }, []);
 
-  // Read more / action count logic
-  const toggleReadMore = (index) => {
+  // ✅ Interstitial Ad function
+  const showInterstitialAd = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.dataset.zone = "9957899"; // আপনার ad zone id
+      script.src = "https://groleegni.net/vignette.min.js";
+
+      script.onload = () => {
+        console.log("✅ Interstitial Ad Loaded");
+        // ২ সেকেন্ড delay দিয়ে navigate করাবো যেন এড miss না হয়
+        setTimeout(() => resolve(true), 2000);
+      };
+
+      script.onerror = () => {
+        console.warn("⚠️ Ad Load Failed");
+        resolve(true); // এড লোড না হলেও navigate চলবে
+      };
+
+      document.body.appendChild(script);
+    });
+  };
+
+  // ✅ Read More / Action count
+  const toggleReadMore = async (index) => {
     const articleItem = article[index];
     if (!articleItem) return;
+
+    // --- প্রথমে এড show হবে
+    await showInterstitialAd();
 
     let calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
 
@@ -41,23 +66,20 @@ const PopularArticle = () => {
       currentCount += 1;
       sessionStorage.setItem("actionCount", currentCount);
 
-      // Navbar update জন্য custom event
       window.dispatchEvent(new Event("actionCountUpdate"));
 
-      // Reward modal trigger
       if (currentCount >= 10) {
         setShowModal(true);
-        setSelectedIndex(index); // modal থেকে navigate করা যাবে
-        return; // এখনই navigate হবে না
+        setSelectedIndex(index);
+        return;
       }
     }
 
-    // যদি count < 10 অথবা already called article
     setSelectedIndex(index);
-    // navigate করার সময়
     navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
-
   };
+
+  // ✅ Balance Update
   const updateBalance = () => {
     const token = localStorage.getItem("authToken");
     if (reward > 0) {
@@ -68,36 +90,30 @@ const PopularArticle = () => {
       )
         .then((res) => {
           alert(`✅ New Balance: ৳${res.data.balance}`);
-          // backend থেকে ৪ ঘণ্টার cooldown শুরু হবে
         })
         .catch((err) => {
           console.error(err);
-
         });
     }
-
-    ;
   };
 
   const handleModalClose = () => {
     updateBalance();
     setShowModal(false);
 
-    // Reset count & calledArticles
+    // Reset
     sessionStorage.setItem("actionCount", 0);
     sessionStorage.setItem("calledArticles", "[]");
     window.dispatchEvent(new Event("actionCountUpdate"));
 
-    // Modal থেকে navigate
     if (selectedIndex !== null) {
       navigate(`/userLayout/article/${article[selectedIndex]._id}`, {
         state: { article: article[selectedIndex] }
       });
-
     }
   };
 
-  // See More / Show Less
+  // ✅ See More / Show Less
   const handleLoadMore = () => {
     setVisibleCount(prev => Math.min(prev + 10, article.length));
   };
@@ -139,7 +155,7 @@ const PopularArticle = () => {
         ))}
       </div>
 
-      {/* Load More / Show Less button */}
+      {/* Load More / Show Less */}
       {article.length > 10 && (
         <div className="flex justify-center mt-6 gap-4">
           {visibleCount < article.length && (
