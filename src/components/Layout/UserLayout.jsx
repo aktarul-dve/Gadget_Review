@@ -1,7 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from '../common/Navbar'
-import Footer from '../common/Footer'
+import Navecation from '../common/Footer'
+import Footer from '../Feture/Footer'
 
 const UserLayout = () => {
   return (
@@ -18,8 +19,8 @@ const UserLayout = () => {
 
          {/* Footer */}
 
-         
-         <Footer />
+         <Footer/>
+         <Navecation/>
          
         </>
     </div>
