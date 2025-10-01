@@ -28,8 +28,8 @@ const Footer = () => {
                 <div>
                     <h2 className="text-xl font-semibold text-white mb-4">Policy</h2>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="/privacy-policy" className="hover:text-white">Privacy Policy</a></li>
-                        <li><a href="/terms" className="hover:text-white">Terms & Conditions</a></li>
+                        <li><a href="/privacyPolicy" className="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="/termsConditition" className="hover:text-white">Terms & Conditions</a></li>
                         <li><a href="/disclaimer" className="hover:text-white">Disclaimer</a></li>
                     </ul>
                 </div>
@@ -37,8 +37,8 @@ const Footer = () => {
                 {/* Contact */}
                 <div>
                     <h2 className="text-xl font-semibold text-white mb-4">Contact</h2>
-                    <p className="text-sm">Email: support@onlineguide.com</p>
-                    <p className="text-sm">Phone: +880 1234-567890</p>
+                    <p className="text-sm">Email: islammdaktarul@gmail.com</p>
+                    <p className="text-sm">Phone: +880 01767398442</p>
                     <p className="text-sm">Dhaka, Bangladesh</p>
                 </div>
             </div>

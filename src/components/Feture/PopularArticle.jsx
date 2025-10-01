@@ -123,7 +123,7 @@ const PopularArticle = () => {
               />
             </div>
 
-            <div className="p-1">
+            <div className="p-1 ml-2">
               <h2 className="text-[17px] mb-2">{item.Title}</h2>
               <p className="text-sm text-gray-700">
                 {item.Description.substring(0, 50) + "..."}

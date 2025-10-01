@@ -11,7 +11,10 @@ import BanglaQuiz from './components/Work/BanglaQuiz'
 import MathQuiz from './components/Work/MathQuiz'
 import EnglishQuiz from './components/Work/EnglishQuiz'
 import Profile from './components/Work/Profile'
-import ArticleDetails from './components/Feture/ArticleDetails'
+import PrivacyPolicy from './components/Feture/PrivacyPolicy'
+import TermsConditition from './components/Feture/Terms & Conditions'
+import Disclaimer from './components/Feture/Disclaimer'
+
 
 
 function App() {
@@ -34,6 +37,12 @@ function App() {
           <Route path="withdrow" element={<Withdrow />} />
           <Route path="profile" element={<Profile/>} />
           <Route path="/userLayout/article/:id" element={<ArticleDetails />} />
+
+          <Route path="privacyPolicy" element={<PrivacyPolicy/>} />
+          <Route path="termsConditition" element={<TermsConditition/>} />
+          <Route path="disclaimer" element={<Disclaimer/>} />
+
+
 
         </Route>
       </Routes>
