@@ -119,7 +119,7 @@ const PopularArticle = () => {
               <img
                 src={item?.photo?.url || ads}
                 alt="ads"
-                className="w-full h-full object-cover"
+                className="w-full h-full "
               />
             </div>
             <div className="p-1">
