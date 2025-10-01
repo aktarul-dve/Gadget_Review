@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ads from "../../assets/ads.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,7 +12,10 @@ const PopularArticle = () => {
   const reward = 0.20;
   const navigate = useNavigate();
 
-  // ✅ Article fetch
+  // ✅ Interstitial Ad Loaded Ref
+  const adLoadedRef = useRef(false);
+
+  // Fetch articles
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -26,34 +29,40 @@ const PopularArticle = () => {
     fetchArticles();
   }, []);
 
-  // ✅ Interstitial Ad function
+  // ✅ Show Interstitial Ad
   const showInterstitialAd = () => {
     return new Promise((resolve) => {
+      if (adLoadedRef.current) {
+        // Already loaded
+        setTimeout(() => resolve(true), 2000);
+        return;
+      }
+
       const script = document.createElement("script");
-      script.dataset.zone = "9957899"; // আপনার ad zone id
+      script.dataset.zone = "9957899";
       script.src = "https://groleegni.net/vignette.min.js";
 
       script.onload = () => {
         console.log("✅ Interstitial Ad Loaded");
-        // ২ সেকেন্ড delay দিয়ে navigate করাবো যেন এড miss না হয়
-        setTimeout(() => resolve(true), 2000);
+        adLoadedRef.current = true;
+        setTimeout(() => resolve(true), 2000); // 2 sec delay
       };
 
       script.onerror = () => {
         console.warn("⚠️ Ad Load Failed");
-        resolve(true); // এড লোড না হলেও navigate চলবে
+        resolve(true); // Even if fail, allow navigation
       };
 
       document.body.appendChild(script);
     });
   };
 
-  // ✅ Read More / Action count
+  // ✅ Read More / Action Count
   const toggleReadMore = async (index) => {
     const articleItem = article[index];
     if (!articleItem) return;
 
-    // --- প্রথমে এড show হবে
+    // Show interstitial ad
     await showInterstitialAd();
 
     let calledArticles = JSON.parse(sessionStorage.getItem("calledArticles") || "[]");
@@ -76,20 +85,23 @@ const PopularArticle = () => {
     }
 
     setSelectedIndex(index);
-   setTimeout(() => {
-  navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
-}, 100000);
+
+    // Navigate after 2 sec to let ad show
+    setTimeout(() => {
+      navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
+    }, 2000);
   };
 
-  // ✅ Balance Update
+  // ✅ Update Balance
   const updateBalance = () => {
     const token = localStorage.getItem("authToken");
     if (reward > 0) {
-      axios.put(
-        "https://aktarul.onrender.com/reward/balance",
-        { amount: parseFloat(reward) },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      axios
+        .put(
+          "https://aktarul.onrender.com/reward/balance",
+          { amount: parseFloat(reward) },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
         .then((res) => {
           alert(`✅ New Balance: ৳${res.data.balance}`);
         })
@@ -115,13 +127,9 @@ const PopularArticle = () => {
     }
   };
 
-  // ✅ See More / Show Less
-  const handleLoadMore = () => {
-    setVisibleCount(prev => Math.min(prev + 10, article.length));
-  };
-  const handleShowLess = () => {
-    setVisibleCount(10);
-  };
+  // ✅ Load More / Show Less
+  const handleLoadMore = () => setVisibleCount(prev => Math.min(prev + 10, article.length));
+  const handleShowLess = () => setVisibleCount(10);
 
   return (
     <div className="bg-gray-100 ">
