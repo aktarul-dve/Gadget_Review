@@ -51,7 +51,7 @@ const ArticleDetails = () => {
       <img src={photo?.url} alt="photo" className="w-full h-52" />
       <h1 className="text-2xl font-bold mb-4">{Title}</h1>
       <p className="text-gray-700">{Description}</p>
-      <h1 className="font-bold mt-5 mb-5">Releted Aritcle & Blog</h1>
+      <h1 className="font-bold mt-5 mb-5 text-[18px]">Releted Aritcle & Blog</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {article.slice(0, visibleCount).map((item, index) => (
           <div
