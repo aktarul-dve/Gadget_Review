@@ -76,7 +76,9 @@ const PopularArticle = () => {
     }
 
     setSelectedIndex(index);
-    navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
+   setTimeout(() => {
+  navigate(`/userLayout/article/${articleItem._id}`, { state: { article: articleItem } });
+}, 100000);
   };
 
   // ✅ Balance Update
