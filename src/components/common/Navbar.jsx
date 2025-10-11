@@ -11,24 +11,9 @@ import { BiLogOut } from "react-icons/bi";
 const Navbar = () => {
   const navigate = useNavigate();
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
-  const [actionCount, setActionCount] = useState(0);
 
   const toggleNavDrawer = () => setNavDrawerOpen(!navDrawerOpen);
 
-  useEffect(() => {
-    const updateCount = () => {
-      const count = parseInt(sessionStorage.getItem("actionCount")) || 0;
-      setActionCount(count);
-    };
-
-    // Initial load
-    updateCount();
-
-    // Listen to custom event
-    window.addEventListener("actionCountUpdate", updateCount);
-
-    return () => window.removeEventListener("actionCountUpdate", updateCount);
-  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -41,9 +26,7 @@ const Navbar = () => {
         <button onClick={toggleNavDrawer} className="absolute left-4">
           <FiAlignJustify className="h-6 w-6 text-white" />
         </button>
-        <p className="text-white font-bold text-[12px] absolute right-8">
-          Task: {actionCount}
-        </p>
+        
       </nav>
 
       {/* Drawer */}

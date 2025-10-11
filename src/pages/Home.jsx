@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import MarqueeText from "../components/Feture/MarqueeText ";
-import PopularArticle from "../components/Feture/PopularArticle";
-import CategoriesSection from "../components/Feture/CategoriesSection";
-import PopularPosts from "../components/Feture/PopularPosts";
 import Work_regulations from "../components/Feture/Work_regulations";
+import Job1 from "../components/Feture/Job1";
+import Job2 from "../components/Feture/Job2";
 import Hero from "../components/Feture/Hero";
 
 const Home = () => {
@@ -14,9 +13,9 @@ const Home = () => {
       <Hero/>
       <Work_regulations/>
       <MarqueeText />
-      <PopularArticle  />
-      <CategoriesSection  />
-      <PopularPosts  />
+      <Job1/>
+      <Job2/>
+     
     </div>
   );
 };
